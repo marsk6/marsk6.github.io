@@ -1,21 +1,4 @@
-# React-Static - TypeScript Template
-
-To use this template, run `react-static create` and use the `typescript` template.
-
-## Path Aliases for Absolute Imports
-
-`react-static-typescript-plugin` supports path aliases [since v3.1](https://github.com/react-static/react-static/pull/963#issuecomment-455596728). It has been set up in this template.
-
-```js
-// tsconfig.json
-{
-  // ...
-    "paths": {
-      "@components/*": ["src/components/*"]
-    },
-  // ...
-}
-
-// this works in your React app
-import FancyDiv from '@components/FancyDiv'
-```
+# TODO
+1. html-toc 包
+2. svg 导入，并可使用样式
+3. hash toc 每次都渲染
