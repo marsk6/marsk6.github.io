@@ -75,7 +75,7 @@ export default () => ({
       },
       {
         test: /\.svg$/,
-        loader: '@svgr/webpack'
+        loader: '@svgr/webpack',
       }
     );
     // config.module.rules.push(...baseConfig);

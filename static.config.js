@@ -1,33 +1,76 @@
-import axios from 'axios'
-import path from 'path'
-// import { Post } from './types'
-
-// Typescript support in static.config.js is not yet supported, but is coming in a future update!
+import path from 'path';
+import { createSharedData } from 'react-static/node';
+import { makePageRoutes, getAllPosts } from './scripts';
 
 export default {
+  sideRoot: 'sdfsdf',
   entry: path.join(__dirname, 'src', 'index.tsx'),
   getRoutes: async () => {
-    const { data: posts } /* :{ data: Post[] } */ = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts'
-    )
-    return [
+    // FIXME: 无法 redirect，用 Redirect
+    const { latest, category, archive, tag } = await getAllPosts();
+    const FIRST_PAGE = 1;
+    const routes = [
+      ...makePageRoutes({
+        items: latest,
+        pageSize: 5,
+        pageToken: 'page', // use page for the prefix, eg. blog/page/3
+        route: {
+          // Use this route as the base route
+          path: '/',
+          template: 'src/pages',
+        },
+        decorate: (posts, i, totalPages) => {
+          if (i === FIRST_PAGE) {
+            return {
+              getData: () => ({
+                latest: posts,
+                category,
+                archive,
+                tag,
+                currentPage: i,
+                totalPages,
+              }),
+            };
+          }
+          return {
+            getData: () => ({
+              latest: posts,
+              currentPage: i,
+              totalPages,
+            }),
+          };
+        },
+      }),
       {
-        path: '/blog',
-        getData: () => ({
-          posts,
+        path: '/post',
+        children: latest.map((post) => {
+          return {
+            path: `/${post.title}`,
+            template: 'src/layout/Post',
+            getData: () => ({
+              post,
+            }),
+          };
         }),
-        children: posts.map((post /* : Post */) => ({
-          path: `/post/${post.id}`,
-          template: 'src/containers/Post',
-          getData: () => ({
-            post,
-          }),
-        })),
       },
-    ]
+      {
+        path: '/category',
+        template: 'src/layout/SectionList',
+        getData: () => ({
+          catalog: category,
+          catalogName: '分类',
+        }),
+      },
+      {
+        path: '/archive',
+        template: 'src/layout/SectionList',
+        getData: () => ({ catalog: archive, catalogName: '归档' }),
+      },
+    ];
+    return routes;
   },
   plugins: [
-    'react-static-plugin-typescript',
+    ['react-static-plugin-typescript', { typeCheck: false }],
     [
       require.resolve('react-static-plugin-source-filesystem'),
       {
@@ -37,4 +80,4 @@ export default {
     require.resolve('react-static-plugin-reach-router'),
     require.resolve('react-static-plugin-sitemap'),
   ],
-}
+};
