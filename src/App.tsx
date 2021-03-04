@@ -1,34 +1,49 @@
-import React from 'react'
-import { Root, Routes, addPrefetchExcludes } from 'react-static'
-import { Link, Router } from '@reach/router'
-import FancyDiv from 'components/FancyDiv'
-import Dynamic from 'containers/Dynamic'
-import './app.css'
+import React, { useEffect } from 'react';
+import { Root, Routes, addPrefetchExcludes } from 'react-static';
+import { Provider, useDispatch } from 'react-redux';
+import { Router, Redirect } from '@reach/router';
+import { Header, SideBar, Footer } from '@/layout';
+import { configureStore } from '@/redux';
+import { setAllPostData } from '@/redux/action';
+import { useSelector } from 'react-redux';
+import GithubCorner from 'react-github-corner';
+import '@/style/layout.scss';
 
 // Any routes that start with 'dynamic' will be treated as non-static routes
-addPrefetchExcludes(['dynamic'])
+addPrefetchExcludes(['dynamic']);
 
+const store = configureStore();
+
+// TODO: 服务端渲染注入数据
 function App() {
+  const hasInit = useSelector((state) => state.site.hasInit);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!hasInit) {
+      dispatch(setAllPostData());
+    }
+  }, []);
   return (
     <Root>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/blog">Blog</Link>
-        <Link to="/dynamic">Dynamic</Link>
-      </nav>
-      <div className="content">
-        <FancyDiv>
-          <React.Suspense fallback={<em>Loading...</em>}>
-            <Router>
-              <Dynamic path="dynamic" />
-              <Routes path="*" />
-            </Router>
-          </React.Suspense>
-        </FancyDiv>
-      </div>
+      <section className="layout container">
+        <React.Suspense fallback={<main className="middle">Loading...</main>}>
+          <Router className="middle">
+            <Redirect from="/page" to="/" noThrow />
+            <Redirect from="/post" to="/" noThrow />
+            <Routes path="*" />
+          </Router>
+        </React.Suspense>
+        <Header />
+        <SideBar />
+        <Footer />
+      </section>
+      <GithubCorner size="60" href="https://www.baidu.com" />
     </Root>
-  )
+  );
 }
 
-export default App
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
