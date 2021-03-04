@@ -12,6 +12,7 @@ export default () => ({
         test: /\.(jpg|png|svg)$/,
         loader: 'url-loader',
         options: {
+          esModule: false,
           limit: 10000,
         },
       },
@@ -19,6 +20,7 @@ export default () => ({
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {
+          esModule: false,
           name: '[path][name].[hash].[ext]',
         },
       },
@@ -78,7 +80,7 @@ export default () => ({
         loader: '@svgr/webpack',
       }
     );
-    // config.module.rules.push(...baseConfig);
+    config.module.rules[0].oneOf.unshift(...baseConfig)
     return config;
   },
 });

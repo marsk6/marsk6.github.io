@@ -58,13 +58,36 @@ export default {
         template: 'src/layout/SectionList',
         getData: () => ({
           catalog: category,
-          catalogName: '分类',
+          catalogName: 'category',
+          count: Object.values(category).reduce(
+            (pre, cur) => pre + cur.length,
+            0
+          ),
         }),
       },
       {
         path: '/archive',
         template: 'src/layout/SectionList',
-        getData: () => ({ catalog: archive, catalogName: '归档' }),
+        getData: () => ({
+          catalog: archive,
+          catalogName: 'archive',
+          count: Object.values(archive).reduce(
+            (pre, cur) => pre + cur.length,
+            0
+          ),
+        }),
+      },
+      {
+        path: '/tag',
+        template: 'src/layout/SectionList',
+        getData: () => ({
+          catalog: tag,
+          catalogName: 'tag',
+          count: Object.values(tag).reduce(
+            (pre, cur) => pre + cur.length,
+            0
+          ),
+        }),
       },
     ];
     return routes;
