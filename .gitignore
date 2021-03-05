@@ -5,3 +5,4 @@ artifacts
 example
 content
 yarn-error.log
+tmp

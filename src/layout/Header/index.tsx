@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = () => {
         <ul>
           <li>
             <Link to="/" className={classnames(style['nav-item'])}>
-              首页
+              最新
             </Link>
           </li>
           <li>
