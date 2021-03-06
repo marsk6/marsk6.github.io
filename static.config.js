@@ -3,7 +3,10 @@ import { createSharedData } from 'react-static/node';
 import { makePageRoutes, getAllPosts } from './scripts';
 
 export default {
-  sideRoot: 'sdfsdf',
+  getSiteData: async ({ dev }) => ({
+    title: "marsk'blog",
+  }),
+  sideRoot: 'https://marsk6.github.io/',
   entry: path.join(__dirname, 'src', 'index.tsx'),
   getRoutes: async () => {
     // FIXME: 无法 redirect，用 Redirect
