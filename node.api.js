@@ -45,6 +45,9 @@ export default () => ({
         },
       });
     }
+    // FIXME: 
+    config.output.chunkFilename = 'templates/[contentHash:8].js';
+    config.output.filename = '[contentHash:8].js';
     config.module.rules[0].oneOf.unshift(
       {
         test: /\.scss$/,
@@ -80,7 +83,7 @@ export default () => ({
         loader: '@svgr/webpack',
       }
     );
-    config.module.rules[0].oneOf.unshift(...baseConfig)
+    config.module.rules[0].oneOf.unshift(...baseConfig);
     return config;
   },
 });
