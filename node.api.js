@@ -49,33 +49,38 @@ export default () => ({
     config.module.rules[0].oneOf.unshift(
       {
         test: /\.scss$/,
-        exclude: [
-          path.resolve(__dirname, './src/components'),
-          path.resolve(__dirname, './src/layout'),
-          path.resolve(__dirname, './src/pages'),
-        ],
+        exclude: /node_modules/,
         use: [...ecc, 'css-loader', postcssConfig, 'sass-loader'],
       },
-      {
-        test: /\.scss$/,
-        include: [
-          path.resolve(__dirname, './src/components'),
-          path.resolve(__dirname, './src/layout'),
-          path.resolve(__dirname, './src/pages'),
-        ],
-        use: [
-          ...ecc,
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]-[hash:base64:5]',
-            },
-          },
-          postcssConfig,
-          'sass-loader',
-        ],
-      },
+      // {
+      //   test: /\.scss$/,
+      //   exclude: [
+      //     path.resolve(__dirname, './src/components'),
+      //     path.resolve(__dirname, './src/layout'),
+      //     path.resolve(__dirname, './src/pages'),
+      //   ],
+      //   use: [...ecc, 'css-loader', postcssConfig, 'sass-loader'],
+      // },
+      // {
+      //   test: /\.scss$/,
+      //   include: [
+      //     path.resolve(__dirname, './src/components'),
+      //     path.resolve(__dirname, './src/layout'),
+      //     path.resolve(__dirname, './src/pages'),
+      //   ],
+      //   use: [
+      //     ...ecc,
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         modules: true,
+      //         localIdentName: '[name]__[local]-[hash:base64:5]',
+      //       },
+      //     },
+      //     postcssConfig,
+      //     'sass-loader',
+      //   ],
+      // },
       {
         test: /\.svg$/,
         loader: '@svgr/webpack',

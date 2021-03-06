@@ -9,7 +9,7 @@ import { RootStoreState } from '@/redux';
 import Toc from '@/components/Toc';
 import Meta from './Meta';
 
-import style from './index.scss';
+import './index.scss';
 // TODO: 文章之间的切换
 const LATEST_CATALOG = 'latest';
 const POST_PATH = 'post';
@@ -33,8 +33,8 @@ export default () => {
   }, [location.pathname]);
 
   return (
-    <section className={style.post}>
-      <header className={style.header}>
+    <section className="post">
+      <header className="header">
         <p>{post.title}</p>
         <Meta post={post} />
       </header>
@@ -44,7 +44,7 @@ export default () => {
         )}
       </div>
       <main className="markdown">{htmr(post.contents)}</main>
-      <section className={style['footer-nav']}>
+      <section className="footer-nav">
         <span>
           {post.prev[catalog] && (
             <Link to={`/post/${post.prev[catalog].id}`}>

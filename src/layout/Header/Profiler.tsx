@@ -1,14 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
-import style from './index.scss';
+import './index.scss';
 import avatar from '@/assets/img/avatar.png';
 
 // TODO: list 的 scss
 
 const Profiler = () => {
   return (
-    <section className={classnames(style.profiler)}>
-      <a href="/" className={style.avatar}>
+    <section className={classnames('profiler')}>
+      <a href="/" className="avatar">
         <img src={avatar} alt="avatar" title="marsk'blog" />
       </a>
       <div className="site-title vertical-text">

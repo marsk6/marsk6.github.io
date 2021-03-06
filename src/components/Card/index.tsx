@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import style from './index.scss';
+import './index.scss';
 
 type Props = {
   children?: ReactNode;
@@ -10,8 +10,8 @@ type Props = {
 const Card: React.FC<Props> = (props) => {
   const { children, title } = props;
   return (
-    <div className={style.card}>
-      <div className={style.title}>{title}</div>
+    <div className="card">
+      <div className="title">{title}</div>
       {children}
     </div>
   );

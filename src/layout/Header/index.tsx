@@ -6,7 +6,7 @@ import Profiler from '@/layout/Header/Profiler';
 
 import Search from './Search';
 
-import style from './index.scss';
+import './index.scss';
 
 // TODO: 配置化 header
 // TODO: 如何引入 svg 并可设置样式
@@ -16,33 +16,33 @@ type HeaderProps = {};
 const Header: React.FC<HeaderProps> = () => {
   const { pathname } = useLocation();
   return (
-    <header className={classnames(style.header, 'rounded', 'shadow-s m')}>
+    <header className={classnames('header', 'rounded', 'shadow-s m')}>
       <Profiler />
       <nav className="site-title-links">
         <ul>
           <li>
-            <Link to="/" className={classnames(style['nav-item'])}>
+            <Link to="/" className="nav-item">
               最新
             </Link>
           </li>
           <li>
-            <Link to="/archive" className={style['nav-item']}>
+            <Link to="/archive" className="nav-item">
               归档
             </Link>
           </li>
           <li>
-            <Link to="/category" className={style['nav-item']}>
+            <Link to="/category" className="nav-item">
               分类
             </Link>
           </li>
           <li></li>
         </ul>
-        {/* <span className={style['nav-item']}>搜索</span> */}
+        {/* <span className="nav-item">搜索</span> */}
       </nav>
 
       {/* <Search /> */}
 
-      {/* <div className={style['social']}>
+      {/* <div className="social">
         <a>
           <i className="bi bi-github" />
         </a>

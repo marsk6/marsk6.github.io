@@ -3,7 +3,7 @@ import Pagination from '@/components/Pagination';
 import { useRouteData } from 'react-static';
 import { Link } from '@reach/router';
 import Meta from '@/layout/Post/Meta';
-// import style from './index.scss';
+// import './index.scss';
 // TODO: 切换分页回到顶部
 const Main = () => {
   const { latest, totalPages, currentPage } = useRouteData();

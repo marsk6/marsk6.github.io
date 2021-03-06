@@ -6,7 +6,7 @@ import { useLocation } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { RootStoreState } from '@/redux';
 
-import style from './index.scss';
+import './index.scss';
 import { Link } from '@reach/router';
 
 
@@ -15,12 +15,12 @@ const SideBar = () => {
   const { category, archive } = useSelector((state) => state.site);
 
   const categoryTitle = (
-    <Link to="/category" className={style['card-title']}>
+    <Link to="/category" className="card-title">
       分类
     </Link>
   );
   const archiveTitle = (
-    <Link to="/archive" className={style['card-title']}>
+    <Link to="/archive" className="card-title">
       归档
     </Link>
   );
@@ -31,12 +31,12 @@ const SideBar = () => {
 
   const location = useLocation();
   return (
-    <aside className={style.sidebar}>
+    <aside className="sidebar">
       {/* <Card title={categoryTitle}>
         <ul className="menu-list">
           {Object.keys(category).map((name) => (
             <li key={name} className="menu-item">
-              <Link to={`/category#${name}`} className={classnames(style['list-item'])}>
+              <Link to={`/category#${name}`} className="list-item">
                 <span>{name}</span>
                 <Badge>{category[name].length}</Badge>
               </Link>
@@ -48,7 +48,7 @@ const SideBar = () => {
         <ul className="filter-list">
           {Object.keys(archive).map((name) => (
             <li key={name} className="filter-item">
-              <Link to={`/archive#${name}`} className={classnames(style['list-item'])}>
+              <Link to={`/archive#${name}`} className="list-item">
                 <span>{name}</span>
                 <Badge type="outline">{archive[name].length}</Badge>
               </Link>

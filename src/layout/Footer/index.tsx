@@ -1,12 +1,8 @@
-import React from 'react'
-import style from "./index.scss";
+import React from 'react';
+import './index.scss';
 
-type Props = {}
+type Props = {};
 
 export const Footer: React.FC<Props> = () => {
-  return (
-    <footer className={style.footer}>
-      Powered by React Static
-    </footer>
-  )
-}
+  return <footer className="footer">Powered by React Static</footer>;
+};

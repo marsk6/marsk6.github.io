@@ -5,7 +5,7 @@ import { Link } from '@reach/router';
 import { RootStoreState } from '@/redux';
 import { Post } from '@/redux/reducer';
 import { stripe } from '@/utils';
-import style from './index.scss';
+import './index.scss';
 
 type Props = {};
 
@@ -62,18 +62,18 @@ const Search: React.FC<Props> = () => {
   );
 
   const match = (
-    <div className={style['search-match']} style={{ display: showResult ? 'block' : 'none' }}>
+    <div className="search-match" style={{ display: showResult ? 'block' : 'none' }}>
       {result.map(({ item: post }) => {
         const index = post.contents.indexOf(filter);
         return (
           <Link
             to={`/post/${post.id}`}
             key={post.id}
-            className={style['match-post']}
+            className="match-post"
           >
-            <span className={style['match-title']}>{post.title}</span>
-            <span className={style['match-content']}>
-              <span className={style['match-filter']}>{filter}</span>
+            <span className="match-title">{post.title}</span>
+            <span className="match-content">
+              <span className="match-filter">{filter}</span>
               {post.contents.slice(index, index + 20)}
             </span>
           </Link>
@@ -83,7 +83,7 @@ const Search: React.FC<Props> = () => {
   );
 
   return (
-    <div className={style.search} onBlur={handleHideResult}>
+    <div className="search" onBlur={handleHideResult}>
       {input}
       {match}
     </div>
