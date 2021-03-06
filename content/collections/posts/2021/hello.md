@@ -1,3 +1,10 @@
+---
+id: hello
+title: hello
+date: 2021-03-06
+category: others
+---
+
 Commands:
   create         create a new project
   start          start the development server
