@@ -4,6 +4,7 @@
  */
 import path from 'path';
 import ExtractCssChunks from 'extract-css-chunks-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 export default () => ({
   webpack: (config, { stage }) => {
@@ -45,9 +46,6 @@ export default () => ({
         },
       });
     }
-    // FIXME: 
-    config.output.chunkFilename = 'templates/[contentHash:8].js';
-    config.output.filename = '[contentHash:8].js';
     config.module.rules[0].oneOf.unshift(
       {
         test: /\.scss$/,
@@ -84,6 +82,15 @@ export default () => ({
       }
     );
     config.module.rules[0].oneOf.unshift(...baseConfig);
+
+    config.plugins.push(new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, './.nojekyll'),
+          to: './'
+        }
+      ]
+    }));
     return config;
   },
 });
