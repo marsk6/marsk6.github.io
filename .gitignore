@@ -3,6 +3,5 @@ dist
 artifacts
 .DS_Store
 example
-content
 yarn-error.log
 tmp

@@ -7,7 +7,6 @@ type Props = {
 
 const Meta: React.FC<Props> = (props) => {
   const { post } = props;
-  console.log(post);
   return (
     <>
       <div className="post-meta">
