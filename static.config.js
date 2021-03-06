@@ -86,10 +86,7 @@ export default {
         getData: () => ({
           catalog: tag,
           catalogName: 'tag',
-          count: Object.values(tag).reduce(
-            (pre, cur) => pre + cur.length,
-            0
-          ),
+          count: Object.values(tag).reduce((pre, cur) => pre + cur.length, 0),
         }),
       },
     ];

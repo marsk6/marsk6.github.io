@@ -83,14 +83,16 @@ export default () => ({
     );
     config.module.rules[0].oneOf.unshift(...baseConfig);
 
-    config.plugins.push(new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, './.nojekyll'),
-          to: './'
-        }
-      ]
-    }));
+    config.plugins.push(
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, './.nojekyll'),
+            to: './',
+          },
+        ],
+      })
+    );
     return config;
   },
 });
