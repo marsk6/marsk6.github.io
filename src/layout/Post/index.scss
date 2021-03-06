@@ -1,0 +1,73 @@
+.post-brief {
+  padding: 24px 0 4px;
+  margin-bottom: 24px;
+  .brief-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .brief-desc {
+    font-size: 14px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .brief-meta {
+    font-size: 12px;
+    margin-top: 6px;
+    & > span {
+      span {
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.post {
+  position: relative;
+  margin-bottom: 20px;
+  .nav {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+
+    ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        margin-right: 6px;
+        &:nth-child(odd) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 14px;
+    & > p {
+      font-size: 32px;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  main {
+    margin: 32px 0;
+  }
+
+  .footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #eee;
+  }
+}

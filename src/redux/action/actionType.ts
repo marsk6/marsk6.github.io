@@ -1,0 +1,3 @@
+export const SET_CURRENT_POST = 'SET_CURRENT_POST';
+export const SET_HAS_INIT = 'SET_HAS_INIT';
+export const SET_ALL_POST_DATA = 'SET_ALL_POST_DATA';

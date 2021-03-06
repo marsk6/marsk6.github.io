@@ -1,0 +1,16 @@
+.sidebar {
+  width: 216px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    display: flex;
+  }
+}
