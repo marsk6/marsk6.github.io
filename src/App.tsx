@@ -37,7 +37,7 @@ function App() {
         <SideBar />
         <Footer />
       </section>
-      <GithubCorner size="60" href="https://www.baidu.com" />
+      <GithubCorner size="60" href="https://github.com/marsk6" />
     </Root>
   );
 }
