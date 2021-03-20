@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = () => {
   return (
     <header className={classnames('header', 'rounded', 'shadow-s m')}>
       <Profiler />
-      <nav className="site-title-links">
+      <nav className="nav">
         <ul>
           <li>
             <Link to="/" className="nav-item">

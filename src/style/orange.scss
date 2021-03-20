@@ -8,7 +8,7 @@ $titleFontList: 'HiraMinProN-W6', 'Source Han Serif CN', 'Source Han Serif SC',
 $verticalPrimaryPaddingTopPatch: 0;
 $verticalSecondaryPaddingTopPatch: 1px;
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,300,400,600');
-@import 'animation';
+@import 'animation.scss';
 
 html,
 body,
@@ -26,22 +26,6 @@ h6 {
 
 html {
   background: $backgroundColor;
-}
-
-.foreground {
-  background: $foregroundColor !important;
-}
-
-.background {
-  background: $backgroundColor !important;
-}
-
-.foreground-text * {
-  color: $foregroundColor !important;
-}
-
-.background-text * {
-  color: $backgroundColor !important;
 }
 
 body {
@@ -70,35 +54,6 @@ body {
   position: relative;
 }
 
-.full-width-container {
-  width: 100vw;
-}
-
-.main-container {
-  text-align: left;
-  margin: 0;
-  padding: 80px 40px;
-  overflow: hidden;
-  float: left;
-
-  :nth-child(1) {
-    margin-top: 0;
-  }
-}
-
-.row {
-  margin: 0;
-}
-
-.vertical-text {
-  writing-mode: horizontal-tb;
-
-  * {
-    line-height: 1;
-    text-align: left;
-  }
-}
-
 .ar-year {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -113,38 +68,14 @@ body {
   margin-bottom: 5px;
 }
 
-.archive :first-child {
-  padding-left: 0;
-}
-
-.no-margin-left {
-  margin-left: 0;
-}
-
-.no-margin-right {
-  margin-right: 0;
-}
-
-.no-margin-top {
-  margin-top: 0;
-}
-
-.no-margin-bottom {
-  margin-bottom: 0;
-}
-
 a {
   text-decoration: none;
   background-color: transparent;
   color: $foregroundColor;
   transition: color 0.3s ease 0s, background-color 0.3s ease 0s;
-  -moz-transition: color 0.3s ease 0s, background-color 0.3s ease 0s;
-  -o-transition: color 0.3s ease 0s, background-color 0.3s ease 0s;
-  -webkit-transition: color 0.3s ease 0s, background-color 0.3s ease 0s;
   border-bottom: solid $foregroundColor 2px;
   padding: 0;
   cursor: pointer;
-  cursor: hand;
 
   &:hover,
   &:focus {
@@ -162,62 +93,16 @@ a {
   }
 }
 
+.site-title {
+  margin: 0;
+}
+
 .a-title {
-  text-decoration: none;
-  background-color: transparent;
-  border-bottom: solid transparent 2px;
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
-  }
-}
-
-.current {
-  border-bottom: solid $foregroundColor 3px !important;
-}
-
-.a-mute {
-  background-color: transparent;
-  color: $foregroundColor !important;
-  text-decoration: none;
-  border-bottom: none;
-
-  &:hover,
-  &:focus {
-    background-color: transparent;
+  border: none;
+  &:hover {
     color: $foregroundColor !important;
-    text-decoration: none;
-    border-bottom: none;
-  }
-}
-
-.soc {
-  margin: 0 5px 0 0;
-  font-size: 18px !important;
-
-  a {
+    background: none;
     border-bottom: solid transparent 2px;
-
-    &:hover {
-      @if lightness($foregroundColor) >50 {
-        color: darken($foregroundColor, 10%) !important;
-      } @else {
-        color: lighten($foregroundColor, 10%) !important;
-      }
-
-      background-color: transparent !important;
-      text-decoration: none;
-      border-bottom: solid rgba(0, 0, 0, 0) 2px;
-    }
-
-    &:focus {
-      @if lightness($foregroundColor) >50 {
-        color: darken($foregroundColor, 10%) !important;
-      } @else {
-        color: lighten($foregroundColor, 10%) !important;
-      }
-    }
   }
 }
 
@@ -228,32 +113,12 @@ a {
   }
 }
 
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
 footer {
   margin-top: 10px;
   padding-top: 0;
   font-size: 12px;
   font-weight: bold;
 }
-
-footer * {
-  margin: 0;
-}
-
-.post-container {
-  margin: 0 0 20px 0;
-  font-weight: normal;
-}
-
-li {
-  margin: 5px 0;
-}
-
 figure {
   overflow: scroll;
 }
@@ -312,139 +177,8 @@ h6 {
   font-size: 14px;
 }
 
-.site-title {
-  font-weight: bolder;
-  font-style: normal;
-  width: auto;
-  height: auto;
-  margin: 0 0 0 -2px;
-  text-align: left;
-  font-size: 0.5em;
-  padding: 0 0 10px 0;
-  border-left: solid $foregroundColor 2px;
-  transition: padding 0.8s ease 0s, background 0.8s ease 0s;
-
-  &:hover {
-    padding: 15px 0 35px 0;
-    color: $backgroundColor !important;
-    background: $foregroundColor !important;
-    border-left: solid $foregroundColor 2px;
-
-    * {
-      color: $backgroundColor !important;
-    }
-  }
-
-  :first-child {
-    margin-right: 10px;
-  }
-
-  * {
-    text-align: left;
-    font-weight: bolder;
-    margin-top: 0;
-    margin-left: 10px;
-    margin-right: 0;
-    font-family: $titleFontList;
-  }
-}
-
-.site-title-large {
-  font-size: 38px;
-  padding-top: $verticalPrimaryPaddingTopPatch;
-}
-
-.site-title-small {
-  font-size: 22px;
-  padding-top: $verticalSecondaryPaddingTopPatch;
-}
-
-.vertical-text {
-  writing-mode: horizontal-tb;
-}
-
-.site-title {
-  margin: 0;
-  font-weight: bolder;
-  font-style: normal;
-  width: auto;
-  height: auto;
-  font-size: 0.5em;
-  padding: 0;
-  border-left: none;
-  text-align: center;
-  transition: none;
-}
-
-.site-title * {
-  text-align: center;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-.site-title:hover {
-  color: $foregroundColor !important;
-  background: transparent !important;
-  padding: 0;
-  border: none;
-}
-
-.site-title:hover * {
-  color: $foregroundColor !important;
-  background: transparent !important;
-}
-
-.main-container {
-  text-align: left;
-  height: auto;
-  margin: 0;
-  padding: 20px 30px;
-  overflow: auto;
-}
-
-.side-container {
-  right: 0;
-  font-style: normal;
-  font-size: 1em;
-  margin: 0;
-  transform: rotate(0deg);
-  text-align: left;
-  float: right;
-  padding: 40px 30px 0 30px;
-  height: auto;
-  position: relative;
-  left: 0;
-}
-
-.site-title-links {
-  font-weight: bold;
-  font-style: normal;
-  position: unset;
-  padding-bottom: 26px;
-  margin-bottom: 26px;
-  text-align: center;
-  & > a {
-    border-bottom: solid $foregroundColor 2px;
-  }
-}
-
-.site-title-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  li {
-    display: inline;
-    margin: 0 14px;
-    font-size: 16px;
-  }
-}
-
 footer {
   padding-top: 30px;
-}
-
-a {
-  padding: 0;
 }
 
 .post-title {
@@ -467,18 +201,6 @@ a {
   -webkit-box-orient: vertical;
 }
 
-.soc {
-  display: block !important;
-}
-
-.site-nav-footer {
-  display: none !important;
-}
-
-.site-bottom-footer {
-  display: block !important;
-}
-
 .markdown {
   hr {
     height: 0.25em;
@@ -495,7 +217,7 @@ a {
     padding: 12px;
     color: #444;
     font-size: 0.9em;
-    background: #fafafa
+    background: #fafafa;
   }
   blockquote p {
     margin: 0;

@@ -1,11 +1,9 @@
 .header {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   order: 1;
-  padding: 0 10px;
-  padding-top: 48px;
-
+  padding: 16px;
+  box-shadow: 0px -1px 4px rgba(74, 74, 78, 0.16);
+  justify-content: space-between;
   .search {
     display: flex;
     flex-direction: column;
@@ -72,22 +70,24 @@
   .nav {
     display: flex;
     justify-content: flex-start;
-    justify-content: center;
-    flex: 1;
     position: sticky;
     top: 0;
+    font-weight: bold;
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      li {
+        display: inline;
+        margin: 0 14px;
+        font-size: 16px;
+      }
+    }
     .nav-item {
       display: inline-flex;
-      padding: 10px;
-      padding-bottom: 4px;
       align-items: center;
       cursor: pointer;
-      border-bottom: 2px solid transparent;
 
-      &:hover,
-      .active {
-        border-color: rgb(96, 200, 241);
-      }
       i {
         font-size: 24px;
         height: 28px;
@@ -115,8 +115,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    flex: 1;
-    margin: auto;
     .avatar {
       margin-bottom: 16px;
       border: none;

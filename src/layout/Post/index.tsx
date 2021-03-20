@@ -34,15 +34,15 @@ export default () => {
 
   return (
     <section className="post">
-      <header className="header">
+      <header className="post-header">
         <p>{post.title}</p>
         <Meta post={post} />
       </header>
-      <div className="toc-container">
-        {location.pathname.includes(POST_PATH) && currentPost?.toc && (
+      {location.pathname.includes(POST_PATH) && currentPost?.toc && (
+        <div className="toc-container">
           <Toc>{htmr(currentPost?.toc)}</Toc>
-        )}
-      </div>
+        </div>
+      )}
       <main className="markdown">{htmr(post.contents)}</main>
       <section className="footer-nav">
         <span>

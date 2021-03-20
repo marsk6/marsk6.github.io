@@ -7,13 +7,13 @@
   min-height: 100vh;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 6px;
-  padding: 0 5vw;
   margin: auto;
   background-color: #fff;
   .middle {
     order: 2;
     flex: 1;
     margin: 0 30px;
+    margin-top: 30px;
+    padding: 0 5vw;
   }
 }
