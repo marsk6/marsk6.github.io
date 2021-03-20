@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 import path from 'path';
 import jdown from 'jdown';
 import dayjs from 'dayjs';
+import fse from 'fs-extra';
 
 export function html2toc(str) {
   const $ = cheerio.load(str);
@@ -16,7 +17,11 @@ export function html2toc(str) {
   const toclist = headings.map((head) => {
     return `<li class="toc-${head.depth}" data-id="#${head.id}">${head.title}</li>`;
   });
-  return `<ul class="toc">${toclist.join('')}</ul>`;
+  const list = toclist.join('');
+  if (list) {
+    return `<ul class="toc">${list}</ul>`;
+  }
+  return '';
 }
 
 export function makePageRoutes({

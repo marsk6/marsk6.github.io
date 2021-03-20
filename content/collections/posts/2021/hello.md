@@ -5,6 +5,7 @@ date: 2021-03-06
 category: others
 ---
 
+```shell
 Commands:
   create         create a new project
   start          start the development server
@@ -12,7 +13,8 @@ Commands:
   bundle         bundle webpack assets
   export         export html from bundled assets
   help [cmd]     display help for [cmd]
-
+```
+```shell
 Examples:
 
   $ react-static -v
@@ -21,3 +23,4 @@ Examples:
   $ react-static build
   $ react-static bundle
   $ react-static export
+```
