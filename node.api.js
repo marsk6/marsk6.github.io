@@ -17,14 +17,6 @@ export default () => ({
           limit: 10000,
         },
       },
-      {
-        test: /\.(jpg|png|svg)$/,
-        loader: 'file-loader',
-        options: {
-          esModule: false,
-          name: '[path][name].[hash].[ext]',
-        },
-      },
     ];
     const postcssConfig = {
       loader: 'postcss-loader',
