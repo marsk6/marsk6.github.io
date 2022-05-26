@@ -3,7 +3,9 @@ import styled from '@emotion/styled'
 
 type SiderProps = {}
 const Sider: React.FC<SiderProps> = () => {
-  return <aside className="3fr"></aside>
+  return <aside className="rounded-lg">
+    
+  </aside>
 }
 
 export default Sider
