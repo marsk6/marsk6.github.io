@@ -1,11 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, ReactNode } from 'react'
 import styled from '@emotion/styled'
 
 type SiderProps = {}
+export const SiderContext = React.createContext({
+  setSider: (ele: ReactNode) => {},
+  sider: null,
+})
+
+export const SiderProvider: React.FC = ({ children }) => {
+  const [sider, _setSider] = useState(null)
+  const setSider = (ele) => {
+    _setSider(ele)
+  }
+  return (
+    <SiderContext.Provider value={{ setSider, sider }}>
+      {children}
+    </SiderContext.Provider>
+  )
+}
+
+export const SiderConsumer = SiderContext.Consumer
+
 const Sider: React.FC<SiderProps> = () => {
-  return <aside className="rounded-lg">
-    
-  </aside>
+  const { sider } = useContext(SiderContext)
+  return <aside>{sider}</aside>
 }
 
 export default Sider

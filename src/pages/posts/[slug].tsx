@@ -1,50 +1,52 @@
-import { useRouter } from 'next/router';
-import ErrorPage from 'next/error';
-import { getPostBySlug, getAllPosts } from '../../../script/api';
-import Head from 'next/head';
-import { CMS_NAME } from '../../../script/constants';
-import markdownToHtml from '../../../script/markdownToHtml';
-import PostType from '../../../types/post';
-import { useRemarkSync } from 'react-remark';
+import { useRouter } from 'next/router'
+import ErrorPage from 'next/error'
+import { getPostBySlug, getAllPosts } from '../../../script/api'
+import { useRemarkSync } from 'react-remark'
+import Card from '@/components/Card'
 
-const ExampleComponent = () => {};
 
 type Props = {
-  post: PostType;
-  morePosts: PostType[];
-  preview?: boolean;
-};
-
-const PostContent = ({ content }) => {
-  const reactContent = useRemarkSync(content);
-
-  return reactContent;
+  post: Post
+  morePosts: Post[]
+  preview?: boolean
 }
 
-const Post = ({ post, morePosts, preview }: Props) => {
-  const router = useRouter();
-  if (!router.isFallback && !post?.slug) {
-    return <ErrorPage statusCode={404} />;
-  }
-  return <PostContent content={post.content} />
-};
+const PostContent = ({ content }) => {
+  const reactContent = useRemarkSync(content)
 
-export default Post;
+  return reactContent
+}
+
+const Post = ({ post }: Props) => {
+  const router = useRouter()
+  if (!router.isFallback && !post?.slug) {
+    return <ErrorPage statusCode={404} />
+  }
+  return (
+    <Card>
+      <article className="markdown-body">
+        <PostContent content={post.content} />
+      </article>
+    </Card>
+  )
+}
+
+export default Post
 
 type Params = {
   params: {
-    slug: string;
-  };
-};
+    slug: string
+  }
+}
 
 export async function getStaticProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
+  const post = await getPostBySlug(params.slug, [
     'title',
     'date',
     'slug',
-    'author',
-    'content'
-  ]);
+    'content',
+    'tags'
+  ])
 
   return {
     props: {
@@ -52,11 +54,11 @@ export async function getStaticProps({ params }: Params) {
         ...post,
       },
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug']);
+  const posts = await getAllPosts(['slug'])
 
   return {
     paths: posts.map((post) => {
@@ -64,8 +66,8 @@ export async function getStaticPaths() {
         params: {
           slug: post.slug,
         },
-      };
+      }
     }),
     fallback: false,
-  };
+  }
 }

@@ -15,20 +15,6 @@ const About = ({ allPosts }: Props) => {
       <section>
         <h2>{heroPost.title}</h2>
       </section>
-      <ul>
-        {allPosts.map((post) => (
-          <li key={post.slug}>
-            <Link
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.slug   },
-              }}
-            >
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
     </>
   );
 };
@@ -36,9 +22,8 @@ const About = ({ allPosts }: Props) => {
 export default About;
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts(['title', 'date', 'slug', 'author', 'coverImage', 'excerpt']);
 
   return {
-    props: { allPosts },
+    props: { },
   };
 };

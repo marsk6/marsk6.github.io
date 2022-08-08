@@ -1,34 +1,30 @@
-import fs from 'fs'
+import fse from 'fs-extra'
 import { join } from 'path'
 import matter from 'gray-matter'
+import dayjs from 'dayjs'
+import rt from 'reading-time'
 
 const postsDirectory = join(process.cwd(), '_posts')
 
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory)
+export async function getPostSlugs() {
+  return await fse.readdir(postsDirectory)
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []) {
+export async function getPostBySlug(slug: string, fields: string[] = []) {
   const realSlug = slug.replace(/\.md$/, '')
   const fullPath = join(postsDirectory, `${realSlug}.md`)
-  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const [fileContents, fileStat] = await Promise.all([
+    fse.readFile(fullPath, 'utf8'),
+    fse.stat(fullPath),
+  ])
   const { data, content } = matter(fileContents)
-
-  type Items = {
-    [key: string]: string
-  }
-
-  const items: Items = {}
-
-  // Ensure only the minimal needed data is exposed
+  const items: Record<string, string> = {}
+  items.ctime = dayjs(fileStat.ctime).format('YYYY-MM-DD')
+  items.slug = realSlug
+  items.content = content
+  items.tags = data.tags || []
+  items.readingTime = rt(content).text
   fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = realSlug
-    }
-    if (field === 'content') {
-      items[field] = content
-    }
-
     if (typeof data[field] !== 'undefined') {
       items[field] = data[field]
     }
@@ -37,11 +33,19 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
   return items
 }
 
-export function getAllPosts(fields: string[] = []) {
-  const slugs = getPostSlugs()
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+export async function getAllPosts(fields: string[] = []) {
+  const slugs = await getPostSlugs()
+  const posts = await Promise.all(
+    slugs.map((slug) => getPostBySlug(slug, fields))
+  )
+  posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
   return posts
+}
+
+export function getAllTags(posts: Post[]) {
+  let tags: string[] = []
+  posts.forEach((post) => {
+    tags = tags.concat(post.tags)
+  })
+  return [...new Set(tags)]
 }
