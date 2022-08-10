@@ -4,7 +4,6 @@ import { getPostBySlug, getAllPosts } from '../../../script/api'
 import { useRemarkSync } from 'react-remark'
 import Card from '@/components/Card'
 
-
 type Props = {
   post: Post
   morePosts: Post[]
