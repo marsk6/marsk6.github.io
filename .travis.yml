@@ -13,7 +13,7 @@ before_script:
   - yarn
   - yarn build
 script:
-  - yarn export
+  - yarn gen
 deploy:
   provider: pages
   skip_cleanup: true

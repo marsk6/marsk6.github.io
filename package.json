@@ -5,7 +5,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc",
-    "export": "next export"
+    "export": "next export",
+    "gen": "yarn build && yarn export && touch ./out/.nojekyll"
   },
   "dependencies": {
     "@emotion/css": "^11.9.0",
