@@ -5,40 +5,19 @@ import Link from 'next/link'
 import Card from '@/components/Card'
 import { SiderContext } from '@/layout/Sider'
 import { cx } from '@emotion/css'
+import PostTags from '@/components/PostTags'
 
 type Props = {
   allPosts: Post[]
-  tags: string[]
+  tags: Record<string, number>
 }
 
-const tagColors: Record<string, string> = {
-  j: 'text-red-800',
-  w: 'text-yellow-600',
-  c: 'text-green-500',
-  h: 'text-blue-700',
-}
-
-const Index = ({ allPosts, tags }: Props) => {
+const Index = ({ allPosts }: Props) => {
   const { setSider } = useContext(SiderContext)
 
   useEffect(() => {
     setSider(() => {
-      return (
-        <Card title="#Tag">
-          {tags.map((tag) => (
-            <Link
-              key={tag}
-              href={{
-                pathname: '/tags',
-              }}
-            >
-              <div className="p-3 cursor-pointer border-b border-gray-100 text-gray-600">
-                {tag}
-              </div>
-            </Link>
-          ))}
-        </Card>
-      )
+      return <Card title="#文章分类"></Card>
     })
   }, [])
   return (
@@ -56,21 +35,7 @@ const Index = ({ allPosts, tags }: Props) => {
                 {post.title}
               </span>
             </Link>
-            <div className="flex cursor-pointer">
-              {post.tags.map((tag) => (
-                <Link
-                  href={{
-                    pathname: '/tags',
-                  }}
-                  key={tag}
-                >
-                  <span className="py-1 px-2 text-gray-700 text-sm">
-                    <span className={cx(tagColors[tag[0]])}>#</span>
-                    {tag}
-                  </span>
-                </Link>
-              ))}
-            </div>
+            <PostTags tags={post.tags} />
             <div className=" cursor-pointer">
               <span className="text-gray-700 py-1 px-2 text-sm">
                 {post.ctime}
@@ -93,11 +58,11 @@ export const getStaticProps = async () => {
     'title',
     'date',
     'slug',
-    'excerpt',
     'tags',
+    'category'
   ])
-  const tags = getAllTags(allPosts)
+  // const tags = await getAllTags(allPosts)
   return {
-    props: { allPosts, tags },
+    props: { allPosts },
   }
 }

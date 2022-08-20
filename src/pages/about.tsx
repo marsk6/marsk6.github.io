@@ -4,11 +4,9 @@ import Link from 'next/link'
 
 const About = () => {
   return (
-    <>
-      <section>
-        <h2>marsk in Github</h2>
-      </section>
-    </>
+    <section>
+      <h2>marsk in Github</h2>
+    </section>
   )
 }
 

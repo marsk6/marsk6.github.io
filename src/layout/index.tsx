@@ -8,7 +8,7 @@ import Content from './Content'
 import Sider, { SiderProvider } from './Sider'
 
 const Main = styled.main`
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 12fr 3fr;
   flex: 1;
   min-height: calc(100.1vh - var(--header-height));
 `

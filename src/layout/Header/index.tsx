@@ -16,9 +16,8 @@ const headerStyle = css`
 const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header className={cx(headerStyle, 'flex shadow items-center bg-white')}>
-      <section className="flex container mx-auto  max-w-screen-lg">
-        <Menu />
-      </section>
+      <a className="ml-auto mr-4 font-medium text-xl text-gray-800">Marsk in GitHub</a>
+      <Menu className="container mr-auto max-w-screen-lg " />
     </header>
   )
 }

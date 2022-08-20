@@ -6,8 +6,10 @@ import { css, cx } from '@emotion/css'
 
 const NavItem = styled.div``
 
-type MenuProps = {}
-const Menu: React.FC<MenuProps> = () => {
+type MenuProps = {
+  className?: string
+}
+const Menu: React.FC<MenuProps> = ({ className }) => {
   const router = useRouter()
   const menuItems = [
     {
@@ -24,7 +26,7 @@ const Menu: React.FC<MenuProps> = () => {
     },
   ]
   return (
-    <nav className="flex justify-center items-center gap-2">
+    <nav className={cx(className, 'flex items-center gap-2')}>
       {menuItems.map((item) => {
         const isActive = router.pathname === item.pathname
         return (
