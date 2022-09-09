@@ -13,8 +13,8 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
   const router = useRouter()
   const menuItems = [
     {
-      pathname: '/',
-      label: 'Home',
+      pathname: '/archive',
+      label: 'Archive',
     },
     {
       pathname: '/tags',

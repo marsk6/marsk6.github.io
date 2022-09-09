@@ -1,18 +1,20 @@
 import { useContext, useEffect } from 'react'
-import { getAllPosts, getAllTags } from '@script/api'
+import { getAllPosts, getAllTags, getTotalPage } from '@script/api'
 import Head from 'next/head'
 import Link from 'next/link'
 import Card from '@/components/Card'
 import { SiderContext } from '@/layout/Sider'
 import { cx } from '@emotion/css'
 import PostTags from '@/components/PostTags'
+import Pagination from '@/components/Pagination'
 
 type Props = {
   allPosts: Post[]
-  tags: Record<string, number>
+  totalPage: number
+  // tags: Record<string, number>
 }
 
-const Index = ({ allPosts }: Props) => {
+const Index: React.FC<Props> = ({ allPosts, totalPage, pageNum }: Props) => {
   const { setSider } = useContext(SiderContext)
 
   useEffect(() => {
@@ -47,6 +49,9 @@ const Index = ({ allPosts }: Props) => {
           </Card>
         ))}
       </div>
+      <footer>
+        <Pagination totalPage={totalPage} pageNum={pageNum} />
+      </footer>
     </section>
   )
 }
@@ -54,15 +59,13 @@ const Index = ({ allPosts }: Props) => {
 export default Index
 
 export const getStaticProps = async () => {
-  const allPosts = await getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'tags',
-    'category'
+  const pageNum = 1
+  const [allPosts, totalPage] = await Promise.all([
+    getAllPosts({ pageNum, pageSize: 15 }),
+    getTotalPage(),
   ])
-  // const tags = await getAllTags(allPosts)
+
   return {
-    props: { allPosts },
+    props: { allPosts, totalPage, pageNum },
   }
 }

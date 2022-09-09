@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { css, cx } from '@emotion/css'
 
-import Header from './Header'
+import Navbar from './Navbar'
 import Content from './Content'
 
 import Sider, { SiderProvider } from './Sider'
@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <SiderProvider>
       <section className={cx('flex flex-col')}>
-        <Header />
+        <Navbar />
         <Main className="container mx-auto grid gap-3 max-w-screen-lg p-4">
           <Content>{children}</Content>
           <Sider />

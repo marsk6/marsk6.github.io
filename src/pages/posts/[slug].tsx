@@ -1,11 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import {
-  getPostBySlug,
-  getAllPosts,
-  getRelatedTag,
-  getAllTags,
-} from '../../../script/api'
+import { getPostBySlug, getAllPosts, getRelatedTag } from '../../../script/api'
 import { useRemarkSync } from 'react-remark'
 import Card from '@/components/Card'
 import Tags from '@/components/PostTags'
@@ -25,15 +20,15 @@ const PostContent = ({ post, relatedTags }) => {
   useEffect(() => {
     setSider(() => {
       return (
-        <Card className="flex flex-col gap-1 items-start">
-          {Object.keys(relatedTags).map((tag) => {
+        <Card className="flex flex-col gap-2 items-start">
+          {relatedTags.map((tag) => {
             return (
               <div
-                className="bg-gray-200 px-2 rounded-sm border border-dotted border-gray-500"
-                key={tag}
+                className="bg-gray-100 px-2 rounded-sm border border-dotted border-gray-300"
+                key={tag.name}
               >
-                {tag}
-                <sup className="ml-1">{relatedTags[tag]}</sup>
+                {tag.name}
+                <sup className="ml-1">{tag.posts.length}</sup>
               </div>
             )
           })}
@@ -52,40 +47,52 @@ const PostContent = ({ post, relatedTags }) => {
           </div>
         </header>
         <section className="markdown-body">{reactContent}</section>
-        <footer className="flex border-y border-gray-200 py-4 my-4">
-          {post.prev && (
+        <footer className="grid grid-cols-3 border-y border-gray-200 py-4 my-4">
+          <div className="mr-auto">
+            {post.prev && post.prev.slug && (
+              <Link
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.prev.slug },
+                }}
+              >
+                <span
+                  title={post.prev.title}
+                  className="text-blue-600 border border-gray-300 rounded-2xl py-2 px-3 text-center"
+                >
+                  Previous (前一篇)
+                </span>
+              </Link>
+            )}
+          </div>
+          <div className="mx-auto">
             <Link
               href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.prev.slug },
+                pathname: '/archive',
               }}
             >
-              <span title={post.prev.title} className="rounded-full py-3 px-6">
-                Previous (前一篇)
+              <span className="text-blue-600 border  border-gray-300 rounded-2xl py-2 px-3 text-center">
+                Archive（目录）
               </span>
             </Link>
-          )}
-          <Link
-            href={{
-              pathname: '/archive',
-            }}
-          >
-            <span className="text-blue-600 border mx-auto border-gray-300 rounded-2xl py-1 px-3 text-center">
-              Archive（目录）
-            </span>
-          </Link>
-          {post.next && (
-            <Link
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.next.slug },
-              }}
-            >
-              <span title={post.next.title} className="rounded-full py-3 px-6">
-                Next（后一篇）
-              </span>
-            </Link>
-          )}
+          </div>
+          <div className="ml-auto">
+            {post.next && post.next.slug && (
+              <Link
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.next.slug },
+                }}
+              >
+                <span
+                  title={post.next.title}
+                  className="text-blue-600 border mx-auto border-gray-300 rounded-2xl py-2 px-3 text-center"
+                >
+                  Next（后一篇）
+                </span>
+              </Link>
+            )}
+          </div>
         </footer>
       </article>
     </Card>
@@ -111,18 +118,8 @@ type Params = {
 }
 
 export async function getStaticProps({ params }: Params) {
-  const post = await getPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'content',
-    'tags',
-  ])
-  const tagCount = await getAllTags([])
-  const relatedTags: TagCountType = {}
-  post.tags.forEach((tag) => {
-    relatedTags[tag] = tagCount[tag]
-  })
+  const post = await getPostBySlug(params.slug)
+  const relatedTags = await getRelatedTag(post.tags.map((tag) => tag.name))
   return {
     props: {
       post: {
@@ -134,7 +131,7 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts(['slug'])
+  const posts = await getAllPosts()
   return {
     paths: posts.map((post) => {
       return {

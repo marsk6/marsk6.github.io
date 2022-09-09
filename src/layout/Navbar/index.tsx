@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { css, cx } from '@emotion/css'
-import Menu from '@/layout/Header/Menu'
+import Menu from '@/layout/Navbar/Menu'
+import Link from 'next/link'
 
 type HeaderProps = {
   className?: string
@@ -13,13 +14,17 @@ const headerStyle = css`
   top: 0;
 `
 
-const Header: React.FC<HeaderProps> = ({ className }) => {
+const Navbar: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header className={cx(headerStyle, 'flex shadow items-center bg-white')}>
-      <a className="ml-auto mr-4 font-medium text-xl text-gray-800">Marsk in GitHub</a>
+      <Link href={{ pathname: '/' }}>
+        <span className="ml-auto mr-4 font-medium text-xl text-gray-800">
+          Marsk in GitHub
+        </span>
+      </Link>
       <Menu className="container mr-auto max-w-screen-lg " />
     </header>
   )
 }
 
-export default Header
+export default Navbar

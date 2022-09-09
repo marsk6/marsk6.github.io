@@ -3,7 +3,7 @@ import { join } from 'path'
 import matter from 'gray-matter'
 import dayjs from 'dayjs'
 import rt from 'reading-time'
-import cache from './cache'
+import { query } from '.keystone/api'
 
 const postsDirectory = join(process.cwd(), '_posts')
 /**
@@ -13,76 +13,50 @@ export async function getPostSlugs() {
   return await fse.readdir(postsDirectory)
 }
 
-export async function getPostBySlug(slug: string, fields: string[] = []) {
-  const realSlug = slug.replace(/\.md$/, '')
-  const fullPath = join(postsDirectory, `${realSlug}.md`)
-  const [fileContents, fileStat] = await Promise.all([
-    fse.readFile(fullPath, 'utf8'),
-    fse.stat(fullPath),
-  ])
-  const { data, content } = matter(fileContents)
-  const items: Record<string, string> = {}
-  items.ctime = dayjs(fileStat.ctime).format('YYYY-MM-DD')
-  items.slug = realSlug
-  items.content = content
-  items.tags = data.tags || ['default']
-  items.readingTime = rt(content).text
-  items.category = data.category || 'default'
-  items.title = data.title || 'default'
-  fields.forEach((field) => {
-    if (typeof data[field] !== 'undefined') {
-      items[field] = data[field]
-    }
+export async function getPostBySlug(slug: string) {
+  const post = await query.Post.findOne({
+    where: { slug },
+    query: 'slug title tags { name } category { name } ctime content prev next',
   })
 
-  return items
+  const item: Record<string, string> = {}
+  item.ctime = post.ctime
+  item.slug = post.slug
+  item.content = post.content
+  item.tags = post.tags
+  item.readingTime = rt(post.content).text
+  item.category = post.category = item.title = post.title
+  item.prev = post.prev
+  item.next = post.next
+  return item
 }
 
-export async function getAllPosts(fields: string[] = []) {
-  const slugs = await getPostSlugs()
-  const posts = await Promise.all(
-    slugs.map((slug) => getPostBySlug(slug, fields))
-  )
-  posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
-  const [, categories] = await Promise.all([
-    getAllTags(posts),
-    getCategories(posts),
-  ])
-  posts.forEach((post) => {
-    const sameCategoryList = categories[post.category]
-
-    sameCategoryList.some((cur, index) => {
-      if (cur.slug === post.slug) {
-        post.prev = sameCategoryList[index - 1]
-        post.next = sameCategoryList[index + 1]
-        return true
-      }
-    })
+export async function getRelatedTag(tags: string[]) {
+  const relatedTags = await query.Tag.findMany({
+    where: { name: { in: tags } },
+    query: 'name posts { slug }',
   })
+  return relatedTags
+}
 
+export async function getAllPosts(options?: {
+  pageNum: number
+  pageSize: number
+}) {
+  const posts = await query.Post.findMany({
+    orderBy: [{ ctime: 'desc' }],
+    query: 'slug title tags { name } ctime',
+  })
   return posts
 }
 // FIXME: 无法使用外层变量，https://github.com/vercel/next.js/issues/10933
 export const common = {}
 
-export async function getAllTags(posts: Post[]) {
-  let tagCount = await cache.get('tagCount')
-  if (tagCount) {
-    return tagCount
-  }
-  tagCount = {}
-  let tags: string[] = []
-  posts.forEach((post) => {
-    tags = tags.concat(post.tags)
+export async function getAllTags() {
+  const tags = await query.Tag.findMany({
+    query: 'name posts { title slug }',
   })
-  tags.forEach((tag) => {
-    if (!tagCount[tag]) {
-      tagCount[tag] = 0
-    }
-    tagCount[tag] += 1
-  })
-  await cache.set('tagCount', tagCount)
-  return tagCount
+  return tags
 }
 
 export async function getCategories(posts: Post[]) {
@@ -103,4 +77,9 @@ export async function getCategories(posts: Post[]) {
 
   await cache.set('categories', categories)
   return categories
+}
+
+export async function getTotalPage() {
+  const count = await query.Post.count()
+  return count
 }

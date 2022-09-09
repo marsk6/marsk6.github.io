@@ -13,10 +13,28 @@ generator client {
 }
 
 model Post {
-  id       String  @id @default(cuid())
-  slug     String  @unique @default("")
-  title    String  @default("")
-  tags     String  @default("[]")
-  categoty String?
-  content  String  @default("")
+  id         String    @id @default(cuid())
+  slug       String    @unique @default("")
+  title      String    @default("")
+  tags       Tag[]     @relation("Post_tags")
+  category   Category? @relation("Post_category", fields: [categoryId], references: [id])
+  categoryId String?   @map("category")
+  ctime      String?   @default("2022-09-09")
+  prev       String?   @default("{}")
+  next       String?   @default("{}")
+  content    String    @default("")
+
+  @@index([categoryId])
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @default("")
+  posts Post[] @relation("Post_tags")
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @default("")
+  posts Post[] @relation("Post_category")
 }

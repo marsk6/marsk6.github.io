@@ -9,21 +9,21 @@ const tagColors: Record<string, string> = {
 }
 
 type PostTagsProps = {
-  tags: string[]
+  tags: Array<{ name: string }>
 }
 const PostTags: React.FC<PostTagsProps> = ({ tags }) => {
   return (
     <div className="flex cursor-pointer">
-      {Object.keys(tags).map((tag) => (
+      {tags.map((tag) => (
         <Link
           href={{
             pathname: '/tags',
           }}
-          key={tag}
+          key={tag.name}
         >
           <span className="py-1 px-2 text-gray-700 text-sm">
-            <span className={cx(tagColors[tag[0]])}>#</span>
-            {tag}
+            <span className={cx(tagColors[tag.name])}>#</span>
+            {tag.name}
           </span>
         </Link>
       ))}
