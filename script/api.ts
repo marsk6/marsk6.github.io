@@ -6,6 +6,8 @@ import rt from 'reading-time'
 import { query } from '.keystone/api'
 
 const postsDirectory = join(process.cwd(), '_posts')
+export const pageSize = 2
+
 /**
  * @description 获取文章文件名
  */
@@ -43,7 +45,13 @@ export async function getAllPosts(options?: {
   pageNum: number
   pageSize: number
 }) {
+  const filter: Record<string, number> = {}
+  if (options) {
+    filter.take = options.pageSize
+    filter.skip = (options.pageNum - 1) * options.pageSize
+  }
   const posts = await query.Post.findMany({
+    ...filter,
     orderBy: [{ ctime: 'desc' }],
     query: 'slug title tags { name } ctime',
   })
@@ -80,6 +88,6 @@ export async function getCategories(posts: Post[]) {
 }
 
 export async function getTotalPage() {
-  const count = await query.Post.count()
-  return count
+  const totalPage = await query.Post.count()
+  return Math.ceil(totalPage / pageSize)
 }

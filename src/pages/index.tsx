@@ -1,7 +1,8 @@
 import { useContext, useEffect } from 'react'
-import { getAllPosts, getAllTags, getTotalPage } from '@script/api'
+import { getAllPosts, getAllTags, getTotalPage, pageSize } from '@script/api'
 import Head from 'next/head'
 import Link from 'next/link'
+import { Router, useRouter } from 'next/router'
 import Card from '@/components/Card'
 import { SiderContext } from '@/layout/Sider'
 import { cx } from '@emotion/css'
@@ -14,9 +15,9 @@ type Props = {
   // tags: Record<string, number>
 }
 
-const Index: React.FC<Props> = ({ allPosts, totalPage, pageNum }: Props) => {
+const Index: React.FC<Props> = ({ allPosts, totalPage }: Props) => {
   const { setSider } = useContext(SiderContext)
-
+  const router = useRouter()
   useEffect(() => {
     setSider(() => {
       return <Card title="#文章分类"></Card>
@@ -50,7 +51,7 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, pageNum }: Props) => {
         ))}
       </div>
       <footer>
-        <Pagination totalPage={totalPage} pageNum={pageNum} />
+        <Pagination totalPage={totalPage} pageNum={+router.query.page} />
       </footer>
     </section>
   )
@@ -61,11 +62,11 @@ export default Index
 export const getStaticProps = async () => {
   const pageNum = 1
   const [allPosts, totalPage] = await Promise.all([
-    getAllPosts({ pageNum, pageSize: 15 }),
+    getAllPosts({ pageNum, pageSize }),
     getTotalPage(),
   ])
 
   return {
-    props: { allPosts, totalPage, pageNum },
+    props: { allPosts, totalPage },
   }
 }
