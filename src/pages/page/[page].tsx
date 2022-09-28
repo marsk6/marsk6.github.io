@@ -1,4 +1,4 @@
-import { getAllPosts, getTotalPage, pageSize } from '@script/api'
+import { getAllPosts, getCategories, getTotalPage, pageSize } from '@script/api'
 import React, { useState } from 'react'
 import Index from '@/pages'
 
@@ -14,13 +14,14 @@ export default PerPage
 
 export const getStaticProps = async ({ params }) => {
   const { page } = params
-  const [allPosts, totalPage] = await Promise.all([
+  const [allPosts, totalPage, categories] = await Promise.all([
     getAllPosts({ pageNum: page, pageSize }),
     getTotalPage(),
+    getCategories(),
   ])
 
   return {
-    props: { allPosts, totalPage },
+    props: { allPosts, totalPage, categories },
   }
 }
 export async function getStaticPaths() {

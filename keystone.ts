@@ -16,23 +16,6 @@ const Post: Lists.Post = list({
   fields: {
     slug: text({ isIndexed: 'unique' }),
     title: text({ validation: { isRequired: true } }),
-    // tags: multiselect({
-    //   isFilterable: true,
-    //   options: [
-    //     {
-    //       label: '23',
-    //       value: '32',
-    //     },
-    //     {
-    //       label: '2322',
-    //       value: '3222',
-    //     },
-    //     {
-    //       label: '2311',
-    //       value: '3211',
-    //     },
-    //   ],
-    // }),
     tags: relationship({
       // NOTE: 此时 grapql，tags 不是标量
       ref: 'Tag.posts',

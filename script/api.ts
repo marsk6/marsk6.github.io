@@ -67,23 +67,15 @@ export async function getAllTags() {
   return tags
 }
 
-export async function getCategories(posts: Post[]) {
-  let categories = await cache.get('categories')
-  if (categories) {
-    return categories
-  }
-  categories = {}
-  posts.forEach((post) => {
-    if (!categories[post.category]) {
-      categories[post.category] = []
-    }
-    categories[post.category].push({
-      title: post.title,
-      slug: post.slug,
-    })
+export async function getCategories() {
+  const _categories = await query.Category.findMany({
+    query: 'name posts { title slug } postsCount',
   })
-
-  await cache.set('categories', categories)
+  const categories = _categories.map(({ name, posts }) => ({
+    name,
+    posts,
+    count: posts.length,
+  }))
   return categories
 }
 
