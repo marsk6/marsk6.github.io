@@ -7,6 +7,7 @@ import {
   json,
   virtual,
   relationship,
+  integer,
 } from '@keystone-6/core/fields'
 import { document } from '@keystone-6/fields-document'
 import dayjs from 'dayjs'
@@ -27,8 +28,16 @@ const Post: Lists.Post = list({
       many: false,
       ui: { displayMode: 'select' },
     }),
-    ctime: calendarDay({
-      defaultValue: dayjs().format('YYYY-MM-DD'),
+    ctime: text({
+      defaultValue: '',
+      ui: {
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        createView: {
+          fieldMode: 'hidden',
+        },
+      },
     }),
     prev: json({
       defaultValue: {},
@@ -64,18 +73,7 @@ const Post: Lists.Post = list({
   hooks: {
     resolveInput: async ({ operation, resolvedData, context }) => {
       if (operation === 'create') {
-        const { category, ctime } = resolvedData
-        const list = await context.query.Post.findMany({
-          where: {
-            category: { id: { equals: category.connect.id } },
-            ctime: { lte: ctime },
-          },
-          orderBy: { ctime: 'desc' },
-          query: 'slug title',
-        })
-        if (list.length > 1) {
-          resolvedData.prev = JSON.stringify(list[list.length - 1])
-        }
+        resolvedData.ctime = dayjs().format('YYYY-MM-DD hh:mm:ss')
       }
       return resolvedData
     },
@@ -87,11 +85,12 @@ const Post: Lists.Post = list({
             category: { id: { equals: categoryId } },
             ctime: { lte: ctime },
           },
-          orderBy: { ctime: 'desc' },
+          orderBy: { ctime: 'asc' },
           query: 'slug title',
         })
         if (list.length > 1) {
           const prev = list[list.length - 2]
+
           await context.query.Post.updateMany({
             data: [
               {

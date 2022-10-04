@@ -13,14 +13,11 @@ type Post {
   ): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   category: Category
-  ctime: CalendarDay
+  ctime: String
   prev: JSON
   next: JSON
   content: String
 }
-
-scalar CalendarDay
-  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input PostWhereUniqueInput {
   id: ID
@@ -36,7 +33,7 @@ input PostWhereInput {
   title: StringFilter
   tags: TagManyRelationFilter
   category: CategoryWhereInput
-  ctime: CalendarDayNullableFilter
+  ctime: StringFilter
   content: StringFilter
 }
 
@@ -85,17 +82,6 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
-input CalendarDayNullableFilter {
-  equals: CalendarDay
-  in: [CalendarDay!]
-  notIn: [CalendarDay!]
-  lt: CalendarDay
-  lte: CalendarDay
-  gt: CalendarDay
-  gte: CalendarDay
-  not: CalendarDayNullableFilter
-}
-
 input PostOrderByInput {
   id: OrderDirection
   slug: OrderDirection
@@ -114,7 +100,7 @@ input PostUpdateInput {
   title: String
   tags: TagRelateToManyForUpdateInput
   category: CategoryRelateToOneForUpdateInput
-  ctime: CalendarDay
+  ctime: String
   prev: JSON
   next: JSON
   content: String
@@ -143,7 +129,7 @@ input PostCreateInput {
   title: String
   tags: TagRelateToManyForCreateInput
   category: CategoryRelateToOneForCreateInput
-  ctime: CalendarDay
+  ctime: String
   prev: JSON
   next: JSON
   content: String

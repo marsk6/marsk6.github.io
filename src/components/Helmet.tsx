@@ -7,7 +7,7 @@ type HelmetProps = {
 const Helmet: React.FC<HelmetProps> = ({ title, children }) => {
   return (
     <Head>
-      <title>{title ? `${title} | ` : ''}Marsk In Github</title>
+      <title>{title ? `${title} | Marsk In Github` : 'Marsk In Github'}</title>
       {children}
     </Head>
   )

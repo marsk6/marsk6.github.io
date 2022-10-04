@@ -36,7 +36,7 @@ const PostContent = ({ post, relatedTags }) => {
   }, [])
   return (
     <>
-      <Helmet title={post.title} />
+      <Helmet title={post.title}></Helmet>
       <Card>
         <article>
           <header className="mb-4">
@@ -48,7 +48,7 @@ const PostContent = ({ post, relatedTags }) => {
           </header>
           <section className="markdown-body">{reactContent}</section>
           <footer className="grid grid-cols-3 border-y border-gray-200 py-4 my-4">
-            <div className="mr-auto">
+            <div className="mr-auto cursor-pointer">
               {post.prev && post.prev.slug && (
                 <Link
                   href={{
@@ -65,7 +65,7 @@ const PostContent = ({ post, relatedTags }) => {
                 </Link>
               )}
             </div>
-            <div className="mx-auto">
+            <div className="mx-auto cursor-pointer">
               <Link
                 href={{
                   pathname: '/archive',
@@ -76,7 +76,7 @@ const PostContent = ({ post, relatedTags }) => {
                 </span>
               </Link>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto cursor-pointer">
               {post.next && post.next.slug && (
                 <Link
                   href={{
