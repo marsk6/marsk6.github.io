@@ -30,14 +30,6 @@ const Post: Lists.Post = list({
     }),
     ctime: text({
       defaultValue: '',
-      ui: {
-        itemView: {
-          fieldMode: 'hidden',
-        },
-        createView: {
-          fieldMode: 'hidden',
-        },
-      },
     }),
     prev: json({
       defaultValue: {},
@@ -72,14 +64,15 @@ const Post: Lists.Post = list({
   },
   hooks: {
     resolveInput: async ({ operation, resolvedData, context }) => {
-      if (operation === 'create') {
-        resolvedData.ctime = dayjs().format('YYYY-MM-DD hh:mm:ss')
+      if (operation === 'create' && resolvedData.ctime === '') {
+        resolvedData.ctime = dayjs().format('YYYY-MM-DD HH:mm:ss')
       }
       return resolvedData
     },
     afterOperation: async ({ operation, item, context }) => {
       if (operation === 'create') {
         const { categoryId, ctime } = item
+        if (!categoryId) return;
         const list = await context.query.Post.findMany({
           where: {
             category: { id: { equals: categoryId } },
@@ -127,14 +120,22 @@ const Post: Lists.Post = list({
 const Tag = list({
   fields: {
     name: text(),
-    posts: relationship({ ref: 'Post.tags', many: true, ui: { hideCreate: true } }),
+    posts: relationship({
+      ref: 'Post.tags',
+      many: true,
+      ui: { hideCreate: true },
+    }),
   },
 })
 
 const Category = list({
   fields: {
     name: text(),
-    posts: relationship({ ref: 'Post.category', many: true, ui: { hideCreate: true } }),
+    posts: relationship({
+      ref: 'Post.category',
+      many: true,
+      ui: { hideCreate: true },
+    }),
   },
 })
 
