@@ -4,7 +4,7 @@ node_js:
   - 14
 branches:
   only:
-    - master
+    - with-keystone
 cache:
   directories:
     - node_modules
@@ -20,6 +20,6 @@ deploy:
   token: $GH_TOKEN
   keep_history: true
   on:
-    branch: master
+    branch: with-keystone
   local_dir: out
   target_branch: gh-pages

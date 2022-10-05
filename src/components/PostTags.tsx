@@ -21,10 +21,10 @@ const PostTags: React.FC<PostTagsProps> = ({ tags }) => {
           }}
           key={tag.name}
         >
-          <span className="py-1 px-2 text-gray-700 text-sm">
+          <div className="px-2 py-0.5 text-emerald-800 text-xs rounded-2xl bg-lime-400">
             <span className={cx(tagColors[tag.name])}>#</span>
             {tag.name}
-          </span>
+          </div>
         </Link>
       ))}
     </div>
