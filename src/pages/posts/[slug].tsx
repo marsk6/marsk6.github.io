@@ -10,6 +10,7 @@ import Link from 'next/link'
 import Tag from '@/components/Tag'
 import Helmet from '@/components/Helmet'
 import remarkGfm from 'remark-gfm'
+import rehypeExternalLinks from 'rehype-external-links'
 
 type Props = {
   post: Post
@@ -18,7 +19,10 @@ type Props = {
 }
 
 const PostContent = ({ post, relatedTags }) => {
-  const reactContent = useRemarkSync(post.content, { remarkPlugins: [remarkGfm] })
+  const reactContent = useRemarkSync(post.content, {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
+  })
   const { setSider } = useContext(SiderContext)
   useEffect(() => {
     setSider(() => {
@@ -47,7 +51,9 @@ const PostContent = ({ post, relatedTags }) => {
               <Tags tags={post.tags} />
             </div>
           </header>
-          <section className="markdown-body prose prose-slate prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500">{reactContent}</section>
+          <section className="markdown-body prose prose-slate prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500">
+            {reactContent}
+          </section>
           <footer className="grid grid-cols-3 border-y border-gray-200 py-4 my-4">
             <div className="mr-auto cursor-pointer">
               {post.prev && post.prev.slug && (
