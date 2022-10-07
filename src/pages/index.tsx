@@ -32,9 +32,11 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
           <div className="flex flex-col gap-2 items-start p-4">
             {categories.map((category) => {
               return (
-                <Tag key={category.name} sup={category.count}>
-                  {category.name}
-                </Tag>
+                <Tag
+                  key={category.name}
+                  sup={category.count}
+                  name={category.name}
+                ></Tag>
               )
             })}
           </div>
@@ -48,7 +50,7 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
       <section>
         <div className="flex flex-col gap-2">
           {allPosts.map((post) => (
-            <Card key={post.slug} className="bg-white">
+            <Card key={post.slug} className="bg-white flex flex-col gap-1">
               <Link
                 href={{
                   pathname: '/posts/[slug]',
@@ -62,7 +64,7 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
               <PostTags tags={post.tags} />
               <div className=" cursor-pointer">
                 <span className="text-gray-700 py-1 px-2 text-sm">
-                  {post.ctime}
+                  {post.date}
                 </span>
                 <span className="text-gray-700 py-1 px-2 text-sm">
                   {post.readingTime}

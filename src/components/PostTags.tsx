@@ -16,9 +16,7 @@ const PostTags: React.FC<PostTagsProps> = ({ tags }) => {
     <div className="flex cursor-pointer">
       {tags.map((tag) => (
         <Link
-          href={{
-            pathname: '/tags',
-          }}
+          href={`/tags#${tag.name}`}
           key={tag.name}
         >
           <div className="px-2 py-0.5 text-emerald-800 text-xs rounded-2xl bg-lime-400">

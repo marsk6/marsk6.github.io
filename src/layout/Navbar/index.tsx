@@ -18,7 +18,7 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header className={cx(headerStyle, 'flex shadow items-center bg-white')}>
       <Link href={{ pathname: '/' }}>
-        <span className="ml-auto mr-4 font-medium text-xl text-gray-800">
+        <span className="ml-auto mr-4 font-medium text-xl text-gray-800 cursor-pointer">
           Marsk in GitHub
         </span>
       </Link>

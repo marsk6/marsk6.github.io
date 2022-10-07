@@ -18,7 +18,8 @@ export async function getPostSlugs() {
 export async function getPostBySlug(slug: string) {
   const post = await query.Post.findOne({
     where: { slug },
-    query: 'slug title tags { name } category { name } ctime content prev next',
+    query:
+      'slug title tags { name } category { name } ctime date content prev next',
   })
 
   const item: Record<string, string> = {}
@@ -30,6 +31,7 @@ export async function getPostBySlug(slug: string) {
   item.category = post.category = item.title = post.title
   item.prev = post.prev
   item.next = post.next
+  item.date = post.date
   return item
 }
 
@@ -53,7 +55,7 @@ export async function getAllPosts(options?: {
   const posts = await query.Post.findMany({
     ...filter,
     orderBy: [{ ctime: 'desc' }],
-    query: 'slug title tags { name } ctime',
+    query: 'slug title tags { name } ctime date',
   })
   return posts
 }

@@ -15,7 +15,12 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
       </section>
       {tags.map((tag) => (
         <section key={tag.name}>
-          <header>{tag.name}</header>
+          <header
+            className="text-2xl px-4 mb-4 py-1 border-l-blue-500 border-l-4 border-b border-b-gray-200"
+            id={tag.name}
+          >
+            {tag.name}
+          </header>
           <ul className="list-disc list-inside">
             {tag.posts.map((post) => (
               <li key={post.slug} className="cursor-pointer text-gray-600">
@@ -25,7 +30,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
                     query: { slug: post.slug },
                   }}
                 >
-                 <span className="text-blue-600">{post.title}</span>
+                  <span className="text-blue-600">{post.title}</span>
                 </Link>
               </li>
             ))}

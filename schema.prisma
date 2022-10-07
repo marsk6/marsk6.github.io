@@ -20,6 +20,7 @@ model Post {
   category   Category? @relation("Post_category", fields: [categoryId], references: [id])
   categoryId String?   @map("category")
   ctime      String    @default("")
+  date       String    @default("")
   prev       String?   @default("{}")
   next       String?   @default("{}")
   content    String    @default("")

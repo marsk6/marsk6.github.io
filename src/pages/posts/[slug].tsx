@@ -30,9 +30,7 @@ const PostContent = ({ post, relatedTags }) => {
         <Card className="flex flex-col gap-2 items-start">
           {relatedTags.map((tag) => {
             return (
-              <Tag key={tag.name} sup={tag.posts.length}>
-                {tag.name}
-              </Tag>
+              <Tag key={tag.name} sup={tag.posts.length} name={tag.name}></Tag>
             )
           })}
         </Card>
@@ -47,7 +45,7 @@ const PostContent = ({ post, relatedTags }) => {
           <header className="mb-4">
             <p className="text-center font-medium text-4xl">{post.title}</p>
             <div className="mt-2 flex justify-center text-xs items-center gap-1">
-              <span>{post.ctime}</span>
+              <span>{post.date}</span>
               <Tags tags={post.tags} />
             </div>
           </header>

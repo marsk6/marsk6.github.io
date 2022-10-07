@@ -31,6 +31,7 @@ const Post: Lists.Post = list({
     ctime: text({
       defaultValue: '',
     }),
+    date: text({ defaultValue: '' }),
     prev: json({
       defaultValue: {},
       ui: {
@@ -66,6 +67,7 @@ const Post: Lists.Post = list({
     resolveInput: async ({ operation, resolvedData, context }) => {
       if (operation === 'create' && resolvedData.ctime === '') {
         resolvedData.ctime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        resolvedData.date = dayjs().format('YYYY-MM-DD')
       }
       return resolvedData
     },
