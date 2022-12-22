@@ -20,5 +20,6 @@ const nextConfig = {
     ]
   },
 }
+module.exports = nextConfig
 
-module.exports = withKeystone(nextConfig)
+// module.exports = withKeystone(nextConfig)

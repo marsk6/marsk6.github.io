@@ -7,12 +7,6 @@ type TagsProps = {}
 const Tags: React.FC<TagsProps> = ({ tags }) => {
   return (
     <Card>
-      <section>
-        <header></header>
-        <ul>
-          <li></li>
-        </ul>
-      </section>
       {tags.map((tag) => (
         <section key={tag.name}>
           <header
@@ -21,7 +15,7 @@ const Tags: React.FC<TagsProps> = ({ tags }) => {
           >
             {tag.name}
           </header>
-          <ul className="list-disc list-inside">
+          <ul className="list-disc list-inside mb-4">
             {tag.posts.map((post) => (
               <li key={post.slug} className="cursor-pointer text-gray-600">
                 <Link

@@ -25,12 +25,6 @@ const Archive: React.FC<ArchiveProps> = ({ posts }) => {
   })
   return (
     <Card>
-      <section>
-        <header></header>
-        <ul>
-          <li></li>
-        </ul>
-      </section>
       {Object.keys(map).map((year) => (
         <section key={year}>
           <header
@@ -39,7 +33,7 @@ const Archive: React.FC<ArchiveProps> = ({ posts }) => {
           >
             {year}
           </header>
-          <ul>
+          <ul className="mb-4">
             {Object.keys(map[year]).map((month) => (
               <li key={month}>
                 <p className="text-xl mb-4">{month}</p>

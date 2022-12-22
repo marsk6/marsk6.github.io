@@ -1,12 +1,13 @@
 import { getAllPosts } from '../../script/api'
 import Head from 'next/head'
 import Link from 'next/link'
+import Card from '@/components/Card'
 
 const About = () => {
   return (
-    <section>
+    <Card>
       <h2>marsk in Github</h2>
-    </section>
+    </Card>
   )
 }
 

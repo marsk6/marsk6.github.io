@@ -6,6 +6,7 @@ import Navbar from './Navbar'
 import Content from './Content'
 
 import Sider, { SiderProvider } from './Sider'
+import Footer from './Footer'
 
 const Main = styled.main`
   grid-template-columns: 12fr 3fr;
@@ -23,6 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Content>{children}</Content>
           <Sider />
         </Main>
+        <Footer />
       </section>
     </SiderProvider>
   )
