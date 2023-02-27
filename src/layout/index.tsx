@@ -18,7 +18,12 @@ type LayoutProps = {}
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <SiderProvider>
-      <section className={cx('flex flex-col')}>
+      <section
+        className={cx(
+          'flex flex-col prose prose-slate max-w-full bg-white',
+          'dark:bg-slate-900 dark:prose-invert'
+        )}
+      >
         <Navbar />
         <Main className="container mx-auto grid gap-3 max-w-screen-lg p-4">
           <Content>{children}</Content>

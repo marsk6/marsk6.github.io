@@ -13,7 +13,7 @@
     "gen": "yarn build && yarn export && touch ./out/.nojekyll"
   },
   "dependencies": {
-    "@emotion/css": "^11.9.0",
+    "@emotion/css": "^11.10.6",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@keystone-6/core": "^2.2.0",
@@ -33,7 +33,7 @@
     "remark-html": "15.0.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.8",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.6.0",

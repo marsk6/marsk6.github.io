@@ -23,6 +23,7 @@ model Post {
   date       String    @default("")
   prev       String?   @default("{}")
   next       String?   @default("{}")
+  brief      String    @default("")
   content    String    @default("")
 
   @@index([categoryId])

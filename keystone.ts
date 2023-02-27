@@ -54,6 +54,11 @@ const Post: Lists.Post = list({
         },
       },
     }),
+    brief: text({
+      ui: {
+        displayMode: 'textarea',
+      },
+    }),
     content: text({
       // hooks: {
       //   afterOperation
@@ -74,7 +79,7 @@ const Post: Lists.Post = list({
     afterOperation: async ({ operation, item, context }) => {
       if (operation === 'create') {
         const { categoryId, ctime } = item
-        if (!categoryId) return;
+        if (!categoryId) return
         const list = await context.query.Post.findMany({
           where: {
             category: { id: { equals: categoryId } },

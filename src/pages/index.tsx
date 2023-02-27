@@ -12,9 +12,10 @@ import Card from '@/components/Card'
 import { SiderContext } from '@/layout/Sider'
 import { cx } from '@emotion/css'
 import PostTags from '@/components/PostTags'
-import Pagination from '@/components/Pagination'
-import Tag from '@/components/Tag'
+import Pagination from '@/components/ui/Pagination'
+import Tag from '@/components/ui/Tag'
 import Helmet from '@/components/Helmet'
+import TimeLine from '@/components/ui/Timeline'
 
 type Props = {
   allPosts: Post[]
@@ -36,7 +37,7 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
                   key={category.name}
                   sup={category.count}
                   name={category.name}
-                ></Tag>
+                />
               )
             })}
           </div>
@@ -44,35 +45,34 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
       )
     })
   }, [])
+  const items = allPosts.map((post, index) => ({
+    label: post.date,
+    content: (
+      <Link
+        href={{
+          pathname: '/posts/[slug]',
+          query: { slug: post.slug },
+        }}
+      >
+        <article key={post.slug} className="bg-white flex flex-col gap-1">
+          <header className="text-xl font-bold cursor-pointer hover:text-blue-700">
+            {post.title}
+          </header>
+          <p>{post.breif}</p>
+        </article>
+      </Link>
+    ),
+  }))
   return (
     <>
       <Helmet />
       <section>
-        <div className="flex flex-col gap-2">
-          {allPosts.map((post) => (
-            <Card key={post.slug} className="bg-white flex flex-col gap-1">
-              <Link
-                href={{
-                  pathname: '/posts/[slug]',
-                  query: { slug: post.slug },
-                }}
-              >
-                <span className="text-2xl font-bold cursor-pointer hover:text-blue-700">
-                  {post.title}
-                </span>
-              </Link>
-              <PostTags tags={post.tags} />
-              <div className=" cursor-pointer">
-                <span className="text-gray-700 py-1 px-2 text-sm">
-                  {post.date}
-                </span>
-                <span className="text-gray-700 py-1 px-2 text-sm">
-                  {post.readingTime}
-                </span>
-              </div>
-            </Card>
-          ))}
-        </div>
+        <p className="text-center text-3xl text-slate-900 font-extrabold dark:text-slate-200">
+          Latest Updates
+        </p>
+        <main className="flex flex-col gap-2">
+          <TimeLine items={items} />
+        </main>
         <footer className="mt-4">
           <Pagination totalPage={totalPage} pageNum={router.query.page} />
         </footer>

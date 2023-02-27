@@ -55,7 +55,7 @@ export async function getAllPosts(options?: {
   const posts = await query.Post.findMany({
     ...filter,
     orderBy: [{ ctime: 'desc' }],
-    query: 'slug title tags { name } ctime date',
+    query: 'slug title tags { name } ctime date brief',
   })
   return posts
 }
