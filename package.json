@@ -10,18 +10,18 @@
     "start": "next start",
     "typecheck": "tsc",
     "export": "next export",
-    "gen": "yarn build && yarn export && touch ./out/.nojekyll"
+    "gen": "yarn read && yarn build && yarn export && touch ./out/.nojekyll",
+    "read": "ts-node --transpileOnly ./script/auto-read.ts"
   },
   "dependencies": {
     "@emotion/css": "^11.9.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@keystone-6/core": "^2.2.0",
-    "@keystone-6/fields-document": "^4.1.0",
+    "@keystone-6/core": "^5.0.0",
     "date-fns": "2.21.3",
     "dayjs": "^1.11.2",
     "github-markdown-css": "^5.1.0",
-    "gray-matter": "4.0.3",
+    "gray-matter": "^4.0.3",
     "markdown-toc": "^1.2.0",
     "next": "12.2.4",
     "react": "^18.2.0",
@@ -36,7 +36,7 @@
     "@tailwindcss/typography": "^0.5.8",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.6.0",
+    "@types/node": "^18.14.2",
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
     "autoprefixer": "^10.4.7",
@@ -46,6 +46,7 @@
     "postcss": "^8.4.13",
     "reading-time": "^1.5.0",
     "tailwindcss": "^3.0.24",
+    "ts-node": "^10.9.1",
     "typescript": "^4.2.4"
   },
   "resolutions": {
