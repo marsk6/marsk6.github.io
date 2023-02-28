@@ -1,4 +1,5 @@
 import { config, graphql, list } from '@keystone-6/core'
+import { allowAll } from '@keystone-6/core/access'
 import {
   text,
   multiselect,
@@ -9,7 +10,6 @@ import {
   relationship,
   integer,
 } from '@keystone-6/core/fields'
-import { document } from '@keystone-6/fields-document'
 import dayjs from 'dayjs'
 import { Lists } from '.keystone/types'
 
@@ -122,6 +122,7 @@ const Post: Lists.Post = list({
       }
     },
   },
+  access: allowAll,
 })
 
 const Tag = list({
@@ -133,6 +134,7 @@ const Tag = list({
       ui: { hideCreate: true },
     }),
   },
+  access: allowAll,
 })
 
 const Category = list({
@@ -144,6 +146,7 @@ const Category = list({
       ui: { hideCreate: true },
     }),
   },
+  access: allowAll,
 })
 
 export default config({

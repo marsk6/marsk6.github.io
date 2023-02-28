@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import styled from '@emotion/styled'
-import { css, cx } from '@emotion/css'
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { css, cx } from '@emotion/css';
 
-import Navbar from './Navbar'
-import Content from './Content'
+import Navbar from './Navbar';
+import Content from './Content';
 
-import Sider, { SiderProvider } from './Sider'
-import Footer from './Footer'
+import Sider, { SiderProvider } from './Sider';
+import Footer from './Footer';
 
 const Main = styled.main`
   grid-template-columns: 12fr 3fr;
   flex: 1;
   min-height: calc(100.1vh - var(--header-height));
-`
+`;
 
-type LayoutProps = {}
+type LayoutProps = {};
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <SiderProvider>
@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Footer />
       </section>
     </SiderProvider>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
