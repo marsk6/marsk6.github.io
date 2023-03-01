@@ -1,9 +1,11 @@
-import fse from 'fs-extra'
+import fs from 'node:fs/promises'
 import { join } from 'path'
 import matter from 'gray-matter'
 import dayjs from 'dayjs'
 import rt from 'reading-time'
-import { query } from '.keystone/api'
+import { keystoneContext as context } from './context'
+
+const query = context.query
 
 const postsDirectory = join(process.cwd(), '_posts')
 export const pageSize = 2
@@ -12,7 +14,7 @@ export const pageSize = 2
  * @description 获取文章文件名
  */
 export async function getPostSlugs() {
-  return await fse.readdir(postsDirectory)
+  return await fs.readdir(postsDirectory)
 }
 
 export async function getPostBySlug(slug: string) {

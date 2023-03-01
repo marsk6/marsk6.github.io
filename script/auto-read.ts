@@ -1,8 +1,6 @@
-import { getContext } from '@keystone-6/core/context'
+import { keystoneContext as context } from './context'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import config from '../keystone'
-import * as PrismaModule from '.prisma/client'
 import matter from 'gray-matter'
 import dayjs from 'dayjs'
 
@@ -39,7 +37,6 @@ async function walk(dir: string) {
 }
 async function main() {
   const files = await walk('/Users/kuncheng/Desktop/a/marsk-next-blog/_posts')
-  const context = getContext(config, PrismaModule)
   await Promise.all(
     files.map(async (file) => {
       const { tags, category } = file

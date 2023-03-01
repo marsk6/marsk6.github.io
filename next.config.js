@@ -1,4 +1,3 @@
-const { withKeystone } = require('@keystone-6/core/next')
 /**
  * @type {import('next').NextConfig}
  */
@@ -21,5 +20,3 @@ const nextConfig = {
   },
 }
 module.exports = nextConfig
-
-// module.exports = withKeystone(nextConfig)

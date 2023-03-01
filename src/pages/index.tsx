@@ -54,7 +54,7 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
           query: { slug: post.slug },
         }}
       >
-        <article key={post.slug} className="bg-white flex flex-col gap-1">
+        <article key={post.slug} className="flex flex-col gap-1">
           <header className="text-xl font-bold cursor-pointer hover:text-blue-700">
             {post.title}
           </header>
