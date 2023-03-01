@@ -11,16 +11,17 @@ import { Router, useRouter } from 'next/router'
 import Card from '@/components/Card'
 import { SiderContext } from '@/layout/Sider'
 import { cx } from '@emotion/css'
-import PostTags from '@/components/PostTags'
+import PostTags from '@/components/PostTag'
 import Pagination from '@/components/ui/Pagination'
 import Tag from '@/components/ui/Tag'
 import Helmet from '@/components/Helmet'
 import TimeLine from '@/components/ui/Timeline'
+import { IconClock, IconTag } from '@tabler/icons-react'
+import PostTag from '@/components/PostTag'
 
 type Props = {
   allPosts: Post[]
   totalPage: number
-  // tags: Record<string, number>
 }
 
 const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
@@ -46,7 +47,18 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
     })
   }, [])
   const items = allPosts.map((post, index) => ({
-    label: post.date,
+    label: (
+      <div className="flex flex-col px-3 pt-0.5 pb-12 gap-1">
+        <p>{post.date}</p>
+        {post.tags.map((tag) => (
+          <PostTag key={tag.name} tag={tag.name} />
+        ))}
+        <div className="flex gap-0.5 items-center text-xs">
+          <IconClock size={12} />
+          {post.readingTime}
+        </div>
+      </div>
+    ),
     content: (
       <Link
         href={{
@@ -55,10 +67,10 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
         }}
       >
         <article key={post.slug} className="flex flex-col gap-1">
-          <header className="text-xl font-bold cursor-pointer hover:text-blue-700">
+          <header className="text-xl font-bold cursor-pointer text-slate-900 dark:text-slate-200">
             {post.title}
           </header>
-          <p>{post.breif}</p>
+          <p>{post.brief}</p>
         </article>
       </Link>
     ),
@@ -67,7 +79,7 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
     <>
       <Helmet />
       <section>
-        <p className="text-center text-3xl text-slate-900 font-extrabold dark:text-slate-200">
+        <p className="my-4 text-center text-3xl font-extrabold text-slate-900 dark:text-slate-200">
           Latest Updates
         </p>
         <main className="flex flex-col gap-2">

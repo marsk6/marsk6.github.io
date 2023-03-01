@@ -3,7 +3,7 @@ import ErrorPage from 'next/error'
 import { getPostBySlug, getAllPosts, getRelatedTag } from '../../../script/api'
 import { useRemarkSync } from 'react-remark'
 import Card from '@/components/Card'
-import Tags from '@/components/PostTags'
+import Tags from '@/components/PostTag'
 import { useContext, useEffect } from 'react'
 import { SiderContext } from '@/layout/Sider'
 import Link from 'next/link'
@@ -12,6 +12,8 @@ import Helmet from '@/components/Helmet'
 import remarkGfm from 'remark-gfm'
 import rehypeExternalLinks from 'rehype-external-links'
 import toc from 'markdown-toc'
+import PostTag from '@/components/PostTag'
+import { IconCalendar, IconClock } from '@tabler/icons-react'
 
 type Props = {
   post: Post
@@ -19,7 +21,7 @@ type Props = {
   preview?: boolean
 }
 
-const PostContent = ({ post, relatedTags }) => {
+const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
   const reactContent = useRemarkSync(post.content, {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
@@ -53,13 +55,22 @@ const PostContent = ({ post, relatedTags }) => {
     <>
       <Helmet title={post.title}></Helmet>
       <Card>
-        <article>
+        <article className="prose prose-slate dark:bg-slate-900 dark:prose-invert">
           <header className="mb-4">
             <p className="text-center font-medium text-4xl">{post.title}</p>
             <div className="border-y border-gray-200 my-4"></div>
             <div className="mt-2 flex justify-center text-xs items-center gap-4">
-              <span>{post.date}</span>
-              <span>{post.readingTime}</span>
+              <div className="flex gap-0.5 items-center">
+                <IconCalendar size={12} />
+                {post.date}
+              </div>
+              <div className="flex gap-0.5 items-center">
+                <IconClock size={12} />
+                {post.readingTime}
+              </div>
+              {post.tags.map((tag) => (
+                <PostTag key={tag.name} tag={tag.name} />
+              ))}
             </div>
           </header>
           <section className="markdown-body prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500">

@@ -10,6 +10,7 @@ type Post {
   category: Category
   ctime: String
   date: String
+  readingTime: String
   prev: JSON
   next: JSON
   brief: String
@@ -32,6 +33,7 @@ input PostWhereInput {
   category: CategoryWhereInput
   ctime: StringFilter
   date: StringFilter
+  readingTime: StringFilter
   brief: StringFilter
   content: StringFilter
 }
@@ -87,6 +89,7 @@ input PostOrderByInput {
   title: OrderDirection
   ctime: OrderDirection
   date: OrderDirection
+  readingTime: OrderDirection
   brief: OrderDirection
   content: OrderDirection
 }
@@ -103,6 +106,7 @@ input PostUpdateInput {
   category: CategoryRelateToOneForUpdateInput
   ctime: String
   date: String
+  readingTime: String
   prev: JSON
   next: JSON
   brief: String
@@ -134,6 +138,7 @@ input PostCreateInput {
   category: CategoryRelateToOneForCreateInput
   ctime: String
   date: String
+  readingTime: String
   prev: JSON
   next: JSON
   brief: String

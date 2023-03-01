@@ -23,8 +23,9 @@ export const SiderConsumer = SiderContext.Consumer
 
 const Sider: React.FC<SiderProps> = () => {
   const { sider } = useContext(SiderContext)
-  return null;
-  return <aside>{sider}</aside>
+  // return null;
+  return <aside>
+    {sider}</aside>
 }
 
 export default Sider

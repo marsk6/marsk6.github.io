@@ -12,6 +12,7 @@ import {
 } from '@keystone-6/core/fields'
 import dayjs from 'dayjs'
 import { Lists } from '.keystone/types'
+import rt from 'reading-time'
 
 const Post: Lists.Post = list({
   fields: {
@@ -32,6 +33,16 @@ const Post: Lists.Post = list({
       defaultValue: '',
     }),
     date: text({ defaultValue: '' }),
+    readingTime: text({
+      ui: {
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        createView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
     prev: json({
       defaultValue: {},
       ui: {
@@ -74,6 +85,7 @@ const Post: Lists.Post = list({
         resolvedData.ctime = dayjs().format('YYYY-MM-DD HH:mm:ss')
         resolvedData.date = dayjs().format('YYYY-MM-DD')
       }
+      resolvedData.readingTime = rt(resolvedData.content || '').text
       return resolvedData
     },
     afterOperation: async ({ operation, item, context }) => {

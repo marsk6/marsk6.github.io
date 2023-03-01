@@ -13,21 +13,22 @@ async function walk(dir: string) {
       if (stats.isDirectory()) {
         return walk(filePath)
       } else if (stats.isFile()) {
+        if (path.extname(filePath) !== '.md') {
+          return false
+        }
         const rawContent = await fs.readFile(filePath, { encoding: 'utf8' })
         await fs.rename(
           filePath,
-          path.join(
-            '/Users/kuncheng/Desktop/a/marsk-next-blog/_posts_archive',
-            name
-          )
+          path.resolve(__dirname, '../_posts_archive', name)
         )
         const data = matter(rawContent)
         return {
           ...data.data,
           slug: name.split('.')[0],
           content: data.content,
-          ctime: dayjs(stats.ctime).format('YYYY-MM-DD hh:mm:ss'),
-          date: dayjs(stats.ctime).format('YYYY-MM-DD'),
+          ctime: '',
+          // ctime: dayjs(stats.ctime).format('YYYY-MM-DD hh:mm:ss'),
+          // date: dayjs(stats.ctime).format('YYYY-MM-DD'),
         }
       }
     })
@@ -36,7 +37,8 @@ async function walk(dir: string) {
   return files.flat()
 }
 async function main() {
-  const files = await walk('/Users/kuncheng/Desktop/a/marsk-next-blog/_posts')
+  let files = await walk(path.resolve(__dirname, '../_posts'))
+  files = files.filter(Boolean)
   await Promise.all(
     files.map(async (file) => {
       const { tags, category } = file

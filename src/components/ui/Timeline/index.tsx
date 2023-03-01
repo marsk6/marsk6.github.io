@@ -30,7 +30,7 @@ const TimelineItem: React.FC<{ item: Item; isFirst?: boolean }> = ({
       className={cx(
         'grid',
         css`
-          grid-template-columns: 140px 108px auto;
+          grid-template-columns: 140px 36px auto;
         `
       )}
     >

@@ -21,20 +21,9 @@ export async function getPostBySlug(slug: string) {
   const post = await query.Post.findOne({
     where: { slug },
     query:
-      'slug title tags { name } category { name } ctime date content prev next',
+      'slug title tags { name } category { name } ctime date content prev next readingTime',
   })
-
-  const item: Record<string, string> = {}
-  item.ctime = post.ctime
-  item.slug = post.slug
-  item.content = post.content
-  item.tags = post.tags
-  item.readingTime = rt(post.content).text
-  item.category = post.category = item.title = post.title
-  item.prev = post.prev
-  item.next = post.next
-  item.date = post.date
-  return item
+  return post
 }
 
 export async function getRelatedTag(tags: string[]) {
@@ -57,7 +46,7 @@ export async function getAllPosts(options?: {
   const posts = await query.Post.findMany({
     ...filter,
     orderBy: [{ ctime: 'desc' }],
-    query: 'slug title tags { name } ctime date brief',
+    query: 'slug title tags { name } ctime date brief readingTime',
   })
   return posts
 }
