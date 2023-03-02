@@ -27,8 +27,6 @@ async function walk(dir: string) {
           slug: name.split('.')[0],
           content: data.content,
           ctime: '',
-          // ctime: dayjs(stats.ctime).format('YYYY-MM-DD hh:mm:ss'),
-          // date: dayjs(stats.ctime).format('YYYY-MM-DD'),
         }
       }
     })
@@ -49,7 +47,7 @@ async function main() {
           where: { name: { equals: tags[i] } },
           query: 'id',
         })
-        if (existId.length) {
+        if (existId.length === 1) {
           if (!file.tags.connect) {
             file.tags.connect = []
           }

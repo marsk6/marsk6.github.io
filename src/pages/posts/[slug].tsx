@@ -55,7 +55,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
     <>
       <Helmet title={post.title}></Helmet>
       <Card>
-        <article className="prose prose-slate dark:bg-slate-900 dark:prose-invert">
+        <article className=" dark:bg-slate-900 dark:prose-invert">
           <header className="mb-4">
             <p className="text-center font-medium text-4xl">{post.title}</p>
             <div className="border-y border-gray-200 my-4"></div>
@@ -73,7 +73,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
               ))}
             </div>
           </header>
-          <section className="markdown-body prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500">
+          <section className="prose prose-slate markdown-body prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500">
             {reactContent}
           </section>
           <footer className="grid grid-cols-3 border-y border-gray-200 py-4 my-4">

@@ -82,7 +82,7 @@ const Post: Lists.Post = list({
   hooks: {
     resolveInput: async ({ operation, resolvedData, context }) => {
       if (operation === 'create' && resolvedData.ctime === '') {
-        resolvedData.ctime = dayjs().format('YYYY-MM-DD HH:mm')
+        resolvedData.ctime = Date.now().toString()
         resolvedData.date = dayjs().format('MMMM DD, YYYY')
       }
       resolvedData.readingTime = rt(resolvedData.content || '').text
@@ -162,7 +162,10 @@ const Category = list({
 })
 
 export default config({
-  db: { provider: 'sqlite', url: 'file:./app.db' },
+  db: {
+    provider: 'sqlite',
+    url: process.env.NODE_ENV === 'production' ? 'file:./app.db' : 'file:./app-dev.db',
+  },
   experimental: {
     generateNextGraphqlAPI: true,
     generateNodeAPI: true,

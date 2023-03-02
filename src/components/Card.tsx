@@ -11,7 +11,7 @@ const Card: React.FC<CardProps> = ({ title, children, className }) => {
   return (
     <section
       className={cx(
-        'rounded-lg border border-gray-900 border-opacity-10 bg-white dark:bg-slate-800',
+        'rounded-lg shadow-md border border-gray-900 border-opacity-10 bg-white dark:bg-slate-800',
         {
           'p-4': !haveTitle,
         },

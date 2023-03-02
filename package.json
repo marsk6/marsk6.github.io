@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "postinstall": "keystone postinstall",
-    "keystone:dev": "keystone dev",
+    "keystone:dev": "ENV=dev keystone dev",
     "keystone:build": "keystone build",
     "keystone:start": "keystone start",
     "next:dev": "next dev -p 4000",

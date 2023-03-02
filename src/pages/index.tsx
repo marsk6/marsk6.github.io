@@ -4,6 +4,7 @@ import {
   getAllTags,
   getTags,
   getTotalPage,
+  getYears,
   pageSize,
 } from '@script/api'
 import Link from 'next/link'
@@ -21,11 +22,11 @@ import PostTag from '@/components/PostTag'
 
 export type PageProps = {
   allPosts: Post[]
-  totalPage: number
+  years: number[]
   tags: Array<{ name: string; postsCount: number }>
 }
 
-const Home: React.FC<PageProps> = ({ allPosts, totalPage, tags }) => {
+const Home: React.FC<PageProps> = ({ allPosts, years, tags }) => {
   const { setSider } = useContext(SiderContext)
   const router = useRouter()
   useEffect(() => {
@@ -73,17 +74,17 @@ const Home: React.FC<PageProps> = ({ allPosts, totalPage, tags }) => {
   return (
     <>
       <Helmet />
-      <section>
-        <p className="my-4 text-center text-3xl font-extrabold text-slate-900 dark:text-slate-200">
-          Latest Updates
+      <Card>
+        <p className="my-4 text-center font-extrabold text-slate-900 dark:text-slate-200">
+          {years}
         </p>
         <main className="flex flex-col gap-2">
           <TimeLine items={items} />
         </main>
-        <footer className="mt-4">
+        {/* <footer className="mt-4">
           <Pagination totalPage={totalPage} pageNum={router.query.page} />
-        </footer>
-      </section>
+        </footer> */}
+      </Card>
     </>
   )
 }
@@ -92,13 +93,13 @@ export default Home
 
 export const getStaticProps = async ({ params = {} }) => {
   const { page = 1 } = params
-  const [allPosts, totalPage, tags] = await Promise.all([
+  const [allPosts, tags, years] = await Promise.all([
     getAllPosts({ pageNum: page, pageSize }),
-    getTotalPage(),
     getTags(),
+    getYears()
   ])
 
   return {
-    props: { allPosts, totalPage, tags },
+    props: { allPosts, tags, years },
   }
 }

@@ -20,8 +20,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <SiderProvider>
       <section
         className={cx(
-          'flex flex-col max-w-full bg-white text-slate-500',
-          'dark:text-slate-400 dark:bg-slate-900'
+          'flex flex-col max-w-full',
+          'bg-white dark:bg-slate-900',
+          'text-slate-700 dark:text-slate-400'
         )}
       >
         <Navbar />

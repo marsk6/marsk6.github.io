@@ -33,7 +33,7 @@ export async function getRelatedTag(tags: string[]) {
   })
   return relatedTags
 }
-
+// TODO: latest ,years
 export async function getAllPosts(options?: {
   pageNum: number
   pageSize: number
@@ -79,7 +79,15 @@ export async function getCategories() {
   return categories
 }
 
-export async function getTotalPage() {
-  const totalPage = await query.Post.count()
-  return Math.ceil(totalPage / pageSize)
+export async function getYears() {
+  const ctimeArray = await query.Post.findMany({
+    query: 'ctime',
+  })
+  let years: number[] = []
+  ctimeArray.map(({ ctime }) => {
+    years.push(new Date(+ctime).getFullYear())
+  })
+  years = [...new Set(years)]
+  years.sort((a, b) => a - b)
+  return years
 }

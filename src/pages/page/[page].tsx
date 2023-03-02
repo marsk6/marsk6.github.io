@@ -1,4 +1,4 @@
-import { getTotalPage } from '@script/api'
+import { getYears } from '@script/api'
 import React from 'react'
 import Page, { PageProps, getStaticProps as pageGetStaticProps } from '@/pages'
 
@@ -11,13 +11,12 @@ export default PerPage
 export const getStaticProps = pageGetStaticProps
 
 export async function getStaticPaths() {
-  const totalPage = await getTotalPage()
-  const list = new Array(totalPage).fill('')
+  const years = await getYears()
   return {
-    paths: list.map((page, index) => {
+    paths: years.map((year) => {
       return {
         params: {
-          page: `${index + 1}`,
+          page: `${year}`,
         },
       }
     }),
