@@ -7,11 +7,11 @@ type TagProps = {
 }
 const Tag: React.FC<TagProps> = ({ sup, name }) => {
   return (
-    <Link href={`/tags#${name}`}>
-      <div className="bg-gray-100 px-2 rounded-sm border border-gray-300 border-dashed">
+    <Link href={`/tags#${name}`} passHref>
+      <a className="text-xs rounded-full bg-gray-50 py-1.5 px-3 font-medium text-gray-600 hover:bg-gray-100">
         {name}
         <sup className="ml-1">{sup}</sup>
-      </div>
+      </a>
     </Link>
   )
 }

@@ -82,8 +82,8 @@ const Post: Lists.Post = list({
   hooks: {
     resolveInput: async ({ operation, resolvedData, context }) => {
       if (operation === 'create' && resolvedData.ctime === '') {
-        resolvedData.ctime = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        resolvedData.date = dayjs().format('YYYY-MM-DD')
+        resolvedData.ctime = dayjs().format('YYYY-MM-DD HH:mm')
+        resolvedData.date = dayjs().format('MMMM DD, YYYY')
       }
       resolvedData.readingTime = rt(resolvedData.content || '').text
       return resolvedData

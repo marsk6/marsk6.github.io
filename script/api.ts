@@ -60,6 +60,13 @@ export async function getAllTags() {
   return tags
 }
 
+export async function getTags() {
+  const _tags = await query.Tag.findMany({
+    query: 'name postsCount',
+  })
+  return Array.from(_tags).sort((a, b) => a.postCount - b.postCount)
+}
+
 export async function getCategories() {
   const _categories = await query.Category.findMany({
     query: 'name posts { title slug } postsCount',

@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import {
   getAllPosts,
   getAllTags,
-  getCategories,
+  getTags,
   getTotalPage,
   pageSize,
 } from '@script/api'
@@ -19,27 +19,22 @@ import TimeLine from '@/components/ui/Timeline'
 import { IconClock, IconTag } from '@tabler/icons-react'
 import PostTag from '@/components/PostTag'
 
-type Props = {
+export type PageProps = {
   allPosts: Post[]
   totalPage: number
+  tags: Array<{ name: string; postsCount: number }>
 }
 
-const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
+const Home: React.FC<PageProps> = ({ allPosts, totalPage, tags }) => {
   const { setSider } = useContext(SiderContext)
   const router = useRouter()
   useEffect(() => {
     setSider(() => {
       return (
-        <Card title="#文章分类">
-          <div className="flex flex-col gap-2 items-start p-4">
-            {categories.map((category) => {
-              return (
-                <Tag
-                  key={category.name}
-                  sup={category.count}
-                  name={category.name}
-                />
-              )
+        <Card title="#Tags">
+          <div className="flex gap-2 items-start p-4 flex-wrap">
+            {tags.map((tag) => {
+              return <Tag key={tag.name} sup={tag.postsCount} name={tag.name} />
             })}
           </div>
         </Card>
@@ -93,17 +88,17 @@ const Index: React.FC<Props> = ({ allPosts, totalPage, categories }: Props) => {
   )
 }
 
-export default Index
+export default Home
 
-export const getStaticProps = async () => {
-  const pageNum = 1
-  const [allPosts, totalPage, categories] = await Promise.all([
-    getAllPosts({ pageNum, pageSize }),
+export const getStaticProps = async ({ params = {} }) => {
+  const { page = 1 } = params
+  const [allPosts, totalPage, tags] = await Promise.all([
+    getAllPosts({ pageNum: page, pageSize }),
     getTotalPage(),
-    getCategories(),
+    getTags(),
   ])
 
   return {
-    props: { allPosts, totalPage, categories },
+    props: { allPosts, totalPage, tags },
   }
 }

@@ -12,18 +12,18 @@ type MenuProps = {
 const Menu: React.FC<MenuProps> = ({ className }) => {
   const router = useRouter()
   const menuItems = [
-    {
-      pathname: '/archive',
-      label: 'Archive',
-    },
+    // {
+    //   pathname: '/archive',
+    //   label: 'Archive',
+    // },
     {
       pathname: '/tags',
       label: 'Tags',
     },
-    {
-      pathname: '/about',
-      label: 'About',
-    },
+    // {
+    //   pathname: '/about',
+    //   label: 'About',
+    // },
   ]
   return (
     <nav className={cx(className, 'flex items-center gap-2')}>

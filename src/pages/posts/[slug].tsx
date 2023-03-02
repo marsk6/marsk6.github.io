@@ -89,7 +89,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                     title={post.prev.title}
                     className="text-blue-600 border border-gray-300 rounded-2xl py-2 px-3 text-center"
                   >
-                    Previous (前一篇)
+                    Previous
                   </span>
                 </Link>
               )}
@@ -101,7 +101,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                 }}
               >
                 <span className="text-blue-600 border  border-gray-300 rounded-2xl py-2 px-3 text-center">
-                  Archive（目录）
+                  Archive
                 </span>
               </Link>
             </div>
@@ -117,7 +117,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                     title={post.next.title}
                     className="text-blue-600 border mx-auto border-gray-300 rounded-2xl py-2 px-3 text-center"
                   >
-                    Next（后一篇）
+                    Next
                   </span>
                 </Link>
               )}
