@@ -5,6 +5,8 @@ import dayjs from 'dayjs'
 import rt from 'reading-time'
 import { keystoneContext as context } from './context'
 
+// TODO: 区分 blog 和 lab
+
 const query = context.query
 
 const postsDirectory = join(process.cwd(), '_posts')

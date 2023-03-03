@@ -76,9 +76,9 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
           <section className="prose prose-slate markdown-body prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500 prose-code:">
             {reactContent}
           </section>
-          <footer className="grid grid-cols-3 border-y border-gray-200 py-4 my-4">
-            <div className="mr-auto cursor-pointer">
-              {post.prev && post.prev.slug && (
+          <footer className="flex border-y border-gray-200 py-4 my-4">
+            {post.prev && post.prev.slug && (
+              <div className="mr-auto cursor-pointer">
                 <Link
                   href={{
                     pathname: '/posts/[slug]',
@@ -89,24 +89,14 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                     title={post.prev.title}
                     className="text-blue-600 border border-gray-300 rounded-2xl py-2 px-3 text-center"
                   >
-                    Previous
+                    {post.prev.title} 👈
                   </span>
                 </Link>
-              )}
-            </div>
-            <div className="mx-auto cursor-pointer">
-              <Link
-                href={{
-                  pathname: '/archive',
-                }}
-              >
-                <span className="text-blue-600 border  border-gray-300 rounded-2xl py-2 px-3 text-center">
-                  Archive
-                </span>
-              </Link>
-            </div>
-            <div className="ml-auto cursor-pointer">
-              {post.next && post.next.slug && (
+              </div>
+            )}
+
+            {post.next && post.next.slug && (
+              <div className="ml-auto cursor-pointer">
                 <Link
                   href={{
                     pathname: '/posts/[slug]',
@@ -117,11 +107,11 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                     title={post.next.title}
                     className="text-blue-600 border mx-auto border-gray-300 rounded-2xl py-2 px-3 text-center"
                   >
-                    Next
+                    👉 {post.next.title}
                   </span>
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
           </footer>
         </article>
       </Card>

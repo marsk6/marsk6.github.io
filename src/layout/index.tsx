@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         className={cx(
           'flex flex-col max-w-full',
           'bg-white dark:bg-slate-900',
-          'text-slate-700 dark:text-slate-400'
+          'text-slate-700 dark:text-slate-50'
         )}
       >
         <Navbar />
