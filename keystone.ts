@@ -9,6 +9,7 @@ import {
   virtual,
   relationship,
   integer,
+  float,
 } from '@keystone-6/core/fields'
 import dayjs from 'dayjs'
 import { Lists } from '.keystone/types'
@@ -29,8 +30,8 @@ const Post: Lists.Post = list({
       many: false,
       ui: { displayMode: 'select' },
     }),
-    ctime: text({
-      defaultValue: '',
+    ctime: float({
+      defaultValue: 0,
     }),
     date: text({ defaultValue: '' }),
     readingTime: text({
@@ -81,8 +82,8 @@ const Post: Lists.Post = list({
   },
   hooks: {
     resolveInput: async ({ operation, resolvedData, context }) => {
-      if (operation === 'create' && resolvedData.ctime === '') {
-        resolvedData.ctime = Date.now().toString()
+      if (operation === 'create' && resolvedData.ctime === 0) {
+        resolvedData.ctime = Date.now()
         resolvedData.date = dayjs().format('MMMM DD, YYYY')
       }
       resolvedData.readingTime = rt(resolvedData.content || '').text

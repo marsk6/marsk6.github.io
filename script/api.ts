@@ -33,15 +33,20 @@ export async function getRelatedTag(tags: string[]) {
   })
   return relatedTags
 }
-// TODO: latest ,years
-export async function getAllPosts(options?: {
-  pageNum: number
-  pageSize: number
-}) {
-  const filter: Record<string, number> = {}
+type Mutable<T> = {
+  -readonly [K in keyof T]: T[K]
+}
+export async function getAllPosts(options: { range: string }) {
+  const filter: Mutable<Parameters<typeof query.Post.findMany>[0]> = {}
+
   if (options) {
-    filter.take = options.pageSize
-    filter.skip = (options.pageNum - 1) * options.pageSize
+    if (options.range === 'latest') {
+      filter.take = 20
+    } else {
+      const gte = new Date(`${options.range}-01-01 00:00:00`).getTime()
+      const lte = new Date(`${options.range}-12-31 23:59:59`).getTime()
+      filter.where = { ctime: { gte, lte } }
+    }
   }
   const posts = await query.Post.findMany({
     ...filter,

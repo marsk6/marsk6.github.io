@@ -8,7 +8,7 @@ type Post {
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   category: Category
-  ctime: String
+  ctime: Float
   date: String
   readingTime: String
   prev: JSON
@@ -31,7 +31,7 @@ input PostWhereInput {
   title: StringFilter
   tags: TagManyRelationFilter
   category: CategoryWhereInput
-  ctime: StringFilter
+  ctime: FloatNullableFilter
   date: StringFilter
   readingTime: StringFilter
   brief: StringFilter
@@ -83,6 +83,17 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
+input FloatNullableFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: FloatNullableFilter
+}
+
 input PostOrderByInput {
   id: OrderDirection
   slug: OrderDirection
@@ -104,7 +115,7 @@ input PostUpdateInput {
   title: String
   tags: TagRelateToManyForUpdateInput
   category: CategoryRelateToOneForUpdateInput
-  ctime: String
+  ctime: Float
   date: String
   readingTime: String
   prev: JSON
@@ -136,7 +147,7 @@ input PostCreateInput {
   title: String
   tags: TagRelateToManyForCreateInput
   category: CategoryRelateToOneForCreateInput
-  ctime: String
+  ctime: Float
   date: String
   readingTime: String
   prev: JSON

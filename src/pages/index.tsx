@@ -75,15 +75,43 @@ const Home: React.FC<PageProps> = ({ allPosts, years, tags }) => {
     <>
       <Helmet />
       <Card>
-        <p className="my-4 text-center font-extrabold text-slate-900 dark:text-slate-200">
-          {years}
-        </p>
-        <main className="flex flex-col gap-2">
-          <TimeLine items={items} />
-        </main>
-        {/* <footer className="mt-4">
-          <Pagination totalPage={totalPage} pageNum={router.query.page} />
-        </footer> */}
+        <section className="flex gap-2">
+          <Link
+            href={{
+              pathname: '/',
+            }}
+            passHref
+          >
+            <a
+              className={cx(
+                'rounded-full px-2 py-1 border border-slate-700 dark:border-slate-200',
+                !router.query.page && 'font-medium'
+              )}
+            >
+              Latest
+            </a>
+          </Link>
+          {years.map((year) => (
+            <Link
+              key={year}
+              href={{
+                pathname: '/page/[page]',
+                query: { page: year },
+              }}
+              passHref
+            >
+              <a
+                className={cx(
+                  'rounded-full px-2 py-1 border border-slate-700 dark:border-slate-200',
+                  router.query.page === `${year}` && 'font-medium'
+                )}
+              >
+                {year}
+              </a>
+            </Link>
+          ))}
+        </section>
+        <TimeLine items={items} />
       </Card>
     </>
   )
@@ -92,11 +120,11 @@ const Home: React.FC<PageProps> = ({ allPosts, years, tags }) => {
 export default Home
 
 export const getStaticProps = async ({ params = {} }) => {
-  const { page = 1 } = params
+  const { year = 'latest' } = params
   const [allPosts, tags, years] = await Promise.all([
-    getAllPosts({ pageNum: page, pageSize }),
+    getAllPosts({ range: year }),
     getTags(),
-    getYears()
+    getYears(),
   ])
 
   return {

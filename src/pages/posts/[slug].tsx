@@ -73,7 +73,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
               ))}
             </div>
           </header>
-          <section className="prose prose-slate markdown-body prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500">
+          <section className="prose prose-slate markdown-body prose-a:text-blue-600 max-w-none hover:prose-a:text-blue-500 prose-code:">
             {reactContent}
           </section>
           <footer className="grid grid-cols-3 border-y border-gray-200 py-4 my-4">

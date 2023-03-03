@@ -17,16 +17,14 @@ async function walk(dir: string) {
           return false
         }
         const rawContent = await fs.readFile(filePath, { encoding: 'utf8' })
-        await fs.rename(
-          filePath,
-          path.resolve(__dirname, '../_posts_archive', name)
-        )
+        const destination = path.resolve(__dirname, '../_posts_archive', name)
+        filePaths.push([filePath, destination])
         const data = matter(rawContent)
         return {
           ...data.data,
           slug: name.split('.')[0],
           content: data.content,
-          ctime: '',
+          ctime: 0,
         }
       }
     })
@@ -34,7 +32,11 @@ async function walk(dir: string) {
 
   return files.flat()
 }
+
+let filePaths: Array<[string, string]> = []
+
 async function main() {
+  filePaths = []
   let files = await walk(path.resolve(__dirname, '../_posts'))
   files = files.filter(Boolean)
   await Promise.all(
@@ -74,7 +76,12 @@ async function main() {
       }
     })
   )
-  context.query.Post.createMany({ data: files })
+  await context.query.Post.createMany({ data: files })
+  await Promise.all(
+    filePaths.map(([origin, destination]) => {
+      return fs.rename(origin, destination)
+    })
+  )
 }
 
 main()

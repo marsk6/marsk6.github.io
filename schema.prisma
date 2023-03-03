@@ -18,7 +18,7 @@ model Post {
   tags        Tag[]     @relation("Post_tags")
   category    Category? @relation("Post_category", fields: [categoryId], references: [id])
   categoryId  String?   @map("category")
-  ctime       String    @default("")
+  ctime       Float?    @default(0)
   date        String    @default("")
   readingTime String    @default("")
   prev        String?   @default("{}")
