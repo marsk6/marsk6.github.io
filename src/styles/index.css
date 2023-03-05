@@ -9,3 +9,8 @@
   margin: 0 0.2em 0.25em -1.6em;
   vertical-align: middle;
 }
+
+
+.dark .github-bg-black {
+  background-color: var(--color-canvas-default, #0d1117);
+}

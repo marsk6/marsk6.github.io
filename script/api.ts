@@ -38,7 +38,7 @@ export async function getRelatedTag(tags: string[]) {
 type Mutable<T> = {
   -readonly [K in keyof T]: T[K]
 }
-export async function getAllPosts(options: { range: string }) {
+export async function getAllPosts(options?: { range: string }) {
   const filter: Mutable<Parameters<typeof query.Post.findMany>[0]> = {}
 
   if (options) {

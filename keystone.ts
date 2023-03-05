@@ -84,7 +84,7 @@ const Post: Lists.Post = list({
     resolveInput: async ({ operation, resolvedData, context }) => {
       if (operation === 'create' && resolvedData.ctime === 0) {
         resolvedData.ctime = Date.now()
-        resolvedData.date = dayjs().format('MMMM DD, YYYY')
+        resolvedData.date = dayjs().format('MMM DD')
       }
       resolvedData.readingTime = rt(resolvedData.content || '').text
       return resolvedData

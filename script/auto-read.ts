@@ -2,7 +2,6 @@ import { keystoneContext as context } from './context'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import matter from 'gray-matter'
-import dayjs from 'dayjs'
 
 async function walk(dir: string) {
   let filesInfo = await fs.readdir(dir)
@@ -39,40 +38,64 @@ async function main() {
   filePaths = []
   let files = await walk(path.resolve(__dirname, '../_posts'))
   files = files.filter(Boolean)
+  console.log(`${files.length} files are precessing...`)
+  let tags: string[] = []
+  files.forEach((file) => {
+    file.tags && file.tags.length && tags.push(...file.tags)
+  })
+  tags = [...new Set(tags)]
+  const tagMap: Record<string, string> = {}
+  for (let i = 0; i < tags.length; ++i) {
+    const existId = await context.query.Tag.findMany({
+      where: { name: { equals: tags[i] } },
+      query: 'id',
+    })
+    if (existId.length === 1) {
+      tagMap[tags[i]] = existId[0].id
+    } else {
+      const { id } = await context.query.Tag.createOne({
+        data: { name: tags[i] },
+        query: 'id',
+      })
+      tagMap[tags[i]] = id
+    }
+  }
+  let categories: string[] = []
+  files.forEach((file) => {
+    file.category && categories.push(file.category)
+  })
+  categories = [...new Set(categories)]
+  const categoryMap: Record<string, string> = {}
+  for (let i = 0; i < categories.length; ++i) {
+    const existId = await context.query.Category.findMany({
+      where: { name: { equals: categories[i] } },
+      query: 'id',
+    })
+    if (existId.length === 1) {
+      categoryMap[categories[i]] = existId[0].id
+    } else {
+      const { id } = await context.query.Category.createOne({
+        data: { name: categories[i] },
+        query: 'id',
+      })
+
+      categoryMap[categories[i]] = id
+    }
+  }
   await Promise.all(
     files.map(async (file) => {
       const { tags, category } = file
       file.tags = {}
-      file.category = {}
-      for (let i = 0; i < tags.length; ++i) {
-        const existId = await context.query.Tag.findMany({
-          where: { name: { equals: tags[i] } },
-          query: 'id',
-        })
-        if (existId.length === 1) {
-          if (!file.tags.connect) {
-            file.tags.connect = []
-          }
-          file.tags.connect.push({
-            id: existId[0].id,
-          })
-        } else {
-          if (!file.tags.create) {
-            file.tags.create = []
-          }
-          file.tags.create.push({
-            name: tags[i],
-          })
+      tags.forEach((tag) => {
+        if (!file.tags.connect) {
+          file.tags.connect = []
         }
-      }
-      const existCategory = await context.query.Category.findMany({
-        where: { name: { equals: category } },
-        query: 'id',
+        file.tags.connect.push({
+          id: tagMap[tag],
+        })
       })
-      if (existCategory.length) {
-        file.category.connect = { id: existCategory[0].id }
-      } else {
-        file.category.create = { name: category }
+      if (category) {
+        file.category = { connect: { id: categoryMap[category] } }
       }
     })
   )
@@ -82,6 +105,7 @@ async function main() {
       return fs.rename(origin, destination)
     })
   )
+  console.log(`All Done!`)
 }
 
 main()

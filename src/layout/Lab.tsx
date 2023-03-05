@@ -1,26 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { cx } from '@emotion/css'
-import { useRouter } from 'next/router'
+import { css, cx } from '@emotion/css'
+
 import Navbar from './Navbar'
 import Content from './Content'
 
-import { SiderProvider } from './Sider'
+import Sider, { SiderProvider } from './Sider'
 import Footer from './Footer'
 
-import LabLayout from './Lab'
-
 const Main = styled.main`
+  grid-template-columns: 12fr 3fr;
   flex: 1;
   min-height: calc(100.1vh - var(--header-height));
 `
 
 type LayoutProps = {}
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const router = useRouter()
-  if (router.pathname === '/lab') {
-    return <LabLayout>{children}</LabLayout>
-  }
   return (
     <SiderProvider>
       <section
@@ -31,8 +26,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
       >
         <Navbar />
-        <Main className="container mx-auto max-w-3xl p-4">
+        <Main className="container mx-auto grid gap-3 max-w-screen-lg p-4">
           <Content>{children}</Content>
+          <Sider />
         </Main>
         <Footer />
       </section>

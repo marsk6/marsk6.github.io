@@ -17,13 +17,9 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
     //   label: 'Archive',
     // },
     {
-      pathname: '/tags',
-      label: 'Tags',
+      pathname: '/lab',
+      label: 'Lab',
     },
-    // {
-    //   pathname: '/about',
-    //   label: 'About',
-    // },
   ]
   return (
     <nav className={cx(className, 'flex items-center gap-2')}>

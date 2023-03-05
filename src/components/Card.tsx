@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { cx } from '@emotion/css';
+import { cx, css } from '@emotion/css';
 import type { ReactNode } from 'react';
 
 type CardProps = Partial<{
@@ -11,7 +11,8 @@ const Card: React.FC<CardProps> = ({ title, children, className }) => {
   return (
     <section
       className={cx(
-        'rounded-lg shadow-md border border-gray-900 border-opacity-10 bg-white dark:bg-slate-800',
+        'rounded-lg shadow-md border border-gray-900 border-opacity-10 bg-white',
+        'github-bg-black',
         {
           'p-4': !haveTitle,
         },

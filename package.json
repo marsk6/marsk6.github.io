@@ -10,8 +10,9 @@
     "start": "next start",
     "typecheck": "tsc",
     "export": "next export",
-    "gen": "yarn read && yarn build && yarn export && touch ./out/.nojekyll",
-    "read": "ts-node --transpileOnly ./script/auto-read.ts"
+    "gen": "yarn read:prod && yarn build && yarn export && touch ./out/.nojekyll",
+    "read": "ts-node --transpileOnly ./script/auto-read.ts",
+    "read:prod": "NODE_ENV=production yarn read"
   },
   "dependencies": {
     "@emotion/css": "^11.10.6",
@@ -34,13 +35,13 @@
     "remark-html": "15.0.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.8",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^26.0.23",
     "@types/node": "^18.14.2",
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
     "autoprefixer": "^10.4.7",
+    "chalk": "^5.2.0",
     "eslint": "^8.14.0",
     "eslint-config-next": "^12.1.6",
     "fs-extra": "^10.1.0",
