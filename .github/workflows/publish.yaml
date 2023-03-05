@@ -12,8 +12,8 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         uses: actions/setup-node@v3
-          with:
-            cache: 'npm'
+        with:
+          cache: 'npm'
       - name: build
         run:  |
           yarn
