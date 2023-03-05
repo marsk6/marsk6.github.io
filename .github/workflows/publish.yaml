@@ -14,7 +14,7 @@ jobs:
       - name: Cache
         uses: actions/setup-node@v3
         with:
-          cache: 'npm'
+          cache: 'yarn'
       - name: build
         run:  |
           yarn
