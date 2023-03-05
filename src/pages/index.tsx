@@ -1,24 +1,6 @@
-import { useContext, useEffect } from 'react'
-import {
-  getAllPosts,
-  getAllTags,
-  getTags,
-  getTotalPage,
-  getYears,
-  pageSize,
-} from '@script/api'
+import { getAllPosts } from '@script/api'
 import Link from 'next/link'
-import { Router, useRouter } from 'next/router'
-import Card from '@/components/Card'
-import { SiderContext } from '@/layout/Sider'
-import { css, cx } from '@emotion/css'
-import PostTags from '@/components/PostTag'
-import Pagination from '@/components/ui/Pagination'
-import Tag from '@/components/ui/Tag'
 import Helmet from '@/components/Helmet'
-import TimeLine from '@/components/ui/Timeline'
-import { IconClock, IconTag } from '@tabler/icons-react'
-import PostTag from '@/components/PostTag'
 
 export type PageProps = {
   posts: { [year: string]: Post[] }
@@ -27,27 +9,33 @@ export type PageProps = {
 }
 
 const Home: React.FC<PageProps> = ({ posts }) => {
-  const items = Object.keys(posts).map((year, index) => {
-    return (
-      <section key={year}>
-        <header className="font-medium text-2xl mb-2">{year}</header>
-        {posts[year].map((post) => (
-          <article className="flex text-lg leading-10" key={post.slug}>
-            <div className="mr-16 w-16 text-right text-slate-500 dark:text-slate-200">{post.date}</div>
-            <Link
-              passHref
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.slug },
-              }}
-            >
-              <a className="text-slate-900 dark:text-slate-200 font-medium hover:underline">{post.title}</a>
-            </Link>
-          </article>
-        ))}
-      </section>
-    )
-  })
+  const items = Object.keys(posts)
+    .sort((a, b) => b - a)
+    .map((year, index) => {
+      return (
+        <section key={year}>
+          <header className="font-medium text-2xl mb-2">{year}</header>
+          {posts[year].map((post) => (
+            <article className="flex text-lg leading-10" key={post.slug}>
+              <div className="mr-16 w-16 text-right text-slate-500 dark:text-slate-200">
+                {post.date}
+              </div>
+              <Link
+                passHref
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.slug },
+                }}
+              >
+                <a className="text-slate-900 dark:text-slate-200 font-medium hover:underline">
+                  {post.title}
+                </a>
+              </Link>
+            </article>
+          ))}
+        </section>
+      )
+    })
   return (
     <>
       <Helmet />
