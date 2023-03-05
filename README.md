@@ -1,2 +1,13 @@
+my blog built with react, nextjs, keystone
+
 # Dev
-1. `yarn dev`
+```shell
+yarn keystone:dev
+yarn next:dev
+```
+- localhost:4000
+- admin: localhost:3000
+
+
+# TODO
+- [ ] 

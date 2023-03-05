@@ -1,27 +1,30 @@
-import React, { useState } from 'react'
-import { cx } from '@emotion/css'
-import type { ReactNode } from 'react'
+import React, { useState } from 'react';
+import { cx, css } from '@emotion/css';
+import type { ReactNode } from 'react';
 
 type CardProps = Partial<{
-  className: string
-  title: ReactNode
-}>
+  className: string;
+  title: ReactNode;
+}>;
 const Card: React.FC<CardProps> = ({ title, children, className }) => {
-  const haveTitle = Boolean(title)
+  const haveTitle = Boolean(title);
   return (
     <section
       className={cx(
-        'rounded-lg border border-gray-900 border-opacity-10 bg-white',
+        'rounded-lg shadow-md border border-gray-900 border-opacity-10 bg-white',
+        'github-bg-black',
         {
           'p-4': !haveTitle,
         },
         className
       )}
     >
-      {haveTitle && <header className="border-b p-3 text-xl font-bold">{title}</header>}
+      {haveTitle && (
+        <header className='border-b p-3 text-xl font-bold'>{title}</header>
+      )}
       {children}
     </section>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

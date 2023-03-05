@@ -1,17 +1,19 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import {
-  getPostBySlug,
-  getAllPosts,
-  getRelatedTag,
-  getAllTags,
-} from '../../../script/api'
+import { getPostBySlug, getAllPosts, getRelatedTag } from '../../../script/api'
 import { useRemarkSync } from 'react-remark'
 import Card from '@/components/Card'
-import Tags from '@/components/PostTags'
+import Tags from '@/components/PostTag'
 import { useContext, useEffect } from 'react'
 import { SiderContext } from '@/layout/Sider'
 import Link from 'next/link'
+import Tag from '@/components/ui/Tag'
+import Helmet from '@/components/Helmet'
+import remarkGfm from 'remark-gfm'
+import rehypeExternalLinks from 'rehype-external-links'
+import toc from 'markdown-toc'
+import PostTag from '@/components/PostTag'
+import { IconCalendar, IconClock } from '@tabler/icons-react'
 
 type Props = {
   post: Post
@@ -19,76 +21,56 @@ type Props = {
   preview?: boolean
 }
 
-const PostContent = ({ post, relatedTags }) => {
-  const reactContent = useRemarkSync(post.content)
-  const { setSider } = useContext(SiderContext)
-  useEffect(() => {
-    setSider(() => {
-      return (
-        <Card className="flex flex-col gap-1 items-start">
-          {Object.keys(relatedTags).map((tag) => {
-            return (
-              <div
-                className="bg-gray-200 px-2 rounded-sm border border-dotted border-gray-500"
-                key={tag}
-              >
-                {tag}
-                <sup className="ml-1">{relatedTags[tag]}</sup>
-              </div>
-            )
-          })}
-        </Card>
-      )
-    })
-  }, [])
+const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
+  const reactContent = useRemarkSync(post.content, {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
+  })
+  const tocReactContent = useRemarkSync(post.toc, {
+    remarkPlugins: [remarkGfm],
+    // rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]],
+  })
+  // const { setSider } = useContext(SiderContext)
+  // useEffect(() => {
+  //   setSider(() => {
+  //     return (
+  //       <>
+  //         <Card className="flex flex-col gap-2 items-start">
+  //           {relatedTags.map((tag) => {
+  //             return (
+  //               <Tag
+  //                 key={tag.name}
+  //                 sup={tag.posts.length}
+  //                 name={tag.name}
+  //               ></Tag>
+  //             )
+  //           })}
+  //         </Card>
+  //         <Card>{tocReactContent}</Card>
+  //       </>
+  //     )
+  //   })
+  // }, [])
   return (
-    <Card>
-      <article>
+    <>
+      <Helmet title={post.title}></Helmet>
+      <article className="p-2">
         <header className="mb-4">
-          <p className="text-center font-medium text-2xl">{post.title}</p>
-          <div className="mt-2 flex justify-center text-sm items-center">
-            <span>{post.ctime}</span>
-            <Tags tags={post.tags} />
+          <p className="text-center font-medium text-4xl">{post.title}</p>
+          <div className="mt-2 flex justify-center text-xs items-center gap-4">
+            <div className="flex gap-0.5 items-center">
+              <IconCalendar size={12} />
+              {post.date}, {new Date(post.ctime).getFullYear()}
+            </div>
+            <div className="flex gap-0.5 items-center">
+              <IconClock size={12} />
+              {post.readingTime}
+            </div>
           </div>
         </header>
-        <section className="markdown-body">{reactContent}</section>
-        <footer className="flex border-y border-gray-200 py-4 my-4">
-          {post.prev && (
-            <Link
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.prev.slug },
-              }}
-            >
-              <span title={post.prev.title} className="rounded-full py-3 px-6">
-                Previous (前一篇)
-              </span>
-            </Link>
-          )}
-          <Link
-            href={{
-              pathname: '/archive',
-            }}
-          >
-            <span className="text-blue-600 border mx-auto border-gray-300 rounded-2xl py-1 px-3 text-center">
-              Archive（目录）
-            </span>
-          </Link>
-          {post.next && (
-            <Link
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.next.slug },
-              }}
-            >
-              <span title={post.next.title} className="rounded-full py-3 px-6">
-                Next（后一篇）
-              </span>
-            </Link>
-          )}
-        </footer>
+        <section className="markdown-body max-w-none dark:bg-slate-900">{reactContent}</section>
       </article>
-    </Card>
+    </>
   )
 }
 
@@ -111,22 +93,14 @@ type Params = {
 }
 
 export async function getStaticProps({ params }: Params) {
-  const post = await getPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'content',
-    'tags',
-  ])
-  const tagCount = await getAllTags([])
-  const relatedTags: TagCountType = {}
-  post.tags.forEach((tag) => {
-    relatedTags[tag] = tagCount[tag]
-  })
+  const post = await getPostBySlug(params.slug)
+  const tocContent = toc(post.content).content
+  const relatedTags = await getRelatedTag(post.tags.map((tag) => tag.name))
   return {
     props: {
       post: {
         ...post,
+        toc: tocContent,
       },
       relatedTags,
     },
@@ -134,7 +108,7 @@ export async function getStaticProps({ params }: Params) {
 }
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts(['slug'])
+  const posts = await getAllPosts()
   return {
     paths: posts.map((post) => {
       return {

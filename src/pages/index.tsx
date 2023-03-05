@@ -1,68 +1,74 @@
 import { useContext, useEffect } from 'react'
-import { getAllPosts, getAllTags } from '@script/api'
-import Head from 'next/head'
+import {
+  getAllPosts,
+  getAllTags,
+  getTags,
+  getTotalPage,
+  getYears,
+  pageSize,
+} from '@script/api'
 import Link from 'next/link'
+import { Router, useRouter } from 'next/router'
 import Card from '@/components/Card'
 import { SiderContext } from '@/layout/Sider'
-import { cx } from '@emotion/css'
-import PostTags from '@/components/PostTags'
+import { css, cx } from '@emotion/css'
+import PostTags from '@/components/PostTag'
+import Pagination from '@/components/ui/Pagination'
+import Tag from '@/components/ui/Tag'
+import Helmet from '@/components/Helmet'
+import TimeLine from '@/components/ui/Timeline'
+import { IconClock, IconTag } from '@tabler/icons-react'
+import PostTag from '@/components/PostTag'
 
-type Props = {
-  allPosts: Post[]
-  tags: Record<string, number>
+export type PageProps = {
+  posts: { [year: string]: Post[] }
+  years: number[]
+  tags: Array<{ name: string; postsCount: number }>
 }
 
-const Index = ({ allPosts }: Props) => {
-  const { setSider } = useContext(SiderContext)
-
-  useEffect(() => {
-    setSider(() => {
-      return <Card title="#文章分类"></Card>
-    })
-  }, [])
-  return (
-    <section>
-      <div className="flex flex-col gap-2">
-        {allPosts.map((post) => (
-          <Card key={post.slug} className="bg-white">
+const Home: React.FC<PageProps> = ({ posts }) => {
+  const items = Object.keys(posts).map((year, index) => {
+    return (
+      <section key={year}>
+        <header className="font-medium text-2xl mb-2">{year}</header>
+        {posts[year].map((post) => (
+          <article className="flex text-lg leading-10" key={post.slug}>
+            <div className="mr-16 w-16 text-right text-slate-500 dark:text-slate-200">{post.date}</div>
             <Link
+              passHref
               href={{
                 pathname: '/posts/[slug]',
                 query: { slug: post.slug },
               }}
             >
-              <span className="text-2xl font-bold cursor-pointer hover:text-blue-700">
-                {post.title}
-              </span>
+              <a className="text-slate-900 dark:text-slate-200 font-medium hover:underline">{post.title}</a>
             </Link>
-            <PostTags tags={post.tags} />
-            <div className=" cursor-pointer">
-              <span className="text-gray-700 py-1 px-2 text-sm">
-                {post.ctime}
-              </span>
-              <span className="text-gray-700 py-1 px-2 text-sm">
-                {post.readingTime}
-              </span>
-            </div>
-          </Card>
+          </article>
         ))}
-      </div>
-    </section>
+      </section>
+    )
+  })
+  return (
+    <>
+      <Helmet />
+      <section className="flex flex-col gap-4">{items}</section>
+    </>
   )
 }
 
-export default Index
+export default Home
 
 export const getStaticProps = async () => {
-  const allPosts = await getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'tags',
-    'category'
-  ])
-  // const tags = await getAllTags(allPosts)
+  const [allPosts] = await Promise.all([getAllPosts()])
+  const posts: Record<number, Post[]> = {}
+  allPosts.forEach((post) => {
+    const year = new Date(post.ctime).getFullYear()
+    if (!posts[year]) {
+      posts[year] = []
+    }
+    posts[year].push(post)
+  })
   return {
-    props: { allPosts },
+    props: { posts },
   }
 }

@@ -12,17 +12,13 @@ type MenuProps = {
 const Menu: React.FC<MenuProps> = ({ className }) => {
   const router = useRouter()
   const menuItems = [
+    // {
+    //   pathname: '/archive',
+    //   label: 'Archive',
+    // },
     {
-      pathname: '/',
-      label: 'Home',
-    },
-    {
-      pathname: '/tags',
-      label: 'Tags',
-    },
-    {
-      pathname: '/about',
-      label: 'About',
+      pathname: '/lab',
+      label: 'Lab',
     },
   ]
   return (
@@ -37,11 +33,14 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
             }}
           >
             <NavItem
-              className={cx('py-2 px-4 rounded-md', {
-                'cursor-pointer hover:bg-blue-100 hover:text-blue-700':
-                  !isActive,
-                'bg-blue-100 text-blue-700': isActive,
-              })}
+              className={cx(
+                'py-2 px-4 rounded-md',
+                'font-semibold text-slate-700 dark:text-slate-200',
+                {
+                  'cursor-pointer': !isActive,
+                  'bg-blue-100 text-blue-700': isActive,
+                }
+              )}
             >
               {item.label}
             </NavItem>
