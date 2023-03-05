@@ -12,8 +12,9 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       - name: build
-        run: yarn
-        run: yarn gen
+        run:  |
+          yarn
+          yarn gen
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
