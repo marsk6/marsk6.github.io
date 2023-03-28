@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://marsk6.github.io
+
+# Sitemaps
+Sitemap: https://marsk6.github.io/sitemap.xml
