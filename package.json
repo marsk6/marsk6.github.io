@@ -56,5 +56,6 @@
   },
   "resolutions": {
     "next": "13.2.4"
-  }
+  },
+  "version": "0.0.1"
 }
