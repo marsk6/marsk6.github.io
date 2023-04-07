@@ -1,44 +1,77 @@
-import { getAllPosts } from '../../script/api';
-import Head from 'next/head';
-import Link from 'next/link';
-import Post from '../../types/post';
+import { getAllPosts } from '@script/api'
+import Link from 'next/link'
+import { NextSeo, ArticleJsonLd } from 'next-seo'
 
-type Props = {
-  allPosts: Post[];
-};
+export type PageProps = {
+  posts: { [year: string]: Post[] }
+  years: number[]
+  tags: Array<{ name: string; postsCount: number }>
+}
 
-const Index = ({ allPosts }: Props) => {
-  const heroPost = allPosts[0];
-  const morePosts = allPosts.slice(1);
+const Home: React.FC<PageProps> = ({ posts }) => {
+  const items = Object.keys(posts)
+    .sort((a, b) => b - a)
+    .map((year) => {
+      return (
+        <section key={year}>
+          <header className="font-medium text-2xl mb-2">{year}</header>
+          {posts[year].map((post) => (
+            <article className="flex text-lg leading-10" key={post.slug}>
+              <div className="mr-16 w-16 text-right text-slate-500 dark:text-slate-200">
+                {post.date}
+              </div>
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.slug },
+                }}
+              >
+                <a className="text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline">
+                  {post.title}
+                </a>
+              </Link>
+            </article>
+          ))}
+        </section>
+      )
+    })
   return (
     <>
-      <section>
-        <h2>{heroPost.title}</h2>
-      </section>
-      <ul>
-        {allPosts.map((post) => (
-          <li key={post.slug}>
-            <Link
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.slug   },
-              }}
-            >
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <NextSeo
+        title={process.env.BLOG.title}
+        description="记录自己的前端工作总结，学习积累，技术思考，疑难问题"
+        canonical={process.env.BLOG.site}
+      />
+      <ArticleJsonLd
+        type="BlogPosting"
+        url={process.env.BLOG.site}
+        title={process.env.BLOG.title}
+        images={[]}
+        datePublished="2020-01-01T08:00:00+08:00"
+        dateModified={process.env.UPDATED_DATE}
+        authorName="Marsk"
+        description="记录自己的前端工作总结，学习积累，技术思考，疑难问题"
+      />
+      <section className="flex flex-col gap-4">{items}</section>
     </>
-  );
-};
+  )
+}
 
-export default Index;
+export default Home
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts(['title', 'date', 'slug', 'author', 'coverImage', 'excerpt']);
-
+  const [allPosts] = await Promise.all([getAllPosts()])
+  const posts: Record<number, Post[]> = {}
+  allPosts.forEach((post) => {
+    const year = new Date(post.ctime).getFullYear()
+    if (!posts[year]) {
+      posts[year] = []
+    }
+    posts[year].push(post)
+  })
   return {
-    props: { allPosts },
-  };
-};
+    props: { posts },
+  }
+}

@@ -6,6 +6,14 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head />
         <body>
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-MNH8X63"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            ></iframe>
+          </noscript>
           <Main />
           <NextScript />
         </body>

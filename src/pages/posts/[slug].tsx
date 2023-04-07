@@ -1,71 +1,134 @@
-import { useRouter } from 'next/router';
-import ErrorPage from 'next/error';
-import { getPostBySlug, getAllPosts } from '../../../script/api';
-import Head from 'next/head';
-import { CMS_NAME } from '../../../script/constants';
-import markdownToHtml from '../../../script/markdownToHtml';
-import PostType from '../../../types/post';
-import { useRemarkSync } from 'react-remark';
-
-const ExampleComponent = () => {};
+import { useRouter } from 'next/router'
+import ErrorPage from 'next/error'
+import { getPostBySlug, getAllPosts, getRelatedTag } from '../../../script/api'
+import { useRemarkSync } from 'react-remark'
+import remarkGfm from 'remark-gfm'
+import rehypeExternalLinks from 'rehype-external-links'
+import toc from 'markdown-toc'
+import { IconCalendar, IconClock } from '@tabler/icons-react'
+import { NextSeo, ArticleJsonLd } from 'next-seo'
+import dayjs from 'dayjs'
+import { useContext, useEffect } from 'react'
+import { SiderContext, useSetSider } from '@/layout/Sider'
+import Card from '@/components/Card'
+import Tag from '@/components/ui/Tag'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import addClasses from 'rehype-add-classes'
+import Toc from '@/components/Toc'
 
 type Props = {
-  post: PostType;
-  morePosts: PostType[];
-  preview?: boolean;
-};
+  post: Post
+  morePosts: Post[]
+  preview?: boolean
+}
+const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
+  const reactContent = useRemarkSync(post.content, {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      [rehypeExternalLinks, { target: '_blank' }],
+      rehypeSlug,
+      rehypeAutolinkHeadings,
+    ],
+  })
 
-const PostContent = ({ content }) => {
-  const reactContent = useRemarkSync(content);
+  useSetSider(() => (
+    <>
+      <Card className="flex flex-col gap-2 items-start">
+        {relatedTags.map((tag) => {
+          return (
+            <Tag key={tag.name} sup={tag.posts.length} name={tag.name}></Tag>
+          )
+        })}
+      </Card>
+      <Card className="sticky top-4">
+        <Toc content={post.toc} />
+      </Card>
+    </>
+  ))
 
-  return reactContent;
+  return (
+    <>
+      <NextSeo
+        title={`${post.title} | ${process.env.BLOG.title}`}
+        description={post.brief}
+        canonical={`${process.env.BLOG.site}/posts/${post.slug}`}
+      />
+      <ArticleJsonLd
+        type="BlogPosting"
+        url={`${process.env.BLOG.site}/posts/${post.slug}`}
+        title={process.env.BLOG.title}
+        images={[]}
+        datePublished="2020-01-01T08:00:00+08:00"
+        dateModified={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
+        authorName="Marsk"
+        description={post.brief || post.title}
+      />
+      <article className="p-2">
+        <header className="mb-4">
+          <p className="text-center font-medium text-4xl">{post.title}</p>
+          <div className="mt-2 flex justify-center text-xs items-center gap-4">
+            <div className="flex gap-0.5 items-center">
+              <IconCalendar size={12} />
+              {post.date}, {new Date(post.ctime).getFullYear()}
+            </div>
+            <div className="flex gap-0.5 items-center">
+              <IconClock size={12} />
+              <span>约 {post.readingTime} 分钟</span>
+            </div>
+          </div>
+        </header>
+        <section className="markdown-body max-w-none dark:bg-[#1a1a1a]">
+          {reactContent}
+        </section>
+      </article>
+    </>
+  )
 }
 
-const Post = ({ post, morePosts, preview }: Props) => {
-  const router = useRouter();
-  if (!router.isFallback && !post?.slug) {
-    return <ErrorPage statusCode={404} />;
+const Post = (props: Props) => {
+  const router = useRouter()
+  if (!router.isFallback && !props.post?.slug) {
+    return <ErrorPage statusCode={404} />
   }
-  return <PostContent content={post.content} />
-};
+  return <PostContent {...props} />
+}
 
-export default Post;
+export default Post
 
+type TagCountType = Record<string, number>
 type Params = {
   params: {
-    slug: string;
-  };
-};
+    slug: string
+    relatedTags: TagCountType
+  }
+}
 
 export async function getStaticProps({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'author',
-    'content'
-  ]);
-
+  const post = await getPostBySlug(params.slug)
+  const tocContent = toc(post.content).content
+  const relatedTags = await getRelatedTag(post.tags.map((tag) => tag.name))
   return {
     props: {
       post: {
         ...post,
+        toc: tocContent,
       },
+      relatedTags,
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug']);
-
+  const posts = await getAllPosts()
   return {
     paths: posts.map((post) => {
       return {
         params: {
           slug: post.slug,
         },
-      };
+      }
     }),
     fallback: false,
-  };
+  }
 }
