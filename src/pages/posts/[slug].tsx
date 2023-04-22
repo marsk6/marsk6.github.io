@@ -8,13 +8,11 @@ import toc from 'markdown-toc'
 import { IconCalendar, IconClock } from '@tabler/icons-react'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
 import dayjs from 'dayjs'
-import { useContext, useEffect } from 'react'
-import { SiderContext, useSetSider } from '@/layout/Sider'
+import { useSetSider } from '@/layout/Sider'
 import Card from '@/components/Card'
 import Tag from '@/components/ui/Tag'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import addClasses from 'rehype-add-classes'
 import Toc from '@/components/Toc'
 
 type Props = {
@@ -41,7 +39,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
           )
         })}
       </Card>
-      <Card className="sticky top-4">
+      <Card className="sticky top-4 hidden lg:block">
         <Toc content={post.toc} />
       </Card>
     </>

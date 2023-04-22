@@ -14,16 +14,22 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header
       className={cx(
-        'flex flex-col w-44 flex-shrink-0 p-4',
+        'flex flex-shrink-0 p-4 sticky',
         'rounded',
         'shadow-[0px_0px_20px_0px_#e2e8f0]',
         'dark:shadow-stone-700',
-        'sticky top-4'
+        'lg:flex-col lg:w-44 lg:top-4'
       )}
     >
       <Link legacyBehavior passHref href={{ pathname: '/' }}>
-        <a className="dark:text-slate-200 mx-auto mb-6 font-medium text-xl text-gray-800 cursor-pointer">
-          里江✨FE
+        <a
+          className={cx(
+            'dark:text-slate-200 font-medium text-xl text-gray-800 cursor-pointer flex',
+            'mr-auto items-center text-2xl',
+            'lg:mx-auto lg:mb-6'
+          )}
+        >
+          ✨Hea✨
         </a>
       </Link>
       <Menu />

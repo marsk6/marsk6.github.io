@@ -1,6 +1,7 @@
 import { getAllPosts } from '@script/api'
 import Link from 'next/link'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
+import { cx } from '@emotion/css'
 
 export type PageProps = {
   posts: { [year: string]: Post[] }
@@ -14,10 +15,31 @@ const Home: React.FC<PageProps> = ({ posts }) => {
     .map((year) => {
       return (
         <section key={year}>
-          <header className="font-medium text-2xl mb-2">{year}</header>
+          <header
+            className={cx(
+              'font-medium',
+              'text-3xl text-center mb-2',
+              'lg:text-2xl lg:text-left'
+            )}
+          >
+            {year}
+          </header>
           {posts[year].map((post) => (
-            <article className="flex text-lg leading-10" key={post.slug}>
-              <div className="mr-16 w-16 text-right text-slate-500 dark:text-slate-200">
+            <article
+              className={cx(
+                'flex items-center',
+                'text-xl my-6 leading-10',
+                'lg:text-lg lg:mb-0'
+              )}
+              key={post.slug}
+            >
+              <div
+                className={cx(
+                  'mr-16 w-16 text-right text-slate-500 dark:text-slate-200',
+                  'hidden',
+                  'lg:block'
+                )}
+              >
                 {post.date}
               </div>
               <Link
@@ -28,7 +50,11 @@ const Home: React.FC<PageProps> = ({ posts }) => {
                   query: { slug: post.slug },
                 }}
               >
-                <a className="text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline">
+                <a
+                  className={cx(
+                    'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline',
+                  )}
+                >
                   {post.title}
                 </a>
               </Link>
@@ -54,7 +80,7 @@ const Home: React.FC<PageProps> = ({ posts }) => {
         authorName="Marsk"
         description="记录自己的前端工作总结，学习积累，技术思考，疑难问题"
       />
-      <section className="flex flex-col gap-4">{items}</section>
+      <section className="flex flex-col gap-8 lg:gap-4">{items}</section>
     </>
   )
 }
