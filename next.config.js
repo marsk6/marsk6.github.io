@@ -23,7 +23,7 @@ const nextConfig = {
     UPDATED_DATE: dayjs().format('YYYY-MM-DDTHH:mm:ssZZ'),
     _DEV_: process.env.NODE_ENV !== 'production',
     BLOG: {
-      title: '里江的web博客',
+      title: 'Hea的web博客',
       site: 'https://masrk.github.io',
     },
   },

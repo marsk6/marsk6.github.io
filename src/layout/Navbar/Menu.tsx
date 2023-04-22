@@ -18,7 +18,7 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
     },
   ]
   return (
-    <nav className={cx(className, 'flex flex-col gap-2 ')}>
+    <nav className={cx(className, 'flex flex-col gap-2')}>
       {menuItems.map((item) => {
         const isActive = router.pathname === item.pathname
         return (
