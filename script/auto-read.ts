@@ -22,7 +22,15 @@ async function walk(dir: string) {
         const destination = path.resolve(__dirname, '../_posts_archive', name)
         filePaths.push([filePath, destination])
         const data = matter(rawContent)
-        const { created_date, updated_date, tags, category, title, slug } = data.data
+        const {
+          created_date,
+          updated_date,
+          tags,
+          category,
+          title,
+          slug,
+          brief,
+        } = data.data
         let ctime = 0
         let date = ''
         if (created_date) {
@@ -37,7 +45,8 @@ async function walk(dir: string) {
           slug,
           content: data.content,
           ctime,
-          date
+          date,
+          brief,
         }
       }
     })
