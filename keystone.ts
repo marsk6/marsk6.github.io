@@ -165,10 +165,10 @@ const Category = list({
 export default config({
   db: {
     provider: 'sqlite',
-    url: 'file:./app.db',
-    // process.env.NODE_ENV === 'production'
-    //   ? 'file:./app.db'
-    //   : 'file:./app-dev.db',
+    url:
+      process.env.NODE_ENV === 'production'
+        ? 'file:./app.db'
+        : 'file:./app-dev.db',
   },
   experimental: {
     generateNextGraphqlAPI: true,

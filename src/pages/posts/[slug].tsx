@@ -14,6 +14,7 @@ import Tag from '@/components/ui/Tag'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import Toc from '@/components/Toc'
+import rehypeFigure from 'rehype-figure'
 
 type Props = {
   post: Post
@@ -27,6 +28,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
       [rehypeExternalLinks, { target: '_blank' }],
       rehypeSlug,
       rehypeAutolinkHeadings,
+      [rehypeFigure, , { className: 'blog-image-figure' }],
     ],
   })
 
