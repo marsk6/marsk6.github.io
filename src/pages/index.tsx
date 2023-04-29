@@ -29,7 +29,7 @@ const Home: React.FC<PageProps> = ({ posts }) => {
               className={cx(
                 'flex items-center',
                 'text-xl my-6 leading-10',
-                'lg:text-lg lg:mb-0'
+                'lg:text-lg lg:mb-0 lg:mt-4'
               )}
               key={post.slug}
             >

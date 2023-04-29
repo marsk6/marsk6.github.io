@@ -28,7 +28,7 @@ async function walk(dir: string) {
         if (created_date) {
           const day = dayjs(created_date, 'YYYY-MM-DD HH:mm')
           ctime = day.valueOf()
-          date = day.format('MMM DD')
+          date = day.format('MM-DD')
         }
         return {
           title,
