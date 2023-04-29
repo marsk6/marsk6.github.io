@@ -86,7 +86,7 @@ const Post: Lists.Post = list({
         resolvedData.ctime = Date.now()
         resolvedData.date = dayjs().format('MM-DD')
       }
-      resolvedData.readingTime = `${rt(resolvedData.content || '').minutes}`
+      resolvedData.readingTime = `${Math.trunc(rt(resolvedData.content || '').minutes)}`
       return resolvedData
     },
     afterOperation: async ({ operation, item, context }) => {

@@ -40,7 +40,7 @@ async function walk(dir: string) {
         }
         return {
           title,
-          tags,
+          tags: tags.filter((t) => t !== 'blog'),
           category,
           slug,
           content: data.content,
