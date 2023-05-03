@@ -41,7 +41,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
           )
         })}
       </Card>
-      <Card className="sticky top-4 hidden lg:block">
+      <Card className="hidden lg:block">
         <Toc content={post.toc} />
       </Card>
     </>

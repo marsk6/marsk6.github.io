@@ -6,18 +6,24 @@ import rehypeAddTitleAttribute from '@script/rehype-add-title-attribute'
 let observer: IntersectionObserver | null = null
 const baseLine = 156
 const distanceActionToCase1 = baseLine - 6
+
+const openDebug = () => {
+  const rootMarginIndicator = document.createElement('div')
+  rootMarginIndicator.style = `position:fixed;top:0;left:0;right:0;height: ${baseLine}px;background-color: #ccc;opacity: 0.3;pointer-events: none;`
+  document.body.appendChild(rootMarginIndicator)
+}
+
 type TocProps = {
   content: string
+  debug?: boolean
 }
-const Toc: React.FC<TocProps> = ({ content }) => {
+const Toc: React.FC<TocProps> = ({ content, debug }) => {
   const tocReactContent = useRemarkSync(content, {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [rehypeAddTitleAttribute],
   })
   useEffect(() => {
-    // const rootMarginIndicator = document.createElement('div')
-    // rootMarginIndicator.style = `position:fixed;top:0;left:0;right:0;height: ${baseLine}px;background-color: #ccc;opacity: 0.3;pointer-events: none;`
-    // document.body.appendChild(rootMarginIndicator)
+    debug && openDebug()
     const article = document.querySelector('.markdown-body')
     const allHeadings = article?.querySelectorAll('h1,h2,h3,h4')
     document.documentElement.style.scrollPaddingTop = `${distanceActionToCase1}px`
@@ -28,15 +34,15 @@ const Toc: React.FC<TocProps> = ({ content }) => {
     if (!observer) {
       observer = new IntersectionObserver(
         (entries) => {
+          const isScrollDown = prevScollTop > document.documentElement.scrollTop
+          const isScrollUp = !isScrollDown
+          prevScollTop = document.documentElement.scrollTop
           if (tocJumpTo) {
             tocJumpTo = null
             return
           }
           let min = entries[0]
           //
-          const isScrollDown = prevScollTop > document.documentElement.scrollTop
-          const isScrollUp = !isScrollDown
-          prevScollTop = document.documentElement.scrollTop
           let willActiveHeading: Element | null = null
 
           entries.forEach((entry) => {
