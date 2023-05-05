@@ -9,6 +9,7 @@ keywords:
   -
 title: 问题记录-本地开发用 whistle 做代理
 slug: whistle-proxy-in-local-dev
+brief: 在本地开发用 whistle 做代理，记录配置 whistle rules 后遇到的请求问题
 ---
 
 ## 背景
