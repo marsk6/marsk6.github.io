@@ -13,8 +13,6 @@ const openDebug = () => {
 }
 
 const createToc = () => {
-  const article = document.querySelector('.markdown-body')
-  const allHeadings = article?.querySelectorAll('h1,h2,h3,h4')
   document.documentElement.style.scrollPaddingTop = `${distanceActionToCase1}px`
   let isInit = true
   let tocJumpTo: Element | null = null
@@ -82,6 +80,8 @@ const createToc = () => {
     )
   }
 
+  const article = document.querySelector('.markdown-body')
+  const allHeadings = article?.querySelectorAll('h1,h2,h3,h4')
   allHeadings?.forEach((heading, index) => {
     let a = findToc(heading)
     a?.addEventListener('click', () => {

@@ -42,7 +42,11 @@
 
 .blog-image-figure {
 }
-
+.rehype-figure img {
+  height: 380px;
+  margin: auto;
+  object-fit: contain;
+}
 .rehype-figure figcaption {
   color: #a8a29e;
   font-size: small;
