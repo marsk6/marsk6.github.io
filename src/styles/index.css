@@ -14,6 +14,10 @@
   background-color: var(--color-canvas-default, #0d1117);
 }
 
+.dark .markdown-body pre {
+  background-color: #272727;
+}
+
 .toc li ul {
   margin-left: 16px;
 }
