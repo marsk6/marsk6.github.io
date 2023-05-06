@@ -41,7 +41,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
           )
         })}
       </Card>
-      <Card className="sticky top-4 hidden lg:block">
+      <Card className="hidden lg:block">
         <Toc content={post.toc} />
       </Card>
     </>
@@ -78,7 +78,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
             </div>
           </div>
         </header>
-        <section className="markdown-body max-w-none dark:bg-[#1a1a1a]">
+        <section className="markdown-body max-w-none dark:bg-[#19191c]">
           {reactContent}
         </section>
       </article>
