@@ -19,56 +19,59 @@ const createToc = () => {
   let isInit = true
   let tocJumpTo: Element | null = null
   let prevScollTop = document.documentElement.scrollTop
-  let observer: IntersectionObserver | null = null
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const isScrollDown = prevScollTop > document.documentElement.scrollTop
+      const isScrollUp = !isScrollDown
+      prevScollTop = document.documentElement.scrollTop
+      if (tocJumpTo) {
+        tocJumpTo = null
+        return
+      }
+      let initClosestHeading = entries[0]
+      //
+      let willActiveHeading: Element | null = null
 
-    observer = new IntersectionObserver(
-      (entries) => {
-        const isScrollDown = prevScollTop > document.documentElement.scrollTop
-        const isScrollUp = !isScrollDown
-        prevScollTop = document.documentElement.scrollTop
-        if (tocJumpTo) {
-          tocJumpTo = null
+      entries.forEach((entry) => {
+        const { top } = entry.boundingClientRect
+        if (isInit) {
+          if (
+            Math.abs(top - baseLine) <=
+            Math.abs(initClosestHeading.boundingClientRect.top - baseLine)
+          ) {
+            initClosestHeading = entry
+          }
           return
         }
-        let min = entries[0]
-        //
-        let willActiveHeading: Element | null = null
-
-        entries.forEach((entry) => {
-          const { top } = entry.boundingClientRect
-          if (isInit) {
-            if (
-              Math.abs(top - baseLine) <=
-              Math.abs(min.boundingClientRect.top - baseLine)
-            ) {
-              min = entry
-            }
-            return
-          }
-          if (entry.isIntersecting && isScrollDown) {
-            willActiveHeading = entry.target
-          } else if (!entry.isIntersecting && isScrollUp) {
-            willActiveHeading = entry.target
-          }
-        })
-        willActiveHeading!?.dispatchEvent(
-          new CustomEvent('active', {
-            detail: isScrollDown ? 'prev' : 'cur',
-          })
-        )
-
-        if (isInit) {
-          min.target.dispatchEvent(new CustomEvent('active'))
-          isInit = false
+        if (entry.isIntersecting && isScrollDown) {
+          willActiveHeading = entry.target
+        } else if (!entry.isIntersecting && isScrollUp) {
+          willActiveHeading = entry.target
         }
-      },
-      {
-        threshold: [1],
-        root: document,
-        rootMargin: `-${baseLine}px 0px 0px 0px`,
+      })
+      willActiveHeading!?.dispatchEvent(
+        new CustomEvent('active', {
+          detail: isScrollDown ? 'prev' : 'cur',
+        })
+      )
+
+      if (isInit) {
+        const { hash } = location
+        if (hash) {
+          ;(document.querySelector(`.toc a[href='${hash}']`) as HTMLAnchorElement).click()
+        } else {
+          initClosestHeading.target.dispatchEvent(new CustomEvent('active'))
+        }
+        isInit = false
       }
-    )
-  
+    },
+    {
+      threshold: [1],
+      root: document,
+      rootMargin: `-${baseLine}px 0px 0px 0px`,
+    }
+  )
+
   const toc = [...document.querySelectorAll('.toc a')] as HTMLAnchorElement[]
 
   const findToc = (heading: Element) => {
@@ -101,6 +104,7 @@ const createToc = () => {
     })
     observer?.observe(heading)
   })
+  return observer
 }
 
 type TocProps = {
@@ -114,10 +118,10 @@ const Toc: React.FC<TocProps> = ({ content, debug }) => {
   })
   useEffect(() => {
     debug && openDebug()
-
+    let tocObserver: IntersectionObserver | null = createToc()
     return () => {
-      observer?.disconnect()
-      observer = null
+      tocObserver?.disconnect()
+      tocObserver = null
     }
   }, [])
 
