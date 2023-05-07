@@ -14,7 +14,7 @@ generator client {
 model Post {
   id          String    @id @default(cuid())
   slug        String    @unique @default("")
-  title       String    @default("")
+  title       String    @default("default title")
   tags        Tag[]     @relation("Post_tags")
   category    Category? @relation("Post_category", fields: [categoryId], references: [id])
   categoryId  String?   @map("category")

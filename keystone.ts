@@ -1,14 +1,9 @@
-import { config, graphql, list } from '@keystone-6/core'
+import { config, list } from '@keystone-6/core'
 import { allowAll } from '@keystone-6/core/access'
 import {
   text,
-  multiselect,
-  select,
-  calendarDay,
   json,
-  virtual,
   relationship,
-  integer,
   float,
 } from '@keystone-6/core/fields'
 import dayjs from 'dayjs'
@@ -18,7 +13,7 @@ import rt from 'reading-time'
 const Post: Lists.Post = list({
   fields: {
     slug: text({ isIndexed: 'unique' }),
-    title: text({ validation: { isRequired: true } }),
+    title: text({ defaultValue: 'default title' }),
     tags: relationship({
       // NOTE: 此时 grapql，tags 不是标量
       ref: 'Tag.posts',
@@ -72,9 +67,6 @@ const Post: Lists.Post = list({
       },
     }),
     content: text({
-      // hooks: {
-      //   afterOperation
-      // },
       ui: {
         displayMode: 'textarea',
       },
