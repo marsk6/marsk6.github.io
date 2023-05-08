@@ -40,3 +40,10 @@ model Category {
   name  String @default("")
   posts Post[] @relation("Post_category")
 }
+
+model UploadPost {
+  id                  String    @id @default(cuid())
+  name                DateTime? @unique
+  attachment_filesize Int?
+  attachment_filename String?
+}

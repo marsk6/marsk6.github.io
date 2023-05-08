@@ -5,6 +5,8 @@ import {
   json,
   relationship,
   float,
+  file,
+  timestamp,
 } from '@keystone-6/core/fields'
 import dayjs from 'dayjs'
 import { Lists } from '.keystone/types'
@@ -156,16 +158,44 @@ const Category = list({
   access: allowAll,
 })
 
+const UploadPost = list({
+  fields: {
+    name: text({
+      defaultValue: 'name',
+      hooks: {
+        resolveInput() {
+          return Date.now().toString()
+        },
+      },
+    }),
+    attachment: file({ storage: 'local_file_storage' }),
+  },
+  access: allowAll,
+})
+
 export default config({
   db: {
     provider: 'sqlite',
-    url: process.env.NODE_ENV === 'production'
-      ? 'file:./app.db'
-      : 'file:./app-dev.db',
+    url:
+      process.env.NODE_ENV === 'production'
+        ? 'file:./app.db'
+        : 'file:./app-dev.db',
   },
   experimental: {
     generateNextGraphqlAPI: true,
     generateNodeAPI: true,
   },
-  lists: { Post, Tag, Category },
+  lists: { Post, Tag, Category, UploadPost },
+  storage: {
+    local_file_storage: {
+      kind: 'local',
+      type: 'file',
+      generateUrl: (path) => `http://localhost:3000/files${path}`,
+      serverRoute: {
+        path: '/files',
+      },
+      transformName: (filename) => `${filename}.md`,
+      storagePath: 'public/files',
+    },
+  },
 })

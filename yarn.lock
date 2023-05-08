@@ -2578,7 +2578,7 @@
 
 "@keystone-ui/button@^7.0.2":
   version "7.0.2"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/button/-/button-7.0.2.tgz#6f3be63b54b517eddd101b3f2d3bb47e281e84f5"
+  resolved "https://registry.npmjs.org/@keystone-ui/button/-/button-7.0.2.tgz#6f3be63b54b517eddd101b3f2d3bb47e281e84f5"
   integrity sha512-bFuT3WtLRFWXGP0lMPRIxYG22u2BEvjP9blSeGGXQSvl3hC5Zh2r/BlylHeYaWFChcaRYRU2G/2QSLoPAvyDGQ==
   dependencies:
     "@babel/runtime" "^7.16.3"
