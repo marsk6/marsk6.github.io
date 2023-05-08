@@ -160,8 +160,8 @@ const Category = list({
 
 const UploadPost = list({
   fields: {
-    name: text({
-      defaultValue: 'name',
+    uploadTime: text({
+      defaultValue: 'default time',
       hooks: {
         resolveInput() {
           return Date.now().toString()
@@ -194,7 +194,10 @@ export default config({
       serverRoute: {
         path: '/files',
       },
-      transformName: (filename) => `${filename}.md`,
+      transformName: (filename) => {
+        console.log(filename)
+        return `${filename}.md`
+      },
       storagePath: 'public/files',
     },
   },

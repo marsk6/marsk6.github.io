@@ -266,11 +266,9 @@ input CategoryCreateInput {
 
 type UploadPost {
   id: ID!
-  name: DateTime
+  name: String
   attachment: FileFieldOutput
 }
-
-scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 type FileFieldOutput {
   filename: String!
@@ -280,7 +278,6 @@ type FileFieldOutput {
 
 input UploadPostWhereUniqueInput {
   id: ID
-  name: DateTime
 }
 
 input UploadPostWhereInput {
@@ -288,18 +285,7 @@ input UploadPostWhereInput {
   OR: [UploadPostWhereInput!]
   NOT: [UploadPostWhereInput!]
   id: IDFilter
-  name: DateTimeNullableFilter
-}
-
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
+  name: StringFilter
 }
 
 input UploadPostOrderByInput {
@@ -308,7 +294,7 @@ input UploadPostOrderByInput {
 }
 
 input UploadPostUpdateInput {
-  name: DateTime
+  name: String
   attachment: FileFieldInput
 }
 
@@ -325,7 +311,7 @@ input UploadPostUpdateArgs {
 }
 
 input UploadPostCreateInput {
-  name: DateTime
+  name: String
   attachment: FileFieldInput
 }
 

@@ -42,8 +42,8 @@ model Category {
 }
 
 model UploadPost {
-  id                  String    @id @default(cuid())
-  name                DateTime? @unique
+  id                  String  @id @default(cuid())
+  name                String  @default("name")
   attachment_filesize Int?
   attachment_filename String?
 }
