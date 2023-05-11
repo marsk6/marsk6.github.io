@@ -13,7 +13,7 @@ export function CustomNavigation({
     <NavigationContainer authenticatedItem={authenticatedItem}>
       <NavItem href="/">Dashboard</NavItem>
       <ListNavItems lists={lists} />
-      <NavItem href="/create-post">Custom Page</NavItem>
+      <NavItem href="/post-preview-list">Preview List</NavItem>
     </NavigationContainer>
   )
 }

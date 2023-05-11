@@ -7,10 +7,15 @@ import {
   float,
   file,
   timestamp,
+  checkbox,
 } from '@keystone-6/core/fields'
 import dayjs from 'dayjs'
 import { Lists } from '.keystone/types'
 import rt from 'reading-time'
+import { preview } from './script/preview-field'
+import path from 'node:path'
+import fs from 'node:fs/promises'
+import { createPosts } from './admin/api'
 
 const Post: Lists.Post = list({
   fields: {
@@ -26,6 +31,18 @@ const Post: Lists.Post = list({
       ref: 'Category.posts',
       many: false,
       ui: { displayMode: 'select' },
+    }),
+    attachment: relationship({
+      ref: 'UploadPost.post',
+      many: false,
+      ui: {
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        createView: {
+          fieldMode: 'hidden',
+        },
+      },
     }),
     ctime: float({
       defaultValue: 0,
@@ -117,7 +134,7 @@ const Post: Lists.Post = list({
     },
     beforeOperation: async ({ operation, item, context }) => {
       if (operation === 'delete') {
-        const { prev, next } = item
+        const { prev, next, attachmentId } = item
         prev?.slug &&
           context.query.Post.updateOne({
             where: { slug: prev.slug },
@@ -128,6 +145,10 @@ const Post: Lists.Post = list({
             where: { slug: next.slug },
             data: { prev },
           })
+        context.query.UploadPost.deleteOne({
+          where: { id: attachmentId },
+          query: 'id',
+        })
       }
     },
   },
@@ -160,6 +181,14 @@ const Category = list({
 
 const UploadPost = list({
   fields: {
+    isLive: checkbox({
+      defaultValue: false,
+      ui: {
+        createView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
     uploadTime: text({
       defaultValue: 'default time',
       hooks: {
@@ -168,7 +197,56 @@ const UploadPost = list({
         },
       },
     }),
-    attachment: file({ storage: 'local_file_storage' }),
+    /**
+     * 1. nextjs 生成的是静态网站，不适合用来动态预览内容
+     * 2. 准确是不能动态生成预览内容页面，但可以用一个静态页面获取动态的内容展示
+     */
+    attachment: file({
+      storage: 'local_file_storage',
+    }),
+    preview: preview(),
+    post: relationship({
+      ref: 'Post.attachment',
+      many: false,
+      ui: {
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'read',
+        },
+      },
+    }),
+  },
+  hooks: {
+    async resolveInput({ resolvedData }) {
+      if (resolvedData.attachment.filename) {
+        const filePath = path.join(
+          process.cwd(),
+          './_posts/',
+          resolvedData.attachment.filename
+        )
+        const rawContent = await fs.readFile(filePath, 'utf8')
+        resolvedData.preview = rawContent
+      }
+      return resolvedData
+    },
+    afterOperation({ operation, originalItem, item, context }) {
+      if (operation === 'update') {
+        if (!originalItem.isLive && item.isLive) {
+          createPosts([item.preview], context).then(([{ id: postId }]) => {
+            context.query.UploadPost.updateOne({
+              data: { preview: '', post: { connect: { id: postId } } },
+              where: { id: item.id.toString() },
+            })
+            context.query.Post.updateOne({
+              data: { attachment: { connect: { id: item.id } } },
+              where: { id: postId },
+            })
+          })
+        }
+      }
+    },
   },
   access: allowAll,
 })
@@ -195,10 +273,9 @@ export default config({
         path: '/files',
       },
       transformName: (filename) => {
-        console.log(filename)
-        return `${filename}.md`
+        return filename
       },
-      storagePath: 'public/files',
+      storagePath: '_posts',
     },
   },
 })
