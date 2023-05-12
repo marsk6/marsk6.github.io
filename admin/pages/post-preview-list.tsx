@@ -13,7 +13,7 @@ import { Button } from '@keystone-ui/button'
 import { useToasts } from '@keystone-ui/toast'
 
 const UPDATE_UPLOAD_POST = gql`
-  mutation UpdateUploadPost($where: UploadPostWhereUniqueInput!, where: UploadPostWhereUniqueInput!, $data: UploadPostUpdateInput!) {
+  mutation UpdateUploadPost($where: UploadPostWhereUniqueInput!, $data: UploadPostUpdateInput!) {
     updateUploadPost(where: $where, data: $data) {
       id
     }
