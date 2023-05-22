@@ -23,7 +23,9 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
         <div className="mt-2 flex justify-center text-xs items-center gap-4">
           <div className="flex gap-0.5 items-center">
             <IconCalendar size={12} />
-            {post.date}, {new Date(post.ctime).getFullYear()}
+            <span>
+              {post.date}, {new Date(post.ctime).getFullYear()}
+            </span>
           </div>
           <div className="flex gap-0.5 items-center">
             <IconClock size={12} />

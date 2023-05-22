@@ -44,7 +44,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
         url={`${process.env.BLOG.site}/posts/${post.slug}`}
         title={process.env.BLOG.title}
         images={[]}
-        datePublished="2020-01-01T08:00:00+08:00"
+        datePublished={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
         dateModified={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
         authorName="Marsk"
         description={post.brief || post.title}
