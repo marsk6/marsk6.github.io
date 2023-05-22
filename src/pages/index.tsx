@@ -1,4 +1,4 @@
-import { getAllPosts } from '@script/api'
+import { getAllPosts } from '@/api/local'
 import Link from 'next/link'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
 import { cx } from '@emotion/css'

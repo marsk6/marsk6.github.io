@@ -1,4 +1,4 @@
-import { getAllPosts, getTags, getYears } from '@script/api'
+import { getAllPosts, getTags, getYears } from '@/api/local'
 import Card from '@/components/Card'
 import { NextSeo } from 'next-seo'
 

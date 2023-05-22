@@ -10,7 +10,7 @@
     "start": "next start",
     "typecheck": "tsc",
     "export": "next export",
-    "build": "yarn read:prod && yarn gen && yarn export && touch ./out/.nojekyll",
+    "build": "yarn gen && yarn export && touch ./out/.nojekyll",
     "read": "ts-node --transpileOnly ./script/auto-read.ts",
     "read:prod": "NODE_ENV=production yarn read",
     "postbuild": "next-sitemap"

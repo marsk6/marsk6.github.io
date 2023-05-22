@@ -12,19 +12,21 @@ generator client {
 }
 
 model Post {
-  id          String    @id @default(cuid())
-  slug        String    @unique @default("")
-  title       String    @default("")
-  tags        Tag[]     @relation("Post_tags")
-  category    Category? @relation("Post_category", fields: [categoryId], references: [id])
-  categoryId  String?   @map("category")
-  ctime       Float?    @default(0)
-  date        String    @default("")
-  readingTime String    @default("")
-  prev        String?   @default("{}")
-  next        String?   @default("{}")
-  brief       String    @default("")
-  content     String    @default("")
+  id           String      @id @default(cuid())
+  slug         String      @unique @default("")
+  title        String      @default("default title")
+  tags         Tag[]       @relation("Post_tags")
+  category     Category?   @relation("Post_category", fields: [categoryId], references: [id])
+  categoryId   String?     @map("category")
+  attachment   UploadPost? @relation("Post_attachment", fields: [attachmentId], references: [id])
+  attachmentId String?     @unique @map("attachment")
+  ctime        Float?      @default(0)
+  date         String      @default("")
+  readingTime  String      @default("")
+  prev         String?     @default("{}")
+  next         String?     @default("{}")
+  brief        String      @default("")
+  content      String      @default("")
 
   @@index([categoryId])
 }
@@ -39,4 +41,14 @@ model Category {
   id    String @id @default(cuid())
   name  String @default("")
   posts Post[] @relation("Post_category")
+}
+
+model UploadPost {
+  id                  String  @id @default(cuid())
+  isLive              Boolean @default(false)
+  uploadTime          String  @default("default time")
+  attachment_filesize Int?
+  attachment_filename String?
+  preview             String?
+  post                Post?   @relation("Post_attachment")
 }
