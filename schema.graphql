@@ -12,8 +12,8 @@ type Post {
   ctime: Float
   date: String
   readingTime: String
-  prev: JSON
-  next: JSON
+  prevArticle: Post
+  nextArticle: Post
   brief: String
   content: String
 }
@@ -36,6 +36,8 @@ input PostWhereInput {
   ctime: FloatNullableFilter
   date: StringFilter
   readingTime: StringFilter
+  prevArticle: PostWhereInput
+  nextArticle: PostWhereInput
   brief: StringFilter
   content: StringFilter
 }
@@ -121,8 +123,8 @@ input PostUpdateInput {
   ctime: Float
   date: String
   readingTime: String
-  prev: JSON
-  next: JSON
+  prevArticle: PostRelateToOneForUpdateInput
+  nextArticle: PostRelateToOneForUpdateInput
   brief: String
   content: String
 }
@@ -146,6 +148,12 @@ input UploadPostRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input PostRelateToOneForUpdateInput {
+  create: PostCreateInput
+  connect: PostWhereUniqueInput
+  disconnect: Boolean
+}
+
 input PostUpdateArgs {
   where: PostWhereUniqueInput!
   data: PostUpdateInput!
@@ -160,8 +168,8 @@ input PostCreateInput {
   ctime: Float
   date: String
   readingTime: String
-  prev: JSON
-  next: JSON
+  prevArticle: PostRelateToOneForCreateInput
+  nextArticle: PostRelateToOneForCreateInput
   brief: String
   content: String
 }
@@ -179,6 +187,11 @@ input CategoryRelateToOneForCreateInput {
 input UploadPostRelateToOneForCreateInput {
   create: UploadPostCreateInput
   connect: UploadPostWhereUniqueInput
+}
+
+input PostRelateToOneForCreateInput {
+  create: PostCreateInput
+  connect: PostWhereUniqueInput
 }
 
 type Tag {
@@ -335,12 +348,6 @@ input FileFieldInput {
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
-input PostRelateToOneForUpdateInput {
-  create: PostCreateInput
-  connect: PostWhereUniqueInput
-  disconnect: Boolean
-}
-
 input UploadPostUpdateArgs {
   where: UploadPostWhereUniqueInput!
   data: UploadPostUpdateInput!
@@ -352,11 +359,6 @@ input UploadPostCreateInput {
   attachment: FileFieldInput
   preview: String
   post: PostRelateToOneForCreateInput
-}
-
-input PostRelateToOneForCreateInput {
-  create: PostCreateInput
-  connect: PostWhereUniqueInput
 }
 
 """

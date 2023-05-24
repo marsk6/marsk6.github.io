@@ -58,27 +58,15 @@ const Post: Lists.Post = list({
         },
       },
     }),
-    prev: json({
-      defaultValue: {},
-      ui: {
-        itemView: {
-          fieldMode: 'hidden',
-        },
-        createView: {
-          fieldMode: 'hidden',
-        },
-      },
+    prevArticle: relationship({
+      ref: 'Post',
+      many: false,
+      ui: { hideCreate: true, displayMode: 'select' },
     }),
-    next: json({
-      defaultValue: {},
-      ui: {
-        itemView: {
-          fieldMode: 'hidden',
-        },
-        createView: {
-          fieldMode: 'hidden',
-        },
-      },
+    nextArticle: relationship({
+      ref: 'Post',
+      many: false,
+      ui: { hideCreate: true, displayMode: 'select' },
     }),
     brief: text({
       ui: {
@@ -104,6 +92,7 @@ const Post: Lists.Post = list({
     },
     afterOperation: async ({ operation, item, context }) => {
       if (operation === 'create') {
+        return
         const { categoryId, ctime } = item
         if (!categoryId) return
         const list = await context.query.Post.findMany({
@@ -134,6 +123,7 @@ const Post: Lists.Post = list({
     },
     beforeOperation: async ({ operation, item, context }) => {
       if (operation === 'delete') {
+        return
         const { prev, next, attachmentId } = item
         prev?.slug &&
           context.query.Post.updateOne({

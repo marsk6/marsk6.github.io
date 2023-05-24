@@ -9,6 +9,7 @@ import Card from '@/components/Card'
 import Tag from '@/components/ui/Tag'
 import Toc from '@/components/Toc'
 import Article from '@/components/Article'
+import Link from 'next/link'
 
 type Props = {
   post: Post
@@ -32,6 +33,39 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
     </>
   ))
 
+  const renderFooter = () => {
+    if (post.prevArticle || post.nextArticle) {
+      return (
+        <section>
+          {post.prevArticle && (
+            <Link
+              passHref
+              legacyBehavior
+              href={{
+                pathname: '/posts/[slug]',
+                query: { slug: post.prevArticle.slug },
+              }}
+            >
+              <a>{post.prevArticle.title}</a>
+            </Link>
+          )}
+          {post.nextArticle && (
+            <Link
+              passHref
+              legacyBehavior
+              href={{
+                pathname: '/posts/[slug]',
+                query: { slug: post.nextArticle.slug },
+              }}
+            >
+              <a>{post.nextArticle.title}</a>
+            </Link>
+          )}
+        </section>
+      )
+    }
+  }
+
   return (
     <>
       <NextSeo
@@ -50,6 +84,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
         description={post.brief || post.title}
       />
       <Article post={post} />
+      {renderFooter()}
     </>
   )
 }

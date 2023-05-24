@@ -22,8 +22,16 @@ export async function getPostSlugs() {
 export async function getPostBySlug(slug: string) {
   const post = await query.Post.findOne({
     where: { slug },
-    query:
-      'slug title tags { name } category { name } ctime date content prev next readingTime brief',
+    query: `
+      slug
+      title
+      tags { name }
+      category { name }
+      ctime date content
+      prevArticle { title slug }
+      nextArticle { title slug }
+      readingTime brief
+    `,
   })
   return post
 }
