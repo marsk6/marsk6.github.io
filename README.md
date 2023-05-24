@@ -3,9 +3,10 @@ my blog built with react, nextjs, keystone
 
 # Dev
 ```shell
+yarn
 yarn keystone:dev
 yarn next:dev
 ```
-- localhost:4000
+- blog: localhost:4000
 - admin: localhost:3000
 

@@ -6,13 +6,10 @@
     "keystone:build": "keystone build",
     "keystone:start": "keystone start",
     "next:dev": "next dev -p 4000",
-    "gen": "yarn keystone:build && yarn next build",
     "start": "next start",
     "typecheck": "tsc",
-    "export": "next export",
-    "build": "yarn gen && yarn export && touch ./out/.nojekyll",
-    "read": "ts-node --transpileOnly ./script/auto-read.ts",
-    "read:prod": "NODE_ENV=production yarn read",
+    "build": "yarn next build && yarn next export && touch ./out/.nojekyll",
+    "db:prod": "NODE_ENV=production yarn keystone prisma db push",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
@@ -36,7 +33,10 @@
     "rehype-figure": "^1.0.1",
     "rehype-slug": "^5.1.0",
     "remark": "14.0.2",
-    "remark-gfm": "1.0.0"
+    "remark-gfm": "1.0.0",
+    "next-sitemap": "^4.0.6",
+    "reading-time": "^1.5.0",
+    "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
@@ -48,10 +48,7 @@
     "eslint": "^8.14.0",
     "eslint-config-next": "^12.1.6",
     "fs-extra": "^10.1.0",
-    "next-sitemap": "^4.0.6",
     "postcss": "^8.4.13",
-    "reading-time": "^1.5.0",
-    "tailwindcss": "^3.0.24",
     "ts-node": "^10.9.1",
     "typescript": "^4.2.4"
   },
