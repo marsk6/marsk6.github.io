@@ -36,31 +36,45 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
   const renderFooter = () => {
     if (post.prevArticle || post.nextArticle) {
       return (
-        <section>
-          {post.prevArticle && (
-            <Link
-              passHref
-              legacyBehavior
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.prevArticle.slug },
-              }}
-            >
-              <a>{post.prevArticle.title}</a>
-            </Link>
-          )}
-          {post.nextArticle && (
-            <Link
-              passHref
-              legacyBehavior
-              href={{
-                pathname: '/posts/[slug]',
-                query: { slug: post.nextArticle.slug },
-              }}
-            >
-              <a>{post.nextArticle.title}</a>
-            </Link>
-          )}
+        <section className="flex mt-6">
+          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
+            {post.prevArticle && (
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.prevArticle.slug },
+                }}
+              >
+                <a
+                  className="text-sm underline text-[#58a6ff]"
+                  title={post.prevArticle.title}
+                >
+                  👈🏻 {post.prevArticle.title}
+                </a>
+              </Link>
+            )}
+          </div>
+          <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
+            {post.nextArticle && (
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.nextArticle.slug },
+                }}
+              >
+                <a
+                  className="text-sm underline text-[#58a6ff]"
+                  title={post.nextArticle.title}
+                >
+                  {post.nextArticle.title} 👉🏻
+                </a>
+              </Link>
+            )}
+          </div>
         </section>
       )
     }

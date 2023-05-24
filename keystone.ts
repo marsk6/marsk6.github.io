@@ -59,12 +59,12 @@ const Post: Lists.Post = list({
       },
     }),
     prevArticle: relationship({
-      ref: 'Post',
+      ref: 'Post.nextArticle',
       many: false,
       ui: { hideCreate: true, displayMode: 'select' },
     }),
     nextArticle: relationship({
-      ref: 'Post',
+      ref: 'Post.prevArticle',
       many: false,
       ui: { hideCreate: true, displayMode: 'select' },
     }),
