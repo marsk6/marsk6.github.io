@@ -14,40 +14,31 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header
       className={cx(
-        'flex flex-shrink-0 p-4 sticky',
-        'rounded',
-        'shadow-[0px_0px_20px_0px_#e2e8f0]',
+        'p-3 sticky z-[9999]',
+        'shadow-[0px_0px_20px_0px_#e2e8f0] bg-white',
         'dark:shadow-stone-700 dark:bg-[#19191c]',
-        'lg:flex-col lg:w-44 lg:top-4'
+        'lg:top-0'
       )}
     >
-      <Link legacyBehavior passHref href={{ pathname: '/' }}>
-        <a
-          className={cx(
-            'dark:text-slate-200 font-medium text-xl text-gray-800 cursor-pointer flex',
-            'mr-auto items-center text-2xl',
-            'lg:mx-auto lg:mb-6'
-          )}
+      <section className="flex flex-shrink-0 items-center lg:max-w-5xl lg:mx-auto">
+        <Link legacyBehavior passHref href={{ pathname: '/' }}>
+          <a
+            className={cx(
+              'dark:text-slate-200 font-medium text-xl text-gray-800 cursor-pointer flex',
+              'mr-auto items-center text-2xl'
+            )}
+          >
+            Hea✨
+          </a>
+        </Link>
+        <Menu />
+        <div
+          className="cursor-pointer px-4 flex items-center gap-2"
+          onClick={darkMode.toggle}
         >
-          ✨Hea✨
-        </a>
-      </Link>
-      <Menu />
-      <div className="h-px my-4 bg-stone-200" />
-      <div
-        className="cursor-pointer px-4 flex items-center gap-2"
-        onClick={darkMode.toggle}
-      >
-        {darkMode.isDark ? (
-          <>
-            <IconMoon size={14} /> 深色
-          </>
-        ) : (
-          <>
-            <IconSun size={14} /> 浅色
-          </>
-        )}
-      </div>
+          {darkMode.isDark ? <IconMoon size={14} /> : <IconSun size={14} />}
+        </div>
+      </section>
     </header>
   )
 }
