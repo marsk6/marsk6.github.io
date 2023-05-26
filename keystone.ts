@@ -16,7 +16,6 @@ import { preview } from './script/preview-field'
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import { createPosts } from './admin/api'
-import autoRelease from './script/release-article'
 
 const Post: Lists.Post = list({
   fields: {
@@ -225,16 +224,14 @@ const UploadPost = list({
     async afterOperation({ operation, originalItem, item, context }) {
       if (operation === 'update') {
         if (!originalItem.isLive && item.isLive) {
-          autoRelease(async () => {
-            const [{ id: postId }] = await createPosts([item.preview], context)
-            context.query.UploadPost.updateOne({
-              data: { preview: '', post: { connect: { id: postId } } },
-              where: { id: item.id.toString() },
-            })
-            context.query.Post.updateOne({
-              data: { attachment: { connect: { id: item.id } } },
-              where: { id: postId },
-            })
+          const [{ id: postId }] = await createPosts([item.preview], context)
+          context.query.UploadPost.updateOne({
+            data: { preview: '', post: { connect: { id: postId } } },
+            where: { id: item.id.toString() },
+          })
+          context.query.Post.updateOne({
+            data: { attachment: { connect: { id: item.id } } },
+            where: { id: postId },
           })
         }
       }

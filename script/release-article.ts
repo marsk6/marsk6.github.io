@@ -1,7 +1,7 @@
 import { simpleGit } from 'simple-git'
 
 const autoRelease = async (cb: () => Promise<void>) => {
-  if (process.env.__DEV__) {
+  if (process.env.__DEV__ || true) {
     cb()
     return
   }
@@ -14,7 +14,6 @@ const autoRelease = async (cb: () => Promise<void>) => {
   await git.commit('release new articles')
   await git.checkout('master')
   await git.mergeFromTo('', 'auto/release')
-
 }
-autoRelease(() => {})
+
 export default autoRelease
