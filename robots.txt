@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /preview
 
 # Host
 Host: https://marsk6.github.io
