@@ -1,13 +1,20 @@
 import fs from 'node:fs/promises'
 import { join } from 'path'
-import matter from 'gray-matter'
-import dayjs from 'dayjs'
-import rt from 'reading-time'
-import { keystoneContext as context } from './context'
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  OperationVariables,
+} from '@apollo/client'
 
 // TODO: 区分 blog 和 lab
 
-const query = context.query
+const client = new ApolloClient({
+  uri: 'http://localhost:3000/api/graphql',
+  cache: new InMemoryCache(),
+  // Enable sending cookies over cross-origin requests
+  credentials: 'include',
+})
 
 const postsDirectory = join(process.cwd(), '_posts')
 export const pageSize = 2
@@ -20,26 +27,56 @@ export async function getPostSlugs() {
 }
 
 export async function getPostBySlug(slug: string) {
-  const post = await query.Post.findOne({
-    where: { slug },
-    query: `
-      slug
-      title
-      tags { name }
-      category { name }
-      ctime date content
-      prevArticle { title slug }
-      nextArticle { title slug }
-      readingTime brief
+  const {
+    data: { post },
+  } = await client.query({
+    query: gql`
+      query Query($where: PostWhereUniqueInput!) {
+        post(where: $where) {
+          slug
+          title
+          tags {
+            name
+          }
+          category {
+            name
+          }
+          ctime
+          date
+          content
+          prevArticle {
+            title
+            slug
+          }
+          nextArticle {
+            title
+            slug
+          }
+          readingTime
+          brief
+        }
+      }
     `,
+    variables: { where: { slug } },
   })
   return post
 }
 
 export async function getRelatedTag(tags: string[]) {
-  const relatedTags = await query.Tag.findMany({
-    where: { name: { in: tags } },
-    query: 'name posts { slug }',
+  const {
+    data: { tags: relatedTags },
+  } = await client.query({
+    query: gql`
+      query Query($where: TagWhereInput!) {
+        tags(where: $where) {
+          name
+          posts {
+            slug
+          }
+        }
+      }
+    `,
+    variables: { where: { name: { in: tags } } },
   })
   return relatedTags
 }
@@ -47,7 +84,7 @@ type Mutable<T> = {
   -readonly [K in keyof T]: T[K]
 }
 export async function getAllPosts(options?: { range: string }) {
-  const filter: Mutable<Parameters<typeof query.Post.findMany>[0]> = {}
+  const filter: OperationVariables = {}
 
   if (options) {
     if (options.range === 'latest') {
@@ -58,10 +95,30 @@ export async function getAllPosts(options?: { range: string }) {
       filter.where = { ctime: { gte, lte } }
     }
   }
-  const posts = await query.Post.findMany({
-    ...filter,
-    orderBy: [{ ctime: 'desc' }],
-    query: 'slug title tags { name } ctime date brief readingTime',
+
+  const {
+    data: { posts },
+  } = await client.query({
+    query: gql`
+      query Query(
+        $where: PostWhereInput! = {}
+        $orderBy: [PostOrderByInput!]! = []
+        $take: Int
+      ) {
+        posts(where: $where, orderBy: $orderBy, take: $take) {
+          slug
+          title
+          tags {
+            name
+          }
+          ctime
+          date
+          brief
+          readingTime
+        }
+      }
+    `,
+    variables: { orderBy: [{ ctime: 'desc' }], ...filter },
   })
   return posts
 }
@@ -69,34 +126,75 @@ export async function getAllPosts(options?: { range: string }) {
 export const common = {}
 
 export async function getAllTags() {
-  const tags = await query.Tag.findMany({
-    query: 'name posts { title slug }',
+  const {
+    data: { tags },
+  } = await client.query({
+    query: gql`
+      query {
+        tags {
+          name
+          posts {
+            title
+            slug
+          }
+        }
+      }
+    `,
   })
   return tags
 }
 
 export async function getTags() {
-  const _tags = await query.Tag.findMany({
-    query: 'name postsCount',
+  const {
+    data: { tags },
+  } = await client.query({
+    query: gql`
+      query {
+        tags {
+          name
+          postsCount
+        }
+      }
+    `,
   })
-  return Array.from(_tags).sort((a, b) => a.postCount - b.postCount)
+  return Array.from(tags).sort((a, b) => a.postCount - b.postCount)
 }
 
 export async function getCategories() {
-  const _categories = await query.Category.findMany({
-    query: 'name posts { title slug } postsCount',
+  const {
+    data: { categories },
+  } = await client.query({
+    query: gql`
+      query {
+        categories {
+          name
+          posts {
+            title
+            slug
+          }
+          postsCount
+        }
+      }
+    `,
   })
-  const categories = _categories.map(({ name, posts }) => ({
+  return categories.map(({ name, posts }) => ({
     name,
     posts,
     count: posts.length,
   }))
-  return categories
 }
 
 export async function getYears() {
-  const ctimeArray = await query.Post.findMany({
-    query: 'ctime',
+  const {
+    data: { posts: ctimeArray },
+  } = await client.query({
+    query: gql`
+      query {
+        posts {
+          ctime
+        }
+      }
+    `,
   })
   let years: number[] = []
   ctimeArray.map(({ ctime }) => {

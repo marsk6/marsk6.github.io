@@ -1,7 +1,7 @@
-import { keystoneContext as context } from '../src/api/context'
+import { keystoneContext as context } from '../keystone/context'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { createPosts } from '../admin/api'
+import { createPosts } from '../keystone/admin/api'
 
 async function walk(dir: string) {
   let filesInfo = await fs.readdir(dir)

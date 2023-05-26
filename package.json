@@ -1,25 +1,21 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "keystone postinstall",
-    "keystone:dev": "ENV=dev keystone dev",
-    "keystone:build": "keystone build",
-    "keystone:start": "keystone start",
     "next:dev": "next dev -p 4000",
     "start": "next start",
     "typecheck": "tsc",
     "build": "yarn next build && yarn next export && touch ./out/.nojekyll",
-    "db:prod": "NODE_ENV=production yarn keystone prisma db push",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.14",
     "@emotion/css": "^11.10.6",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@keystone-6/core": "^5.1.0",
     "@tabler/icons-react": "^2.6.0",
     "dayjs": "^1.11.2",
     "github-markdown-css": "^5.1.0",
+    "graphql": "^16.6.0",
     "gray-matter": "^4.0.3",
     "markdown-toc": "^1.2.0",
     "next": "^13.2.4",
