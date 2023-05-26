@@ -27,18 +27,18 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
             passHref
             key={item.pathname}
             href={{
-              pathname: isActive ? 'javascript:void(0)' : item.pathname,
+              pathname: item.pathname,
             }}
           >
             <a
               className={cx(
                 'relative',
                 'flex items-center gap-2',
-                'py-2 px-4',
+                'px-4',
                 'font-semibold text-slate-700 dark:text-slate-200',
-                'hover:after:absolute hover:after:w-0.5 hover:after:bg-stone-400 hover:after:h-4/5 hover:after:right-0',
+                'hover:after:absolute hover:after:h-0.5 hover:after:bg-stone-400 hover:after:w-4/5 hover:after:-bottom-2',
                 isActive &&
-                  'after:absolute after:w-0.5 after:bg-stone-400 after:h-4/5 after:right-0'
+                  'after:absolute after:h-0.5 after:bg-stone-400 after:w-4/5 after:-bottom-2'
               )}
             >
               {item.icon}
