@@ -58,27 +58,15 @@ const Post: Lists.Post = list({
         },
       },
     }),
-    prev: json({
-      defaultValue: {},
-      ui: {
-        itemView: {
-          fieldMode: 'hidden',
-        },
-        createView: {
-          fieldMode: 'hidden',
-        },
-      },
+    prevArticle: relationship({
+      ref: 'Post.nextArticle',
+      many: false,
+      ui: { hideCreate: true, displayMode: 'select' },
     }),
-    next: json({
-      defaultValue: {},
-      ui: {
-        itemView: {
-          fieldMode: 'hidden',
-        },
-        createView: {
-          fieldMode: 'hidden',
-        },
-      },
+    nextArticle: relationship({
+      ref: 'Post.prevArticle',
+      many: false,
+      ui: { hideCreate: true, displayMode: 'select' },
     }),
     brief: text({
       ui: {
@@ -104,6 +92,7 @@ const Post: Lists.Post = list({
     },
     afterOperation: async ({ operation, item, context }) => {
       if (operation === 'create') {
+        return
         const { categoryId, ctime } = item
         if (!categoryId) return
         const list = await context.query.Post.findMany({
@@ -134,6 +123,7 @@ const Post: Lists.Post = list({
     },
     beforeOperation: async ({ operation, item, context }) => {
       if (operation === 'delete') {
+        return
         const { prev, next, attachmentId } = item
         prev?.slug &&
           context.query.Post.updateOne({
@@ -231,18 +221,17 @@ const UploadPost = list({
       }
       return resolvedData
     },
-    afterOperation({ operation, originalItem, item, context }) {
+    async afterOperation({ operation, originalItem, item, context }) {
       if (operation === 'update') {
         if (!originalItem.isLive && item.isLive) {
-          createPosts([item.preview], context).then(([{ id: postId }]) => {
-            context.query.UploadPost.updateOne({
-              data: { preview: '', post: { connect: { id: postId } } },
-              where: { id: item.id.toString() },
-            })
-            context.query.Post.updateOne({
-              data: { attachment: { connect: { id: item.id } } },
-              where: { id: postId },
-            })
+          const [{ id: postId }] = await createPosts([item.preview], context)
+          context.query.UploadPost.updateOne({
+            data: { preview: '', post: { connect: { id: postId } } },
+            where: { id: item.id.toString() },
+          })
+          context.query.Post.updateOne({
+            data: { attachment: { connect: { id: item.id } } },
+            where: { id: postId },
           })
         }
       }

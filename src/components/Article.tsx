@@ -5,6 +5,7 @@ import { IconCalendar, IconClock } from '@tabler/icons-react'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeFigure from 'rehype-figure'
+import dayjs from 'dayjs'
 
 const Article: React.FC<{ post: Post }> = ({ post }) => {
   const reactContent = useRemarkSync(post.content, {
@@ -23,7 +24,7 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
         <div className="mt-2 flex justify-center text-xs items-center gap-4">
           <div className="flex gap-0.5 items-center">
             <IconCalendar size={12} />
-            {post.date}, {new Date(post.ctime).getFullYear()}
+            <span>{`发布于 ${dayjs(post.ctime).format('YYYY-MM-DD')}`}</span>
           </div>
           <div className="flex gap-0.5 items-center">
             <IconClock size={12} />

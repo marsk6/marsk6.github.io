@@ -10,6 +10,6 @@ type Post = {
   brief?: string
   category: string
   readingTime: string
-  prev?: any
-  next?: any
+  prevArticle?: Post
+  nextArticle?: Post
 }

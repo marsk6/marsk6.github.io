@@ -9,6 +9,7 @@ import Card from '@/components/Card'
 import Tag from '@/components/ui/Tag'
 import Toc from '@/components/Toc'
 import Article from '@/components/Article'
+import Link from 'next/link'
 
 type Props = {
   post: Post
@@ -32,6 +33,53 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
     </>
   ))
 
+  const renderFooter = () => {
+    if (post.prevArticle || post.nextArticle) {
+      return (
+        <section className="flex mt-6">
+          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
+            {post.prevArticle && (
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.prevArticle.slug },
+                }}
+              >
+                <a
+                  className="text-sm underline text-[#58a6ff]"
+                  title={post.prevArticle.title}
+                >
+                  👈🏻 {post.prevArticle.title}
+                </a>
+              </Link>
+            )}
+          </div>
+          <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
+            {post.nextArticle && (
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.nextArticle.slug },
+                }}
+              >
+                <a
+                  className="text-sm underline text-[#58a6ff]"
+                  title={post.nextArticle.title}
+                >
+                  {post.nextArticle.title} 👉🏻
+                </a>
+              </Link>
+            )}
+          </div>
+        </section>
+      )
+    }
+  }
+
   return (
     <>
       <NextSeo
@@ -44,12 +92,13 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
         url={`${process.env.BLOG.site}/posts/${post.slug}`}
         title={process.env.BLOG.title}
         images={[]}
-        datePublished="2020-01-01T08:00:00+08:00"
+        datePublished={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
         dateModified={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
         authorName="Marsk"
         description={post.brief || post.title}
       />
       <Article post={post} />
+      {renderFooter()}
     </>
   )
 }

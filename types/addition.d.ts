@@ -3,6 +3,7 @@ declare namespace NodeJS {
     BLOG: {
       title: string
       site: string
-    }
+    },
+    __DEV__: boolean
   }
 }

@@ -19,14 +19,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
       >
         <Background />
+        <Navbar />
         <section
           className={cx(
             'container flex gap-2 relative',
             'flex-col',
-            'lg:max-w-6xl lg:flex-row lg:mt-4 lg:items-start lg:mx-auto'
+            'lg:max-w-5xl lg:flex-row lg:mt-4 lg:items-start lg:mx-auto'
           )}
         >
-          <Navbar />
           <section
             className={cx(
               'p-6 bg-[#fefefe] dark:bg-[#19191c] opacity-100 rounded shadow-[0px_0px_20px_0px_#e2e8f0]',
