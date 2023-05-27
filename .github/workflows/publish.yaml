@@ -9,14 +9,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Cache
-        uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
       - name: checkout keystone admin
         uses: actions/checkout@v3
         with:
           repository: 'git@github.com:marsk6/blog-admin.git'
+      - name: Cache
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
       - name: build and deploy admin
         run:  |
           yarn
