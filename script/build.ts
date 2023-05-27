@@ -25,7 +25,7 @@ const isAdminRun = () => {
 }
 const main = async () => {
   await execSh
-    .promise('git clone git@github.com:marsk6/blog-admin.git admin')
+    .promise('gh repo clone marsk6/blog-admin admin')
     .catch(() => console.log('000000'))
 
   await execSh.promise('git pull origin master', { cwd: './admin' })
