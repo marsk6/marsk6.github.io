@@ -8,7 +8,7 @@ let count = 0
 const isAdminRun = () => {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      execSh('yarn healthcheck', { cwd: '../admin' }, (err) => {
+      execSh('yarn healthcheck', { cwd: './admin' }, (err) => {
         if (err) {
           if (count === 5) {
             reject(err)
@@ -25,7 +25,7 @@ const isAdminRun = () => {
 }
 const main = async () => {
   console.log('---------------- start admin ----------------')
-  const childProcess = execSh('yarn keystone:start', { cwd: '../admin' })
+  const childProcess = execSh('yarn keystone:start', { cwd: './admin' })
 
   await isAdminRun()
 
