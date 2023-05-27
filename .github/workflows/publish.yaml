@@ -11,14 +11,29 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: checkout admin repo
         uses: actions/checkout@v3
+        with:
+          repository: marsk6/blog-admin
+          path: admin
       - name: Cache
         uses: actions/setup-node@v3
         with:
           cache: 'yarn'
-      - name: install deps
+      - name: install admin deps
         run:  |
+          pwd
+          yarn
+      - name: build admin
+        run:  |
+          yarn keystone:build
+      - name: checkout blog repo
+        uses: actions/checkout@v3
+        with:
+          path: blog
+      - name: install blog deps
+        run:  |
+          pwd
           yarn
       - name: build blog
         run:  |

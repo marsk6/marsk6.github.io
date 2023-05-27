@@ -24,23 +24,8 @@ const isAdminRun = () => {
   })
 }
 const main = async () => {
-  console.log('---------------- clone admin repo ----------------')
-  await execSh
-    .promise('gh repo clone marsk6/blog-admin admin')
-    .catch(() => {})
-
-  console.log('---------------- update admin repo ----------------')
-  await execSh.promise('git pull origin master', { cwd: './admin' })
-
-  console.log('---------------- install admin deps ----------------')
-  await execSh.promise('yarn', { cwd: './admin' })
-
-
-  console.log('---------------- build admin ----------------')
-  await execSh.promise('yarn keystone:build', { cwd: './admin' })
-
   console.log('---------------- start admin ----------------')
-  const childProcess = execSh('yarn keystone:start', { cwd: './admin' })
+  const childProcess = execSh('yarn keystone:start', { cwd: '../admin' })
 
   await isAdminRun()
 
