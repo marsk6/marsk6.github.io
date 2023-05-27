@@ -24,10 +24,10 @@ jobs:
       - name: install admin deps
         run:  |
           pwd
-          yarn
+          yarn --cwd ./admin
       - name: build admin
         run:  |
-          yarn keystone:build
+          yarn --cwd ./admin keystone:build
       - name: checkout blog repo
         uses: actions/checkout@v3
         with:
@@ -40,10 +40,10 @@ jobs:
       - name: install blog deps
         run:  |
           pwd
-          yarn
+          yarn --cwd ./blog
       - name: build blog
         run:  |
-          yarn build
+          yarn --cwd ./blog build
       - name: deploy blog
         uses: JamesIves/github-pages-deploy-action@v4
         with:
