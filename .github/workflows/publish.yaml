@@ -5,6 +5,8 @@ on:
       - master
 permissions:
   contents: write
+env:
+  GH_TOKEN: ${{ blog.TOKEN }}
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
