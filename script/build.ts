@@ -3,19 +3,38 @@
  *
  */
 
-import { simpleGit } from 'simple-git'
-
+import execSh from 'exec-sh'
+let count = 0
+const isAdminRun = () => {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      execSh('yarn healthcheck', { cwd: './admin' }, (err) => {
+        if (err) {
+          if (count === 5) {
+            reject(err)
+          } else {
+            count++
+            resolve(isAdminRun())
+          }
+        }
+        resolve('')
+      })
+      clearTimeout(timer)
+    }, 2000)
+  })
+}
 const main = async () => {
-  const git = simpleGit()
-  await git.clone()
-  await git.checkout('master')
-  await git.deleteLocalBranch('auto/release', true)
-  await git.checkoutBranch('auto/release', 'origin/master')
-  await cb()
-  await git.add('.')
-  await git.commit('release new articles')
-  await git.checkout('master')
-  await git.mergeFromTo('', 'auto/release')
+  await execSh
+    .promise('git clone git@github.com:marsk6/blog-admin.git admin')
+    .catch(() => console.log('000000'))
+
+  await execSh.promise('git pull origin master', { cwd: './admin' })
+  const childProcess = execSh('yarn && yarn deploy', { cwd: './admin' })
+  await isAdminRun()
+  console.log('to next deploy')
+  await execSh.promise('yarn next:build')
+  console.log('finish build')
+  childProcess.kill()
 }
 
 main()
