@@ -11,6 +11,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout blog repo
+        uses: actions/checkout@v3
       - name: checkout admin repo
         uses: actions/checkout@v3
         with:
@@ -20,32 +22,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: 'yarn'
-          cache-dependency-path: admin
-      - name: install admin deps
+      - name: install blog deps
         run:  |
           pwd
+          yarn
+      - name: install admin deps
+        run:  |
           yarn --cwd ./admin
       - name: build admin
         run:  |
           yarn --cwd ./admin keystone:build
-      - name: checkout blog repo
-        uses: actions/checkout@v3
-        with:
-          path: blog
-      - name: cache blog
-        uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          cache-dependency-path: blog
-      - name: install blog deps
-        run:  |
-          pwd
-          yarn --cwd ./blog
       - name: build blog
         run:  |
-          yarn --cwd ./blog build
+          yarn build
       - name: deploy blog
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: blog/out
+          folder: out
           token: ${{ secrets.ACCESS_TOKEN }}
