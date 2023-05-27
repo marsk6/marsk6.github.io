@@ -8,7 +8,7 @@ let count = 0
 const isAdminRun = () => {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      execSh('yarn healthcheck', { cwd: './admin' }, (err) => {
+      execSh('yarn healthcheck', { cwd: '../admin' }, (err) => {
         if (err) {
           if (count === 5) {
             reject(err)
