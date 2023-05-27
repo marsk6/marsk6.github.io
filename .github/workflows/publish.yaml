@@ -12,7 +12,7 @@ jobs:
       - name: checkout keystone admin
         uses: actions/checkout@v3
         with:
-          repository: 'git@github.com:marsk6/blog-admin.git'
+          repository: 'marsk6/blog-admin'
           ref: 'master'
       - name: Cache
         uses: actions/setup-node@v3
