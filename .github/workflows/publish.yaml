@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 env:
-  GH_TOKEN: ${{ blog.TOKEN }}
+  GH_TOKEN: ${{ github.TOKEN }}
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
