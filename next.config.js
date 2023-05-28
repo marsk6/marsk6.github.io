@@ -24,7 +24,7 @@ const nextConfig = {
     _DEV_: process.env.NODE_ENV !== 'production',
     BLOG: {
       title: 'Hea的web博客',
-      site: 'https://masrk.github.io',
+      site: 'https://marsk6.github.io',
     },
   },
 }
