@@ -36,46 +36,51 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
   const renderFooter = () => {
     if (post.prevArticle || post.nextArticle) {
       return (
-        <section className="flex mt-6">
-          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
-            {post.prevArticle && (
-              <Link
-                passHref
-                legacyBehavior
-                href={{
-                  pathname: '/posts/[slug]',
-                  query: { slug: post.prevArticle.slug },
-                }}
-              >
-                <a
-                  className="text-sm underline text-[#58a6ff]"
-                  title={post.prevArticle.title}
+        <footer className="flex flex-col gap-6 mt-6">
+          {post.mtime && (
+            <p>-- 更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</p>
+          )}
+          <section className="flex">
+            <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
+              {post.prevArticle && (
+                <Link
+                  passHref
+                  legacyBehavior
+                  href={{
+                    pathname: '/posts/[slug]',
+                    query: { slug: post.prevArticle.slug },
+                  }}
                 >
-                  👈🏻 {post.prevArticle.title}
-                </a>
-              </Link>
-            )}
-          </div>
-          <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
-            {post.nextArticle && (
-              <Link
-                passHref
-                legacyBehavior
-                href={{
-                  pathname: '/posts/[slug]',
-                  query: { slug: post.nextArticle.slug },
-                }}
-              >
-                <a
-                  className="text-sm underline text-[#58a6ff]"
-                  title={post.nextArticle.title}
+                  <a
+                    className="text-sm underline text-[#58a6ff]"
+                    title={post.prevArticle.title}
+                  >
+                    👈🏻 {post.prevArticle.title}
+                  </a>
+                </Link>
+              )}
+            </div>
+            <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
+              {post.nextArticle && (
+                <Link
+                  passHref
+                  legacyBehavior
+                  href={{
+                    pathname: '/posts/[slug]',
+                    query: { slug: post.nextArticle.slug },
+                  }}
                 >
-                  {post.nextArticle.title} 👉🏻
-                </a>
-              </Link>
-            )}
-          </div>
-        </section>
+                  <a
+                    className="text-sm underline text-[#58a6ff]"
+                    title={post.nextArticle.title}
+                  >
+                    {post.nextArticle.title} 👉🏻
+                  </a>
+                </Link>
+              )}
+            </div>
+          </section>
+        </footer>
       )
     }
   }
@@ -93,7 +98,9 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
         title={process.env.BLOG.title}
         images={[]}
         datePublished={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
-        dateModified={dayjs(post.ctime).format('YYYY-MM-DDTHH:mm:ssZZ')}
+        dateModified={dayjs(post.mtime || post.ctime).format(
+          'YYYY-MM-DDTHH:mm:ssZZ'
+        )}
         authorName="Marsk"
         description={post.brief || post.title}
       />

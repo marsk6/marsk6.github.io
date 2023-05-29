@@ -42,6 +42,7 @@ export async function getPostBySlug(slug: string) {
             name
           }
           ctime
+          mtime
           date
           content
           prevArticle {
