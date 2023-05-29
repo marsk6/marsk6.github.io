@@ -10,6 +10,7 @@ import Tag from '@/components/ui/Tag'
 import Toc from '@/components/Toc'
 import Article from '@/components/Article'
 import Link from 'next/link'
+import { IconEditCircle } from '@tabler/icons-react'
 
 type Props = {
   post: Post
@@ -38,7 +39,10 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
       return (
         <footer className="flex flex-col gap-6 mt-6">
           {post.mtime && (
-            <p>-- 更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</p>
+            <div className="flex items-center gap-1 ml-auto whitespace-nowrap text-xs leading-6 text-slate-400">
+              <IconEditCircle size={12} />
+              <span>更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</span>
+            </div>
           )}
           <section className="flex">
             <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
