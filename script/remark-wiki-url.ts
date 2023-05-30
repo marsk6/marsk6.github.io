@@ -7,7 +7,7 @@ export default function remarkWikiUrl(options: { cdnUrl: string }) {
       if (lastChild && lastChild.type === 'text') {
         let string = lastChild.value.replace(/ +$/, '')
         const matched = string.match(/^!\[{2}.+?\]{2}$/)
-
+        // FIXME: 图片和文本在同一行就没法识别
         if (matched) {
           const imageNode = {}
           string = string.replace(/^!\[{2}(.+?)\]{2}$/, '$1')
