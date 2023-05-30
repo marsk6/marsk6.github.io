@@ -5,11 +5,18 @@ import { IconCalendar, IconClock } from '@tabler/icons-react'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeFigure from 'rehype-figure'
+import remarkWikiLinkPlugin from '@script/remark-wiki-url'
 import dayjs from 'dayjs'
 
 const Article: React.FC<{ post: Post }> = ({ post }) => {
   const reactContent = useRemarkSync(post.content, {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [
+      remarkGfm,
+      [
+        remarkWikiLinkPlugin,
+        { cdnUrl: 'https://cdn.jsdelivr.net/gh/marsk6/image-center@master' },
+      ],
+    ],
     rehypePlugins: [
       [rehypeExternalLinks, { target: '_blank' }],
       rehypeSlug,
