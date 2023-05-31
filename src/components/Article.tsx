@@ -1,12 +1,49 @@
 import { useRemarkSync } from 'react-remark'
 import remarkGfm from 'remark-gfm'
 import rehypeExternalLinks from 'rehype-external-links'
-import { IconCalendar, IconClock } from '@tabler/icons-react'
+import {
+  IconCalendar,
+  IconClock,
+  IconCopy,
+  IconSquareRoundedCheck,
+} from '@tabler/icons-react'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeFigure from 'rehype-figure'
 import remarkWikiLinkPlugin from '@script/remark-wiki-url'
+import addClasses from 'rehype-add-classes'
 import dayjs from 'dayjs'
+import React, { PropsWithChildren, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+import useCopy from '@/hooks/useCopy'
+
+const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
+  const [showCopyBtn, setShowCopyBtn] = useState(false)
+  return (
+    <pre
+      {...rest}
+      className="pre-copy"
+      onMouseEnter={() => setShowCopyBtn(true)}
+      onMouseLeave={() => setShowCopyBtn(false)}
+    >
+      {showCopyBtn && <CopyButton text={children[0].props.children[0]} />}
+      {children}
+    </pre>
+  )
+}
+
+const CopyButton: React.FC<{ text: string }> = ({ text }) => {
+  const [isCopied, handleCopy] = useCopy(text)
+  return (
+    <div className="pre-copy-button" onClick={handleCopy}>
+      {isCopied ? (
+        <IconSquareRoundedCheck size={12} color="green" />
+      ) : (
+        <IconCopy size={12} />
+      )}
+    </div>
+  )
+}
 
 const Article: React.FC<{ post: Post }> = ({ post }) => {
   const reactContent = useRemarkSync(post.content, {
@@ -21,9 +58,24 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
       [rehypeExternalLinks, { target: '_blank' }],
       rehypeSlug,
       rehypeAutolinkHeadings,
-      [rehypeFigure, , { className: 'blog-image-figure' }],
+      [rehypeFigure, { className: 'blog-image-figure' }],
     ],
+    rehypeReactOptions: {
+      components: {
+        pre: PreElement,
+      },
+    },
   })
+  useEffect(() => {
+    document.querySelectorAll('.pre-copy').forEach((preNode) => {
+      preNode.addEventListener('mouseenter', () => {
+        preNode.querySelector<HTMLButtonElement>('.pre-copy-button')?.remove()
+      })
+      preNode.addEventListener('mouseleave', () => {
+        preNode.querySelector<HTMLButtonElement>('.pre-copy-button')?.remove()
+      })
+    })
+  }, [])
   return (
     <article className="p-2">
       <header className="mb-4">

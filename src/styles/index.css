@@ -57,3 +57,15 @@
   text-align: center;
   font-style: italic;
 }
+
+.pre-copy {
+  position: relative;
+}
+
+.pre-copy-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  padding: 4px;
+  background-color: #a8a29e;
+}
