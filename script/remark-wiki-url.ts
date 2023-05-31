@@ -5,13 +5,13 @@ export default function remarkWikiUrl(options: { cdnUrl: string }) {
     visit(node, 'paragraph', (node, index, parent) => {
       const lastChild = node.children[node.children.length - 1]
       if (lastChild && lastChild.type === 'text') {
-        let string = lastChild.value.replace(/ +$/, '')
-        const matched = string.match(/^!\[{2}.+?\]{2}$/)
-        // FIXME: 图片和文本在同一行就没法识别
+        const string = lastChild.value.replace(/ +$/, '')
+        const matched = string.match(/!\[{2}(.+)?\]{2}/)
+
         if (matched) {
           const imageNode = {}
-          string = string.replace(/^!\[{2}(.+?)\]{2}$/, '$1')
-          const keys = string.split('|')
+          const wikiLink = matched[0]
+          const keys = matched[1].split('|')
           imageNode.type = 'image'
           imageNode.url = `${options.cdnUrl}/${keys[0]}`
           if (!imageNode.data) {
@@ -34,7 +34,26 @@ export default function remarkWikiUrl(options: { cdnUrl: string }) {
               }
             }
           })
-          parent.children[index] = imageNode
+          const [startString, endString] = string.split(wikiLink)
+          const newNode = []
+          if (startString) {
+            newNode.push({
+              type: 'text',
+              value: startString
+            })
+          }
+          newNode.push(imageNode)
+          if (endString) {
+            newNode.push({
+              type: 'text',
+              value: endString
+            })
+          }
+          if (newNode.length > 1) {
+            node.children = newNode
+          } else {
+            parent.children.splice(index, 1, ...newNode)
+          }
         }
       }
     })
