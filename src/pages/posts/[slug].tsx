@@ -56,7 +56,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                   }}
                 >
                   <a
-                    className="text-sm underline text-[#58a6ff]"
+                    className="text-sm underline dark:text-[#58a6ff] text-[#0969da]"
                     title={post.prevArticle.title}
                   >
                     👈🏻 {post.prevArticle.title}
@@ -75,7 +75,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
                   }}
                 >
                   <a
-                    className="text-sm underline text-[#58a6ff]"
+                    className="text-sm underline dark:text-[#58a6ff] text-[#0969da]"
                     title={post.nextArticle.title}
                   >
                     {post.nextArticle.title} 👉🏻

@@ -87,6 +87,9 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
     rehypeReactOptions: {
       components: {
         pre: PreElement,
+        img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+          <img {...props} loading="lazy" />
+        ),
       },
     },
   })

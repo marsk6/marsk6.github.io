@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         className={cx(
           'flex flex-col max-w-full',
           'bg-stone-50 dark:bg-stone-900',
-          'text-stone-800  dark:text-[#c9d1d9]'
+          'text-stone-800 dark:text-[#c9d1d9]'
         )}
       >
         <Background />
