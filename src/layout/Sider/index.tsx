@@ -15,7 +15,7 @@ export const SiderContext = React.createContext<SideContextType>({
 export const SiderProvider: React.FC = ({ children }) => {
   const [siders, setSider] = useState<SideContextType['siders']>([])
   const addSider: SideContextType['addSider'] = (render) => {
-    setSider([...siders, render])
+    setSider([render])
   }
   const removeSider: SideContextType['removeSider'] = (render) => {
     const index = siders.indexOf(render)
@@ -45,7 +45,7 @@ const Sider: React.FC<SiderProps> = () => {
   const { siders } = useContext(SiderContext)
   if (siders.length === 0) return null
   return (
-    <aside className="flex flex-col gap-4 self-start order-2 lg:order-3 lg:w-44 lg:sticky top-4">
+    <aside className="flex flex-col gap-4 self-start order-2 lg:order-3 lg:w-44 lg:sticky top-16">
       {siders.map((sider, index) =>
         React.cloneElement(sider(), { key: index })
       )}

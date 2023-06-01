@@ -1,7 +1,10 @@
-import { getAllPosts } from '@/api/local'
+import { getAllPosts, getTags } from '@/api/local'
 import Link from 'next/link'
 import { NextSeo, ArticleJsonLd } from 'next-seo'
 import { cx } from '@emotion/css'
+import { useSetSider } from '@/layout/Sider'
+import Card from '@/components/Card'
+import Tag from '@/components/ui/Tag'
 
 export type PageProps = {
   posts: { [year: string]: Post[] }
@@ -9,7 +12,18 @@ export type PageProps = {
   tags: Array<{ name: string; postsCount: number }>
 }
 
-const Home: React.FC<PageProps> = ({ posts }) => {
+const Home: React.FC<PageProps> = ({ posts, tags }) => {
+  useSetSider(() => (
+    <>
+      <Card className="flex flex-col gap-2 items-start">
+        {tags.map((tag) => {
+          return (
+            <Tag key={tag.name} sup={tag.postsCount} name={tag.name}></Tag>
+          )
+        })}
+      </Card>
+    </>
+  ))
   const items = Object.keys(posts)
     .sort((a, b) => b - a)
     .map((year) => {
@@ -52,7 +66,7 @@ const Home: React.FC<PageProps> = ({ posts }) => {
               >
                 <a
                   className={cx(
-                    'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline',
+                    'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline'
                   )}
                 >
                   {post.title}
@@ -88,7 +102,7 @@ const Home: React.FC<PageProps> = ({ posts }) => {
 export default Home
 
 export const getStaticProps = async () => {
-  const [allPosts] = await Promise.all([getAllPosts()])
+  const [allPosts, tags] = await Promise.all([getAllPosts(), getTags()])
   const posts: Record<number, Post[]> = {}
   allPosts.forEach((post) => {
     const year = new Date(post.ctime).getFullYear()
@@ -98,6 +112,6 @@ export const getStaticProps = async () => {
     posts[year].push(post)
   })
   return {
-    props: { posts },
+    props: { posts, tags },
   }
 }

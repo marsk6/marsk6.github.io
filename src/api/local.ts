@@ -1,5 +1,3 @@
-import fs from 'node:fs/promises'
-import { join } from 'path'
 import {
   ApolloClient,
   InMemoryCache,
@@ -16,15 +14,7 @@ const client = new ApolloClient({
   credentials: 'include',
 })
 
-const postsDirectory = join(process.cwd(), '_posts')
 export const pageSize = 2
-
-/**
- * @description 获取文章文件名
- */
-export async function getPostSlugs() {
-  return await fs.readdir(postsDirectory)
-}
 
 export async function getPostBySlug(slug: string) {
   const {
@@ -158,7 +148,7 @@ export async function getTags() {
       }
     `,
   })
-  return Array.from(tags).sort((a, b) => a.postCount - b.postCount)
+  return Array.from(tags).sort((a, b) => b.postCount - a.postCount)
 }
 
 export async function getCategories() {

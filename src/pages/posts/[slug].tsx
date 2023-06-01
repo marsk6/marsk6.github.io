@@ -35,58 +35,56 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
   ))
 
   const renderFooter = () => {
-    if (post.prevArticle || post.nextArticle) {
-      return (
-        <footer className="flex flex-col gap-6 mt-6">
-          {post.mtime && (
-            <div className="flex items-center gap-1 ml-auto whitespace-nowrap text-xs leading-6 text-slate-400">
-              <IconEditCircle size={12} />
-              <span>更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</span>
-            </div>
-          )}
-          <section className="flex">
-            <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
-              {post.prevArticle && (
-                <Link
-                  passHref
-                  legacyBehavior
-                  href={{
-                    pathname: '/posts/[slug]',
-                    query: { slug: post.prevArticle.slug },
-                  }}
+    return (
+      <footer className="flex flex-col gap-6 mt-6">
+        {Boolean(post.mtime) && (
+          <div className="flex items-center gap-1 ml-auto whitespace-nowrap text-xs leading-6 text-slate-400">
+            <IconEditCircle size={12} />
+            <span>更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</span>
+          </div>
+        )}
+        <section className="flex">
+          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
+            {post.prevArticle && (
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.prevArticle.slug },
+                }}
+              >
+                <a
+                  className="text-sm underline dark:text-[#58a6ff] text-[#0969da]"
+                  title={post.prevArticle.title}
                 >
-                  <a
-                    className="text-sm underline dark:text-[#58a6ff] text-[#0969da]"
-                    title={post.prevArticle.title}
-                  >
-                    👈🏻 {post.prevArticle.title}
-                  </a>
-                </Link>
-              )}
-            </div>
-            <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
-              {post.nextArticle && (
-                <Link
-                  passHref
-                  legacyBehavior
-                  href={{
-                    pathname: '/posts/[slug]',
-                    query: { slug: post.nextArticle.slug },
-                  }}
+                  👈🏻 {post.prevArticle.title}
+                </a>
+              </Link>
+            )}
+          </div>
+          <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
+            {post.nextArticle && (
+              <Link
+                passHref
+                legacyBehavior
+                href={{
+                  pathname: '/posts/[slug]',
+                  query: { slug: post.nextArticle.slug },
+                }}
+              >
+                <a
+                  className="text-sm underline dark:text-[#58a6ff] text-[#0969da]"
+                  title={post.nextArticle.title}
                 >
-                  <a
-                    className="text-sm underline dark:text-[#58a6ff] text-[#0969da]"
-                    title={post.nextArticle.title}
-                  >
-                    {post.nextArticle.title} 👉🏻
-                  </a>
-                </Link>
-              )}
-            </div>
-          </section>
-        </footer>
-      )
-    }
+                  {post.nextArticle.title} 👉🏻
+                </a>
+              </Link>
+            )}
+          </div>
+        </section>
+      </footer>
+    )
   }
 
   return (

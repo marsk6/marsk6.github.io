@@ -34,6 +34,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               'order-3 lg:order-2',
               css`
                 flex: 1;
+                width: calc(100% - 44rem);
                 min-height: calc(100.1vh - var(--header-height));
               `
             )}
