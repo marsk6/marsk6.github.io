@@ -39,21 +39,17 @@ export default function remarkWikiUrl(options: { cdnUrl: string }) {
           if (startString) {
             newNode.push({
               type: 'text',
-              value: startString
+              value: startString,
             })
           }
           newNode.push(imageNode)
           if (endString) {
             newNode.push({
               type: 'text',
-              value: endString
+              value: endString,
             })
           }
-          if (newNode.length > 1) {
-            node.children = newNode
-          } else {
-            parent.children.splice(index, 1, ...newNode)
-          }
+          node.children = newNode
         }
       }
     })

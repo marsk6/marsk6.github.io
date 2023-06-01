@@ -82,7 +82,7 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
       [rehypeExternalLinks, { target: '_blank' }],
       rehypeSlug,
       rehypeAutolinkHeadings,
-      [rehypeFigure, { className: 'blog-image-figure' }],
+      rehypeFigure,
     ],
     rehypeReactOptions: {
       components: {
