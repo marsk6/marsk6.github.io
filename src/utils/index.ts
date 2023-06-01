@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
 export function copyToClipboard(text: string) {
   try {
     if (text) {
@@ -22,18 +21,3 @@ export function copyToClipboard(text: string) {
   }
   return false
 }
-
-function useCopy(text: string) {
-  const [isCopied, setIsCopied] = useState(false)
-  const handleCopy = useMemo(() => {
-    setIsCopied(false)
-    return () => {
-      copyToClipboard(text)
-      setIsCopied(true)
-    }
-  }, [text])
-
-  return [isCopied, handleCopy] as [boolean, () => void]
-}
-
-export default useCopy

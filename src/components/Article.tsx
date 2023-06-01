@@ -11,11 +11,10 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeFigure from 'rehype-figure'
 import remarkWikiLinkPlugin from '@script/remark-wiki-url'
-import addClasses from 'rehype-add-classes'
 import dayjs from 'dayjs'
 import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
-import useCopy from '@/hooks/useCopy'
+import { cx } from '@emotion/css'
+import { copyToClipboard } from '@/utils'
 
 const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
   const [showCopyBtn, setShowCopyBtn] = useState(false)
@@ -26,20 +25,45 @@ const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
       onMouseEnter={() => setShowCopyBtn(true)}
       onMouseLeave={() => setShowCopyBtn(false)}
     >
-      {showCopyBtn && <CopyButton text={children[0].props.children[0]} />}
+      <CopyButton
+        visible={showCopyBtn}
+        className={cx(
+          showCopyBtn ? 'pre-copy-button--fade-in' : 'pre-copy-button--fade-out'
+        )}
+        text={children[0].props.children[0]}
+      />
       {children}
     </pre>
   )
 }
 
-const CopyButton: React.FC<{ text: string }> = ({ text }) => {
-  const [isCopied, handleCopy] = useCopy(text)
+const CopyButton: React.FC<{
+  text: string
+  className?: string
+  visible: boolean
+}> = ({ text, className, visible }) => {
+  const [isCopied, setIsCopied] = useState(false)
+  const handleCopy = () => {
+    copyToClipboard(text)
+    setIsCopied(true)
+  }
+  useEffect(() => {
+    if (!visible) {
+      setTimeout(() => {
+        setIsCopied(false)
+      }, 500)
+    }
+  }, [visible])
   return (
-    <div className="pre-copy-button" onClick={handleCopy}>
+    <div
+      className={cx('pre-copy-button', className)}
+      onClick={handleCopy}
+      title={isCopied ? 'Copied' : 'Copy'}
+    >
       {isCopied ? (
-        <IconSquareRoundedCheck size={12} color="green" />
+        <IconSquareRoundedCheck size={18} color="green" />
       ) : (
-        <IconCopy size={12} />
+        <IconCopy size={18} />
       )}
     </div>
   )
@@ -66,16 +90,6 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
       },
     },
   })
-  useEffect(() => {
-    document.querySelectorAll('.pre-copy').forEach((preNode) => {
-      preNode.addEventListener('mouseenter', () => {
-        preNode.querySelector<HTMLButtonElement>('.pre-copy-button')?.remove()
-      })
-      preNode.addEventListener('mouseleave', () => {
-        preNode.querySelector<HTMLButtonElement>('.pre-copy-button')?.remove()
-      })
-    })
-  }, [])
   return (
     <article className="p-2">
       <header className="mb-4">
