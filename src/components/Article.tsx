@@ -19,8 +19,7 @@ import { copyToClipboard } from '@/utils'
 const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
   const [showCopyBtn, setShowCopyBtn] = useState(false)
   return (
-    <pre
-      {...rest}
+    <p
       className="pre-copy"
       onMouseEnter={() => setShowCopyBtn(true)}
       onMouseLeave={() => setShowCopyBtn(false)}
@@ -32,8 +31,8 @@ const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
         )}
         text={children[0].props.children[0]}
       />
-      {children}
-    </pre>
+      <pre {...rest}>{children}</pre>
+    </p>
   )
 }
 
@@ -96,7 +95,9 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <article className="p-2">
       <header className="mb-4">
-        <h1 className="text-center font-medium lg:text-4xl text-3xl">{post.title}</h1>
+        <h1 className="text-center font-medium lg:text-4xl text-3xl">
+          {post.title}
+        </h1>
         <div className="mt-2 flex justify-center text-xs items-center gap-4">
           <div className="flex gap-0.5 items-center">
             <IconCalendar size={12} />

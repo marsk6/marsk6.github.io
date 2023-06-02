@@ -45,7 +45,7 @@ const Sider: React.FC<SiderProps> = () => {
   const { siders } = useContext(SiderContext)
   if (siders.length === 0) return null
   return (
-    <aside className="flex flex-col gap-4 self-start order-2 lg:order-3 lg:w-44 lg:sticky top-16">
+    <aside className="lg:flex hidden flex-col gap-4 self-start order-2 lg:order-3 lg:w-44 lg:sticky top-16">
       {siders.map((sider, index) =>
         React.cloneElement(sider(), { key: index })
       )}
