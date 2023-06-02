@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app'
 import Script from 'next/script'
-import '../styles/tailwind.css'
 import '../styles/github-markdown.css'
 import '../styles/index.css'
 

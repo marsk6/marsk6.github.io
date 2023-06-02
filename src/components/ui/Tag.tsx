@@ -12,13 +12,13 @@ const Tag: React.FC<TagProps> = ({ sup, name }) => {
     <Link href={`/tags#${name}`} legacyBehavior passHref>
       <a
         className={cx(
-          'text-xs rounded-full py-1.5 px-3 font-medium',
+          'rounded-full py-1 px-2 font-medium text-xs',
           'bg-stone-50 dark:bg-stone-900',
           'hover:bg-stone-200, dark:hover:bg-stone-400'
         )}
       >
         {name}
-        <sup className="ml-1">{sup}</sup>
+        <sup className="ml-1 scale-75 inline-block">{sup}</sup>
       </a>
     </Link>
   )

@@ -1,5 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --header-height: 56px;
+}
+.markdown-body * {
+  box-sizing: border-box !important;
 }
 .markdown-body ol,
 .markdown-body ul {
@@ -44,16 +51,73 @@
   background-color: #c9d1d9;
 }
 
-.blog-image-figure {
+@layer components {
+  .markdown-body .rehype-figure {
+    @apply mx-auto;
+  }
+  .rehype-figure img {
+    @apply lg:h-72 lg:p-4;
+    @apply p-2 m-auto object-contain rounded-md
+  }
 }
+
 .rehype-figure img {
-  height: 380px;
-  margin: auto;
-  object-fit: contain;
+  border: 1px solid #e7e5e4;
+}
+
+.dark .rehype-figure img {
+  border-color: #737373;
 }
 .rehype-figure figcaption {
   color: #a8a29e;
   font-size: small;
   text-align: center;
   font-style: italic;
+  margin: 4px auto;
+}
+
+
+.pre-copy {
+  position: relative;
+}
+
+.pre-copy-button {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  padding: 4px;
+  background-color: var(--color-canvas-subtle);
+  user-select: none;
+  border: 1px solid;
+  border-radius: 6px;
+  border-color: var(--color-neutral-muted);
+  cursor: pointer;
+}
+
+.pre-copy-button--fade-in {
+  animation: fade-in 200ms forwards;
+}
+
+.pre-copy-button--fade-out {
+  animation: fade-out 200ms forwards;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    display: block;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
 }

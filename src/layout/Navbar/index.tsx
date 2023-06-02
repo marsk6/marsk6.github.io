@@ -24,11 +24,18 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
         <Link legacyBehavior passHref href={{ pathname: '/' }}>
           <a
             className={cx(
-              'dark:text-slate-200 font-medium text-xl text-gray-800 cursor-pointer flex',
+              'font-medium text-xl cursor-pointer flex',
               'mr-auto items-center text-2xl'
             )}
           >
-            Hea✨
+            <span
+              className="bg-clip-text bg-gradient-to-r from-stone-500 to-stone-800 text-transparent
+            dark:from-stone-500 dark:to-stone-200
+            "
+            >
+              Hea
+            </span>
+            ✨
           </a>
         </Link>
         <Menu />

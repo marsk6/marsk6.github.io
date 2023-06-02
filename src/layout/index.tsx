@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         className={cx(
           'flex flex-col max-w-full',
           'bg-stone-50 dark:bg-stone-900',
-          'text-stone-800  dark:text-[#c9d1d9]'
+          'text-stone-800 dark:text-[#c9d1d9]'
         )}
       >
         <Background />
@@ -31,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             className={cx(
               'p-6 bg-[#fefefe] dark:bg-[#19191c] opacity-100 rounded shadow-[0px_0px_20px_0px_#e2e8f0]',
               'dark:shadow-stone-700',
-              'order-3 lg:order-2',
+              'order-3 lg:order-2 lg:w-[calc(100%-44rem)]',
               css`
                 flex: 1;
                 min-height: calc(100.1vh - var(--header-height));
