@@ -96,7 +96,7 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <article className="p-2">
       <header className="mb-4">
-        <p className="text-center font-medium text-4xl">{post.title}</p>
+        <h1 className="text-center font-medium lg:text-4xl text-3xl">{post.title}</h1>
         <div className="mt-2 flex justify-center text-xs items-center gap-4">
           <div className="flex gap-0.5 items-center">
             <IconCalendar size={12} />
