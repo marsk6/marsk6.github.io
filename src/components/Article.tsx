@@ -19,7 +19,7 @@ import { copyToClipboard } from '@/utils'
 const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
   const [showCopyBtn, setShowCopyBtn] = useState(false)
   return (
-    <p
+    <div
       className="pre-copy"
       onMouseEnter={() => setShowCopyBtn(true)}
       onMouseLeave={() => setShowCopyBtn(false)}
@@ -32,7 +32,7 @@ const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
         text={children[0].props.children[0]}
       />
       <pre {...rest}>{children}</pre>
-    </p>
+    </div>
   )
 }
 

@@ -14,15 +14,11 @@ export type PageProps = {
 
 const Home: React.FC<PageProps> = ({ posts, tags }) => {
   useSetSider(() => (
-    <>
-      <Card className="flex flex-col gap-2 items-start">
-        {tags.map((tag) => {
-          return (
-            <Tag key={tag.name} sup={tag.postsCount} name={tag.name}></Tag>
-          )
-        })}
-      </Card>
-    </>
+    <Card className="flex flex-col gap-2 items-start">
+      {tags.map((tag) => {
+        return <Tag key={tag.name} sup={tag.postsCount} name={tag.name}></Tag>
+      })}
+    </Card>
   ))
   const items = Object.keys(posts)
     .sort((a, b) => b - a)
