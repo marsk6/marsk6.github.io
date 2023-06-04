@@ -1,19 +1,13 @@
-export function copyToClipboard(text: string) {
+export function copyToClipboardFromNode<T extends Element>(node: T) {
   try {
-    if (text) {
-      const p = document.createElement('p')
-      p.innerText = text
-      p.style.position = 'absolute'
-      p.style.left = '-99999px'
-      document.body.appendChild(p)
+    if (node) {
       const range = document.createRange()
-      range.selectNodeContents(p)
+      range.selectNodeContents(node)
       const selection = window.getSelection()
       selection.removeAllRanges()
       selection.addRange(range)
       document.execCommand('copy')
       selection.removeAllRanges()
-      p.remove()
       return true
     }
   } catch (e) {
