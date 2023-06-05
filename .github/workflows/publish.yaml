@@ -7,8 +7,6 @@ on:
     types: [admin-update-event]
 permissions:
   contents: write
-env:
-  GH_TOKEN: ${{ github.TOKEN }}
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

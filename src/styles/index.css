@@ -185,4 +185,22 @@ pre {
   user-select: none;
 }
 
+pre[title] {
+  padding-top: 0;
+}
+
+.code-block-title::before {
+  display: block;
+  content: attr(title);
+  padding: 4px 8px;
+  margin-left: -16px;
+  margin-right: -16px;
+  font-size: 12px;
+  background-color: #ebedf0;
+}
+
+.dark .code-block-title::before {
+  background-color: #35393f;
+}
+
 /* rehype prism plus style */
