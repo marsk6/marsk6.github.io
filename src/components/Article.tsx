@@ -12,12 +12,14 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeFigure from 'rehype-figure'
 import remarkWikiLinkPlugin from '@script/remark-wiki-url'
 import dayjs from 'dayjs'
-import React, { PropsWithChildren, useEffect, useState } from 'react'
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { cx } from '@emotion/css'
-import { copyToClipboard } from '@/utils'
+import { copyToClipboardFromNode } from '@/utils'
+import rehypePrism from 'rehype-prism-plus'
 
 const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
   const [showCopyBtn, setShowCopyBtn] = useState(false)
+  const preNode = useRef<HTMLPreElement>(null)
   return (
     <div
       className="pre-copy"
@@ -29,22 +31,26 @@ const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
         className={cx(
           showCopyBtn ? 'pre-copy-button--fade-in' : 'pre-copy-button--fade-out'
         )}
-        text={children[0].props.children[0]}
+        node={preNode.current}
       />
-      <pre {...rest}>{children}</pre>
+      <pre ref={preNode} {...rest}>
+        {children}
+      </pre>
     </div>
   )
 }
 
 const CopyButton: React.FC<{
-  text: string
+  node: Element | null
   className?: string
   visible: boolean
-}> = ({ text, className, visible }) => {
+}> = ({ node, className, visible }) => {
   const [isCopied, setIsCopied] = useState(false)
   const handleCopy = () => {
-    copyToClipboard(text)
-    setIsCopied(true)
+    if (node) {
+      copyToClipboardFromNode(node)
+      setIsCopied(true)
+    }
   }
   useEffect(() => {
     if (!visible) {
@@ -82,6 +88,7 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
       rehypeSlug,
       rehypeAutolinkHeadings,
       rehypeFigure,
+      [rehypePrism, { showLineNumbers: true }],
     ],
     rehypeReactOptions: {
       components: {
