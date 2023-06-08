@@ -3490,7 +3490,7 @@ rehype-parse@^8.0.2:
 
 rehype-prism-plus@marsk6/rehype-prism-plus#feat/diff-code-option:
   version "1.5.0"
-  resolved "https://codeload.github.com/marsk6/rehype-prism-plus/tar.gz/85f554e0aeaa02e6708e94c961667268c04258cd"
+  resolved "https://codeload.github.com/marsk6/rehype-prism-plus/tar.gz/4c5dd68dd5c6943fe4bdf14c9923f0de50651457"
   dependencies:
     hast-util-to-string "^2.0.0"
     parse-numeric-range "^1.3.0"
