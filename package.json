@@ -30,17 +30,13 @@
     "rehype-autolink-headings": "^6.1.1",
     "rehype-external-links": "^2.0.1",
     "rehype-figure": "^1.0.1",
+    "rehype-prism-plus": "marsk6/rehype-prism-plus#feat/diff-code-option",
     "rehype-slug": "^5.1.0",
     "remark": "14.0.2",
     "remark-gfm": "1.0.0",
-    "remark-wiki-link": "^1.0.4",
-    "simple-git": "^3.19.0",
-    "tailwindcss": "^3.0.24",
-    "rehype-prism-plus": "marsk6/rehype-prism-plus#feat/diff-code-option"
+    "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.13",
-    "@types/jest": "^26.0.23",
     "@types/node": "^18.14.2",
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
@@ -48,7 +44,6 @@
     "eslint": "^8.14.0",
     "eslint-config-next": "^12.1.6",
     "exec-sh": "^0.4.0",
-    "fs-extra": "^10.1.0",
     "postcss": "^8.4.13",
     "ts-node": "^10.9.1",
     "typescript": "^4.2.4"

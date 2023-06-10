@@ -5,6 +5,9 @@
 
 import execSh from 'exec-sh'
 let count = 0
+/**
+ * 判断 keystone 是否启动成功
+ */
 const isAdminRun = () => {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
