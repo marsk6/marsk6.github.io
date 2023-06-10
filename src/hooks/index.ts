@@ -25,6 +25,8 @@ const toggleCodeBlockTheme = (isDark: boolean) => {
         'dark-code-block-theme'
       )
     }
+    document.documentElement.classList.add('dark')
+    localStorage.setItem('themeMode', 'dark')
     lightLink?.setAttribute('rel', 'disabled-stylesheet')
   } else {
     if (lightLink) {
@@ -36,6 +38,8 @@ const toggleCodeBlockTheme = (isDark: boolean) => {
       )
     }
     darkLink?.setAttribute('rel', 'disabled-stylesheet')
+    document.documentElement.classList.remove('dark')
+    localStorage.setItem('themeMode', 'light')
   }
 }
 
@@ -43,21 +47,17 @@ export const useDarkMode = () => {
   const [isDark, setDark] = useState(false)
   const isInit = useRef(false)
   useEffect(() => {
+    let nextState = isDark
     if (!isInit.current) {
-      const nextState = localStorage.getItem('themeMode') === 'dark'
+      nextState = localStorage.getItem('themeMode') === 'dark'
       setDark(nextState)
-      isInit.current = true;
-    } else {
-      if (isDark) {
-        document.documentElement.classList.add('dark')
-        localStorage.setItem('themeMode', 'dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.setItem('themeMode', 'light')
+      if (nextState === isDark) {
+        toggleCodeBlockTheme(isDark)
       }
+      isInit.current = true
+    } else {
       toggleCodeBlockTheme(isDark)
     }
-
   }, [isDark])
 
   return {
