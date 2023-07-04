@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://marsk6.github.io</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/lab</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/install-ruby-cocoapods-on-mac</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/zh-cn-js-engine-shape-inline-cache</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/if-disable-source-maps-in-live</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/log-of-reack-hooks-trap</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/error-boundary-for-custom-error</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/css-custom-var</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/expo-intro</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/git-includeif</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/intersectionobserver-table-of-content</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/separate-keystone-from-nextjs-blog</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/whistle-proxy-in-local-dev</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/deploy-blog-to-github-pages</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/build-blog-with-headless-cms</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://marsk6.github.io/posts/build-blog-with-nextjs</loc><lastmod>2023-06-10T11:45:26.643Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/lab</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/install-ruby-cocoapods-on-mac</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/zh-cn-js-engine-shape-inline-cache</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/ignore-file-with-jianguoyun-sync</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/if-disable-source-maps-in-live</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/log-of-reack-hooks-trap</loc><lastmod>2023-07-04T03:17:19.953Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/error-boundary-for-custom-error</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/css-custom-var</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/expo-intro</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/git-includeif</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/intersectionobserver-table-of-content</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/separate-keystone-from-nextjs-blog</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/whistle-proxy-in-local-dev</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/deploy-blog-to-github-pages</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/build-blog-with-headless-cms</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://marsk6.github.io/posts/build-blog-with-nextjs</loc><lastmod>2023-07-04T03:17:19.954Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
