@@ -1,0 +1,6 @@
+.markdown-body {
+  --color-diff-blob-addition-line-bg: #e6ffec;
+  --color-diff-blob-deletion-line-bg: #ffebe9;
+  --color-diff-blob-deletion-num-bg: #ffd7d5;
+  --color-diff-blob-addition-num-bg: #ccffd8;
+}

@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app'
 import Script from 'next/script'
 import '../styles/github-markdown.css'
+import '../styles/github-markdown-extend.css'
 import '../styles/index.css'
 
 import Layout from '@/layout'
