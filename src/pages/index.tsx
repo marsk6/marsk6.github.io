@@ -43,15 +43,6 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
               )}
               key={post.slug}
             >
-              <div
-                className={cx(
-                  'mr-16 w-16 text-right text-slate-500 dark:text-slate-200',
-                  'hidden',
-                  'lg:block'
-                )}
-              >
-                {post.date}
-              </div>
               <Link
                 passHref
                 legacyBehavior
@@ -62,12 +53,24 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
               >
                 <a
                   className={cx(
-                    'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline'
+                    'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline',
+                    'lg:ml-6',
+                    'leading-normal'
                   )}
                 >
                   {post.title}
                 </a>
               </Link>
+              <div className="hidden lg:block flex-1 border-dashed border-slate-300 border-t mx-3" />
+              <div
+                className={cx(
+                  'w-16 text-slate-500 dark:text-slate-200',
+                  'hidden text-base',
+                  'lg:block',
+                )}
+              >
+                {post.date}
+              </div>
             </article>
           ))}
         </section>
@@ -90,7 +93,7 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
         authorName="Marsk"
         description="记录自己的前端工作总结，学习积累，技术思考，疑难问题"
       />
-      <section className="flex flex-col gap-8 lg:gap-4">{items}</section>
+      <section className="flex flex-col gap-8 lg:gap-8">{items}</section>
     </>
   )
 }

@@ -21,6 +21,10 @@
   background-color: var(--color-canvas-default, #0d1117);
 }
 
+.markdown-body pre {
+  padding-left: 0;
+}
+
 .dark .markdown-body pre {
   background-color: #272727;
 }
@@ -57,7 +61,7 @@
   }
   .rehype-figure img {
     @apply lg:h-72 lg:p-4;
-    @apply p-2 m-auto object-contain rounded-md;
+    @apply p-0 m-auto object-contain rounded-md;
   }
 }
 
@@ -164,26 +168,50 @@ pre {
   width: 1rem;
   text-align: right;
   margin-right: 16px;
-  margin-left: -8px;
+  margin-left: -20px;
+  padding-left: 12px;
+  padding-right: 8px;
   color: rgb(156, 163, 175); /* Line number color */
   content: attr(line);
-}
-
-.code-line.inserted {
-  background-color: rgba(16, 185, 129, 0.2); /* Set inserted line (+) color */
-}
-
-.code-line.deleted {
-  background-color: rgba(239, 68, 68, 0.2); /* Set deleted line (-) color */
+  box-sizing: content-box;
+  background-color: var(--color-canvas-subtle);
+  position: sticky;
+  left: 0;
 }
 
 .line-suffix {
   display: inline-block;
-  width: 12px;
-  margin-left: -15px;
+  width: 16px;
+  margin-right: 12px;
   color: rgb(156, 163, 175);
   user-select: none;
+  position: sticky;
+  left: 0;
 }
+
+.code-line.inserted {
+  background-color: var(
+    --color-diff-blob-addition-line-bg
+  ); /* Set inserted line (+) color */
+}
+
+.code-line.deleted {
+  background-color: var(
+    --color-diff-blob-deletion-line-bg
+  ); /* Set deleted line (-) color */
+}
+
+.code-line.inserted .line-suffix,
+.code-line.inserted.line-number::before {
+  background-color: var(--color-diff-blob-addition-num-bg);
+}
+
+.code-line.deleted .line-suffix,
+.code-line.deleted.line-number::before {
+  background-color: var(--color-diff-blob-deletion-num-bg);
+}
+
+
 
 pre[title] {
   padding-top: 0;
@@ -193,9 +221,9 @@ pre[title] {
   display: block;
   content: attr(title);
   padding: 4px 8px;
-  margin-left: -16px;
   margin-right: -16px;
   font-size: 12px;
+  font-weight: 700;
   background-color: #ebedf0;
 }
 
