@@ -1,12 +1,24 @@
 # Marsk's Blog
-my blog built with react, nextjs, keystone
+My blog is built with react, nextjs, keystone.
 
 # Dev
+Blog admin uses keystone, a headless cms, to manage blog data.
+
+run blog admin
+```shell
+git clone git@github.com:marsk6/blog-admin.git
+```
+
+```shell
+yarn keystone:dev
+```
+visit admin: localhost:3000
+
+run blog site
 ```shell
 yarn
-yarn keystone:dev
 yarn next:dev
 ```
-- blog: localhost:4000
-- admin: localhost:3000
+
+visit blog: localhost:4000
 

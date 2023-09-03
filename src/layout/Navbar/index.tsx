@@ -16,7 +16,7 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
       className={cx(
         'p-3 sticky z-[9999]',
         'shadow-[0px_0px_20px_0px_#e2e8f0] bg-white',
-        'dark:shadow-stone-700 dark:bg-[#19191c]',
+        'dark:shadow-stone-800 dark:bg-[#19191c]',
         'lg:top-0'
       )}
     >

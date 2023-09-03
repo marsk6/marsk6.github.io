@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <section
             className={cx(
               'p-6 bg-[#fefefe] dark:bg-[#19191c] opacity-100 rounded shadow-[0px_0px_20px_0px_#e2e8f0]',
-              'dark:shadow-stone-700',
+              'dark:shadow-stone-800',
               'order-3 lg:order-2 lg:w-[calc(100%-44rem)] lg:p-8',
               css`
                 flex: 1;

@@ -13,7 +13,7 @@ const Card: React.FC<CardProps> = ({ title, children, className }) => {
     <section
       className={cx(
         'rounded shadow-[0px_0px_20px_0px_#e2e8f0] border-opacity-10 bg-[#fefefe]',
-        'dark:bg-[#19191c] dark:shadow-stone-700',
+        'dark:bg-[#19191c] dark:shadow-stone-800',
         {
           'p-4': !haveTitle,
         },

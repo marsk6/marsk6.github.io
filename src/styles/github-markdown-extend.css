@@ -3,4 +3,16 @@
   --color-diff-blob-deletion-line-bg: #ffebe9;
   --color-diff-blob-deletion-num-bg: #ffd7d5;
   --color-diff-blob-addition-num-bg: #ccffd8;
+  --color-highlight: rgb(255 251 221/1);
+  --color-bg-color: #f6f8fa;
+
+}
+
+.dark .markdown-body {
+  --color-diff-blob-addition-num-bg: rgba(63,185,80,0.3);
+  --color-diff-blob-addition-line-bg: rgba(46,160,67,0.15);
+  --color-diff-blob-deletion-num-bg: rgba(248,81,73,0.3);
+  --color-diff-blob-deletion-line-bg: rgba(248,81,73,0.1);
+  --color-highlight: rgb(255 251 221/0.1);
+  --color-bg-color: #272727;
 }
