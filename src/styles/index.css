@@ -23,10 +23,8 @@
 
 .markdown-body pre {
   padding-left: 0;
-}
+  background-color: var(--color-bg-color);
 
-.dark .markdown-body pre {
-  background-color: #272727;
 }
 
 .toc li ul {
@@ -153,14 +151,8 @@ pre {
 .highlight-line {
   margin-left: -16px;
   margin-right: -16px;
-  background-color: #acd6ff; /* Set highlight bg color */
+  background-color: var(--color-highlight); /* Set highlight bg color */
   border-left: 4px solid rgb(59, 130, 246); /* Set highlight accent border color */
-}
-
-.dark {
-  .highlight-line {
-    background-color: #264f78; /* Set highlight bg color */
-  }
 }
 
 .line-number::before {
@@ -174,7 +166,7 @@ pre {
   color: rgb(156, 163, 175); /* Line number color */
   content: attr(line);
   box-sizing: content-box;
-  background-color: var(--color-canvas-subtle);
+  background-color: var(--color-bg-color);
   position: sticky;
   left: 0;
 }
@@ -225,6 +217,8 @@ pre[title] {
   font-size: 12px;
   font-weight: 700;
   background-color: #ebedf0;
+  position: sticky;
+  left: 0;
 }
 
 .dark .code-block-title::before {
