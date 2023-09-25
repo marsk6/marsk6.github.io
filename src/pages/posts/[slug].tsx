@@ -63,7 +63,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
               </Link>
             )}
           </div>
-          <div className="flex-shrink-0 text-ellipsis overflow-hidden ml-auto">
+          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden ml-auto">
             {post.nextArticle && (
               <Link
                 passHref
