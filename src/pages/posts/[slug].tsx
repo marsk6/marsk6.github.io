@@ -43,8 +43,8 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
             <span>更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</span>
           </div>
         )}
-        <section className="flex">
-          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden">
+        <section className="flex flex-col lg:flex-row">
+          <div className="flex-shrink-0 lg:basis-2/4 text-ellipsis overflow-hidden">
             {post.prevArticle && (
               <Link
                 passHref
@@ -63,7 +63,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
               </Link>
             )}
           </div>
-          <div className="flex-shrink-0 basis-2/4 text-ellipsis overflow-hidden ml-auto">
+          <div className="flex-shrink-0 lg:basis-2/4 text-ellipsis overflow-hidden ml-auto text-right">
             {post.nextArticle && (
               <Link
                 passHref
