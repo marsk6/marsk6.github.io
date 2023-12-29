@@ -1,5 +1,5 @@
 import React from 'react'
-import { css, cx } from '@emotion/css'
+import { cx } from '@emotion/css'
 import Navbar from './Navbar'
 
 import Sider, { SiderProvider } from './Sider'
@@ -32,10 +32,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               'p-6 bg-[#fefefe] dark:bg-[#19191c] opacity-100 rounded shadow-[0px_0px_20px_0px_#e2e8f0]',
               'dark:shadow-stone-800',
               'order-3 lg:order-2 lg:w-[calc(100%-44rem)] lg:p-8',
-              css`
-                flex: 1;
-                min-height: calc(100.1vh - var(--header-height));
-              `
+              'flex-1',
+              'main-content'
             )}
           >
             {children}
