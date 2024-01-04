@@ -124,6 +124,10 @@
   }
 }
 
+.main-content {
+  min-height: calc(100.1vh - var(--header-height));
+}
+
 /* rehype prism plus style */
 pre {
   overflow-x: auto;
