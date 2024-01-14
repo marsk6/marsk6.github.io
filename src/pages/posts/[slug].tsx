@@ -103,7 +103,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
         dateModified={dayjs(post.mtime || post.ctime).format(
           'YYYY-MM-DDTHH:mm:ssZZ'
         )}
-        authorName="Marsk"
+        authorName="marsk"
         description={post.brief || post.title}
       />
       <Article post={post} />

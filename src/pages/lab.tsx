@@ -14,7 +14,7 @@ const Lab: React.FC<PageProps> = ({ allPosts, years, tags }) => {
       <NextSeo
         title={process.env.BLOG.title}
         description="尝试新技术，新功能"
-        canonical={`${process.env.BLOG.site}/posts/lab`}
+        canonical={`${process.env.BLOG.site}/lab`}
       />
       <Card>lab</Card>
     </>
