@@ -90,7 +90,7 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
         images={[]}
         datePublished="2020-01-01T08:00:00+08:00"
         dateModified={process.env.UPDATED_DATE}
-        authorName="Marsk"
+        authorName="marsk"
         description="记录自己的前端工作总结，学习积累，技术思考，疑难问题"
       />
       <section className="flex flex-col gap-8 lg:gap-8">{items}</section>

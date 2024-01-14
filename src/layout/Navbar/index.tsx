@@ -17,7 +17,7 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
         'p-3 sticky z-[9999]',
         'shadow-[0px_0px_20px_0px_#e2e8f0] bg-white',
         'dark:shadow-stone-800 dark:bg-[#19191c]',
-        'lg:top-0'
+        'top-0'
       )}
     >
       <section className="flex flex-shrink-0 items-center lg:max-w-5xl lg:mx-auto">
