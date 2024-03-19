@@ -9,7 +9,7 @@ type TagProps = {
 
 const Chip: React.FC<TagProps> = ({ sup, name }) => {
   return (
-    <Link href={`/tags#${name}`} legacyBehavior passHref>
+    <Link href={`/tags${name}`} legacyBehavior passHref>
       <a
         className={cx(
           'rounded-full px-2 font-medium text-xs',
