@@ -4,7 +4,7 @@ import { NextSeo, ArticleJsonLd } from 'next-seo'
 import { cx } from '@emotion/css'
 import { useSetSider } from '@/layout/Sider'
 import Card from '@/components/Card'
-import Tag from '@/components/ui/Tag'
+import Chip from '@/components/ui/Chip'
 
 export type PageProps = {
   posts: { [year: string]: Post[] }
@@ -13,13 +13,13 @@ export type PageProps = {
 }
 
 const Home: React.FC<PageProps> = ({ posts, tags }) => {
-  useSetSider(() => (
-    <Card className="flex flex-col gap-2 items-start">
-      {tags.map((tag) => {
-        return <Tag key={tag.name} sup={tag.postsCount} name={tag.name}></Tag>
-      })}
-    </Card>
-  ))
+  // useSetSider(() => (
+  //   <Card className="flex flex-col gap-2 items-start">
+  //     {tags.map((tag) => {
+  //       return <Chip key={tag.name} sup={tag.postsCount} name={tag.name}></Chip>
+  //     })}
+  //   </Card>
+  // ))
   const items = Object.keys(posts)
     .sort((a, b) => b - a)
     .map((year) => {
@@ -29,7 +29,7 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
             className={cx(
               'font-medium',
               'text-3xl text-center mb-2',
-              'lg:text-2xl lg:text-left'
+              'md:text-2xl md:text-left'
             )}
           >
             {year}
@@ -39,7 +39,7 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
               className={cx(
                 'flex items-center',
                 'text-xl my-6 leading-10',
-                'lg:text-lg lg:mb-0 lg:mt-4'
+                'md:text-lg md:mb-0 md:mt-4'
               )}
               key={post.slug}
             >
@@ -54,19 +54,19 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
                 <a
                   className={cx(
                     'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline',
-                    'lg:ml-6',
+                    'md:ml-6',
                     'leading-normal'
                   )}
                 >
                   {post.title}
                 </a>
               </Link>
-              <div className="hidden lg:block flex-1 border-dashed border-slate-300 border-t mx-3" />
+              <div className="hidden md:block flex-1 border-dashed border-slate-300 border-t mx-3" />
               <div
                 className={cx(
                   'w-16 text-slate-500 dark:text-slate-200',
                   'hidden text-base',
-                  'lg:block',
+                  'md:block',
                 )}
               >
                 {post.date}
@@ -93,7 +93,7 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
         authorName="marsk"
         description="记录自己的前端工作总结，学习积累，技术思考，疑难问题"
       />
-      <section className="flex flex-col gap-8 lg:gap-8">{items}</section>
+      <section className="flex flex-col gap-8 md:gap-8">{items}</section>
     </>
   )
 }

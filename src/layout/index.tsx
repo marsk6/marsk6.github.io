@@ -22,22 +22,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Navbar />
         <section
           className={cx(
-            'container flex gap-2 relative',
+            'w-full flex gap-2 relative',
             'flex-col',
-            'lg:max-w-5xl lg:flex-row lg:mt-4 lg:items-start lg:mx-auto'
+            'md:max-w-3xl md:flex-row md:mt-4 md:items-start md:mx-auto'
           )}
         >
-          <section
+          <main
             className={cx(
               'p-6 bg-[#fefefe] dark:bg-[#19191c] opacity-100 rounded shadow-[0px_0px_20px_0px_#e2e8f0]',
               'dark:shadow-stone-800',
-              'order-3 lg:order-2 lg:w-[calc(100%-44rem)] lg:p-8',
+              'order-3 md:order-2 md:w-[calc(100%-44rem)] md:p-8',
               'flex-1',
               'main-content'
             )}
           >
             {children}
-          </section>
+          </main>
           <Sider />
         </section>
         <Footer />

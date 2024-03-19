@@ -7,13 +7,13 @@ type TagProps = {
   name: string
 }
 
-const Tag: React.FC<TagProps> = ({ sup, name }) => {
+const Chip: React.FC<TagProps> = ({ sup, name }) => {
   return (
     <Link href={`/tags#${name}`} legacyBehavior passHref>
       <a
         className={cx(
-          'rounded-full py-1 px-2 font-medium text-xs',
-          'bg-stone-50 dark:bg-stone-900',
+          'rounded-full px-2 font-medium text-xs',
+          'bg-stone-50 dark:bg-stone-900 leading-6',
           'hover:bg-stone-200, dark:hover:bg-stone-400'
         )}
       >
@@ -24,4 +24,4 @@ const Tag: React.FC<TagProps> = ({ sup, name }) => {
   )
 }
 
-export default Tag
+export default Chip

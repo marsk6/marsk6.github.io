@@ -17,7 +17,7 @@ type TagsProps = {
 const TagContainer: React.FC<{ tag: TagsProps['tags'][0] }> = ({ tag }) => {
   return (
     <section>
-      <p id={tag.name} className="text-3xl lg:text-2xl mb-4">
+      <p id={tag.name} className="text-3xl md:text-2xl mb-4">
         # {tag.name}
       </p>
       <div className="flex gap-2 flex-wrap">

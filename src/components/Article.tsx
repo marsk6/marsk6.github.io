@@ -102,7 +102,7 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <article className="p-2">
       <header className="mb-4">
-        <h1 className="text-center font-medium lg:text-4xl text-3xl">
+        <h1 className="text-center font-medium md:text-4xl text-3xl">
           {post.title}
         </h1>
         <div className="mt-2 flex justify-center text-xs items-center gap-4">

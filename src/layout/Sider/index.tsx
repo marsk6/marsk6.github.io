@@ -1,3 +1,4 @@
+import { cx } from '@emotion/css'
 import React, { useState, useContext, ReactElement, useEffect } from 'react'
 
 type SiderProps = {}
@@ -47,10 +48,17 @@ const Sider: React.FC<SiderProps> = () => {
     return null
   }
   return (
-    <aside className="lg:flex hidden flex-col gap-4 self-start order-2 lg:order-3 lg:w-44 lg:sticky top-16">
-      {siders.map((sider, index) =>
-        React.cloneElement(sider(), { key: index })
+    <aside
+      className={cx(
+        'hidden flex-col gap-4 self-start order-2 h-full',
+        'md:flex md:order-3 md:w-44 md:absolute right-[-192px]'
       )}
+    >
+      <section className="md:sticky md:top-[72px]">
+        {siders.map((sider, index) =>
+          React.cloneElement(sider(), { key: index })
+        )}
+      </section>
     </aside>
   )
 }
