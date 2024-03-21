@@ -53,9 +53,10 @@ const Home: React.FC<PageProps> = ({ posts, tags }) => {
               >
                 <a
                   className={cx(
-                    'text-slate-900 dark:text-[#c9d1d9] font-medium hover:underline',
+                    'text-slate-900 dark:text-[#c9d1d9] font-medium',
                     'md:ml-6',
-                    'leading-normal'
+                    'leading-normal',
+                    'text-underline'
                   )}
                 >
                   {post.title}
