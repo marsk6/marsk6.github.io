@@ -6,7 +6,7 @@ import { NextSeo, ArticleJsonLd } from 'next-seo'
 import dayjs from 'dayjs'
 import { useSetSider } from '@/layout/Sider'
 import Card from '@/components/Card'
-import Tag from '@/components/ui/Tag'
+import Chip from '@/components/ui/Chip'
 import Toc from '@/components/Toc'
 import Article from '@/components/Article'
 import Link from 'next/link'
@@ -21,14 +21,12 @@ type Props = {
 const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
   useSetSider(() => (
     <>
-      <Card className="flex flex-col gap-2 items-start">
-        {relatedTags.map((tag) => {
-          return (
-            <Tag key={tag.name} sup={tag.posts.length} name={tag.name}></Tag>
-          )
-        })}
-      </Card>
-      <Card className="hidden lg:block">
+      {/* <Card className="flex flex-col gap-2 items-start">
+        {relatedTags.map((tag) => (
+          <Chip key={tag.name} sup={tag.posts.length} name={tag.name} />
+        ))}
+      </Card> */}
+      <Card className="hidden md:block">
         <Toc content={post.toc} />
       </Card>
     </>
@@ -37,14 +35,22 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
   const renderFooter = () => {
     return (
       <footer className="flex flex-col gap-6 mt-6">
-        {Boolean(post.mtime) && (
-          <div className="flex items-center gap-1 ml-auto whitespace-nowrap text-xs leading-6 text-slate-400">
-            <IconEditCircle size={12} />
-            <span>更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</span>
+        <section className="flex items-center">
+          <div className="flex gap-1">
+            {relatedTags.map((tag) => (
+              <Chip key={tag.name} sup={tag.posts.length} name={`#${tag.name}`} />
+            ))}
           </div>
-        )}
-        <section className="flex flex-col lg:flex-row">
-          <div className="flex-shrink-0 lg:basis-2/4 text-ellipsis overflow-hidden">
+          {Boolean(post.mtime) && (
+            <div className="flex items-center gap-1 ml-auto whitespace-nowrap text-xs leading-6 text-slate-400">
+              <IconEditCircle size={12} />
+              <span>更新于 {dayjs(post.mtime).format('YYYY-MM-DD')}</span>
+            </div>
+          )}
+        </section>
+
+        <section className="flex flex-col md:flex-row">
+          <div className="flex-shrink-0 md:basis-2/4 text-ellipsis overflow-hidden">
             {post.prevArticle && (
               <Link
                 passHref
@@ -63,7 +69,7 @@ const PostContent: React.FC<Props> = ({ post, relatedTags }) => {
               </Link>
             )}
           </div>
-          <div className="flex-shrink-0 lg:basis-2/4 text-ellipsis overflow-hidden ml-auto text-right">
+          <div className="flex-shrink-0 md:basis-2/4 text-ellipsis overflow-hidden ml-auto text-right">
             {post.nextArticle && (
               <Link
                 passHref

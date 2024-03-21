@@ -58,7 +58,7 @@
     @apply mx-auto;
   }
   .rehype-figure img {
-    @apply lg:h-72 lg:p-4;
+    @apply md:h-72 md:p-4;
     @apply p-0 m-auto object-contain rounded-md;
   }
 }
@@ -122,6 +122,20 @@
     display: none;
     opacity: 0;
   }
+}
+.text-underline {
+  background-image: linear-gradient(to right, #2c3e50, #3498db);
+  background-size: 0 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 300ms ease-in-out;
+}
+a.text-underline:hover {
+  text-decoration: none;
+}
+.text-underline:hover {
+  text-decoration: none;
+  background-size: 100% 2px;
 }
 
 .main-content {

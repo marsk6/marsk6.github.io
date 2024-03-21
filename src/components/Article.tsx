@@ -16,6 +16,7 @@ import React, { PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { cx } from '@emotion/css'
 import { copyToClipboardFromNode } from '@/utils'
 import rehypePrism from 'rehype-prism-plus'
+import rehypeClassNames from 'rehype-class-names'
 
 const PreElement: React.FC<PropsWithChildren<{}>> = ({ children, ...rest }) => {
   const [showCopyBtn, setShowCopyBtn] = useState(false)
@@ -89,12 +90,13 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
       rehypeAutolinkHeadings,
       rehypeFigure,
       [rehypePrism, { showLineNumbers: true }],
+      [rehypeClassNames, { a: 'text-underline' }]
     ],
     rehypeReactOptions: {
       components: {
         pre: PreElement,
         img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-          <img {...props} loading="lazy" />
+          <img {...props} loading="lazy" decoding="async" />
         ),
       },
     },
@@ -102,7 +104,7 @@ const Article: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <article className="p-2">
       <header className="mb-4">
-        <h1 className="text-center font-medium lg:text-4xl text-3xl">
+        <h1 className="text-center font-medium md:text-4xl text-3xl">
           {post.title}
         </h1>
         <div className="mt-2 flex justify-center text-xs items-center gap-4">

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import styled from '@emotion/styled'
-import { css, cx } from '@emotion/css'
-import { IconBrandReact } from '@tabler/icons-react'
+import { cx } from '@emotion/css'
+import { IconBrandReact, IconTags } from '@tabler/icons-react'
 
 type MenuProps = {
   className?: string
@@ -12,13 +11,18 @@ const Menu: React.FC<MenuProps> = ({ className }) => {
   const router = useRouter()
   const menuItems = [
     {
+      icon: <IconTags size={16} />,
+      pathname: '/tags',
+      label: 'Tags',
+    },
+    {
       icon: <IconBrandReact size={16} />,
       pathname: '/lab',
-      label: '实验室',
+      label: 'Lab',
     },
   ]
   return (
-    <nav className={cx(className, 'flex flex-col gap-2')}>
+    <nav className={cx(className, 'flex gap-2')}>
       {menuItems.map((item) => {
         const isActive = router.pathname === item.pathname
         return (

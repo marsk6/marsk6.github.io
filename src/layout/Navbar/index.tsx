@@ -20,7 +20,7 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
         'top-0'
       )}
     >
-      <section className="flex flex-shrink-0 items-center lg:max-w-5xl lg:mx-auto">
+      <section className="flex flex-shrink-0 items-center md:max-w-5xl md:mx-auto">
         <Link legacyBehavior passHref href={{ pathname: '/' }}>
           <a
             className={cx(
