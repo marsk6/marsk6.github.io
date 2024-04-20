@@ -5,21 +5,25 @@ import Navbar from './Navbar'
 import Sider, { SiderProvider } from './Sider'
 import Footer from './Footer'
 import Background from '@/components/Background'
+import Progress from '@/components/Progress'
+import { useRouter } from 'next/router'
 
 type LayoutProps = {}
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const router = useRouter()
+
   return (
     <SiderProvider>
       <section
         className={cx(
           'flex flex-col max-w-full',
-          'bg-stone-50 dark:bg-stone-900',
           'text-stone-800 dark:text-[#c9d1d9]'
         )}
       >
         <Background />
         <Navbar />
+        {router.pathname.includes('post') && <Progress />}
         <section
           className={cx(
             'w-full flex gap-2 relative',
