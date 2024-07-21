@@ -24,7 +24,6 @@
 .markdown-body pre {
   padding-left: 0;
   background-color: var(--color-bg-color);
-
 }
 
 .toc li ul {
@@ -60,7 +59,7 @@
   .rehype-figure img {
     @apply p-0 m-auto object-contain rounded-md;
     @apply md:h-72 md:p-4 md:min-w-[500px];
-  } 
+  }
 }
 
 .rehype-figure img {
@@ -155,6 +154,11 @@ a.text-underline:hover {
   background-size: var(--viewed-height, 0) 100%;
 }
 
+.nav {
+  backdrop-filter: saturate(180%) blur(1em);
+  transition: background 0.5s;
+}
+
 /* rehype prism plus style */
 pre {
   overflow-x: auto;
@@ -233,8 +237,6 @@ pre {
 .code-line.deleted.line-number::before {
   background-color: var(--color-diff-blob-deletion-num-bg);
 }
-
-
 
 pre[title] {
   padding-top: 0;

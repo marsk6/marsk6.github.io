@@ -15,12 +15,13 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
     <header
       className={cx(
         'p-3 sticky z-[9999]',
-        'shadow-[0px_0px_20px_0px_#e2e8f0] bg-white',
-        'dark:shadow-stone-800 dark:bg-[#19191c]',
-        'top-0'
+        'shadow-[0px_0px_20px_0px_#e2e8f0] bg-white/20',
+        'dark:shadow-stone-800 dark:bg-[#19191c]/20',
+        'top-0',
+        'nav'
       )}
     >
-      <section className="flex flex-shrink-0 items-center md:max-w-5xl md:mx-auto">
+      <section className="flex flex-shrink-0 items-center md:max-w-3xl md:mx-auto">
         <Link legacyBehavior passHref href={{ pathname: '/' }}>
           <a
             className={cx(
@@ -40,7 +41,7 @@ const Navbar: React.FC<HeaderProps> = ({ className }) => {
         </Link>
         <Menu />
         <div
-          className="cursor-pointer px-4 flex items-center gap-2"
+          className="cursor-pointer pl-4 flex items-center gap-2"
           onClick={darkMode.toggle}
         >
           {darkMode.isDark ? <IconMoon size={14} /> : <IconSun size={14} />}

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Background() {
   return (
-    <span className="pointer-events-none fixed inset-0 h-full w-full opacity-100 bg-stone-50 dark:bg-stone-900">
+    <span className="pointer-events-none fixed inset-0 h-full w-full opacity-100 bg-stone-50 dark:bg-stone-900 -z-[1]">
       <svg
         className="pointer-events-none h-full w-full touch-none select-none bg-transparent"
         version="1.1"
